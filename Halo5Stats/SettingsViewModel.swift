@@ -56,6 +56,10 @@ class SettingsViewModel {
         }
     }
 
+    init() {
+        updateAppStoreUrl()
+    }
+
     private var appStoreUrlString: String? {
         get {
             return NSUserDefaults.standardUserDefaults().stringForKey(K.appStoreUrlKey) ?? "https://itunes.apple.com/app/id\(K.appId)"
@@ -69,7 +73,7 @@ class SettingsViewModel {
     }
 
     private func updateAppStoreUrl() {
-        guard let url = NSURL(string: "") else { return }
+        guard let url = NSURL(string: "https://raw.githubusercontent.com/Psylynce/Halo5Stats/develop/config.json") else { return }
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { [weak self] (data, response, error) in
             guard let data = data where error == nil else { return }
