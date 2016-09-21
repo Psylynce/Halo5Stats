@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="GamertagView" customModule="Halo5Stats" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="40"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y6s-Me-h0J">
+                    <rect key="frame" x="59" y="0.0" width="82" height="40"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fv9-g5-PNv">
+                            <rect key="frame" x="40" y="0.0" width="42" height="40"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MfY-XQ-ghH">
+                            <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="IgF-VF-MVT"/>
+                                <constraint firstAttribute="width" secondItem="MfY-XQ-ghH" secondAttribute="height" multiplier="1:1" id="RWa-zm-U9N"/>
+                                <constraint firstAttribute="height" constant="50" id="xRJ-5S-9qJ"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="IgF-VF-MVT"/>
+                                    <exclude reference="xRJ-5S-9qJ"/>
+                                </mask>
+                            </variation>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="fv9-g5-PNv" firstAttribute="top" secondItem="y6s-Me-h0J" secondAttribute="top" id="6ey-0D-nJn"/>
+                        <constraint firstAttribute="bottom" secondItem="fv9-g5-PNv" secondAttribute="bottom" id="7B2-W8-w6K"/>
+                        <constraint firstAttribute="trailing" secondItem="fv9-g5-PNv" secondAttribute="trailing" id="EZB-Lj-awj"/>
+                        <constraint firstItem="MfY-XQ-ghH" firstAttribute="leading" secondItem="y6s-Me-h0J" secondAttribute="leading" id="Wa6-sB-cOb"/>
+                        <constraint firstItem="MfY-XQ-ghH" firstAttribute="top" secondItem="y6s-Me-h0J" secondAttribute="top" id="eve-hE-ELT"/>
+                        <constraint firstItem="fv9-g5-PNv" firstAttribute="leading" secondItem="MfY-XQ-ghH" secondAttribute="trailing" id="pgI-r3-NMZ"/>
+                        <constraint firstAttribute="bottom" secondItem="MfY-XQ-ghH" secondAttribute="bottom" id="vYX-Iu-EeA"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="y6s-Me-h0J" secondAttribute="trailing" id="0WH-KJ-h7T"/>
+                <constraint firstItem="y6s-Me-h0J" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="leading" id="Goi-1r-J7f"/>
+                <constraint firstItem="y6s-Me-h0J" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Kgh-U1-XgS"/>
+                <constraint firstItem="MfY-XQ-ghH" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="Tby-dF-d4f"/>
+                <constraint firstItem="y6s-Me-h0J" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="e4l-7k-5h0"/>
+                <constraint firstAttribute="bottom" secondItem="y6s-Me-h0J" secondAttribute="bottom" id="pxI-hr-XxU"/>
+                <constraint firstItem="y6s-Me-h0J" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="zUe-Dx-S5I"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="containerView" destination="y6s-Me-h0J" id="itJ-36-rnx"/>
+                <outlet property="gamertagLabel" destination="fv9-g5-PNv" id="G78-xb-8Zh"/>
+                <outlet property="imageView" destination="MfY-XQ-ghH" id="Ung-f8-Y47"/>
+            </connections>
+            <point key="canvasLocation" x="872" y="527.5"/>
+        </view>
+    </objects>
+</document>

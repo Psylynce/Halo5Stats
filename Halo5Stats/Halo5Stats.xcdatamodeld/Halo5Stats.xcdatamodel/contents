@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15F34" minimumToolsVersion="Automatic">
+    <entity name="AttainedCSR" representedClassName=".AttainedCSR" syncable="YES">
+        <attribute name="csr" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="designationId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="percentToNextTier" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="rank" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="tier" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <relationship name="serviceRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRecord" inverseName="highestCSRAttained" inverseEntity="ServiceRecord" syncable="YES"/>
+    </entity>
+    <entity name="BaseStats" representedClassName=".BaseStats" syncable="YES">
+        <attribute name="totalAssassinations" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalAssists" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalDeaths" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalGrenadeDamage" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="totalGrenadeKills" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalGroundPoundDamage" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="totalGroundPoundKills" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalHeadshots" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalKills" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalMeleeDamage" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="totalMeleeKills" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalPowerWeaponDamage" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="totalPowerWeaponGrabs" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalPowerWeaponKills" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalPowerWeaponPossessionTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalShotsFired" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalShotsLanded" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalShoulderBashDamage" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="totalShoulderBashKills" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalWeaponDamage" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="carnageReport" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CarnageReport" inverseName="baseStats" inverseEntity="CarnageReport" syncable="YES"/>
+        <relationship name="serviceRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRecord" inverseName="baseStats" inverseEntity="ServiceRecord" syncable="YES"/>
+    </entity>
+    <entity name="CarnageReport" representedClassName=".CarnageReport" syncable="YES">
+        <attribute name="averageLifeTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="didNotFinish" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="gameBaseVariantId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gamertag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameVariantId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mapId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mapVariantId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="playlistId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rank" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="seasonId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamId" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalDuration" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="aiKills" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EnemyKill" inverseName="carnageReportAI" inverseEntity="EnemyKill" syncable="YES"/>
+        <relationship name="baseStats" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BaseStats" inverseName="carnageReport" inverseEntity="BaseStats" syncable="YES"/>
+        <relationship name="killedByOpponents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OpponentDetail" inverseName="killedByCarnageReport" inverseEntity="OpponentDetail" syncable="YES"/>
+        <relationship name="killedOpponents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="OpponentDetail" inverseName="killedCarnageReport" inverseEntity="OpponentDetail" syncable="YES"/>
+        <relationship name="match" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Match" inverseName="carnageReports" inverseEntity="Match" syncable="YES"/>
+        <relationship name="medals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MedalAward" inverseName="carnageReport" inverseEntity="MedalAward" syncable="YES"/>
+        <relationship name="mostUsedWeapon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeaponStats" inverseName="mostUsedCarnageReport" inverseEntity="WeaponStats" syncable="YES"/>
+        <relationship name="vehicleKills" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="EnemyKill" inverseName="carnageReportVehicle" inverseEntity="EnemyKill" syncable="YES"/>
+        <relationship name="weaponStats" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WeaponStats" inverseName="carnageReport" inverseEntity="WeaponStats" syncable="YES"/>
+    </entity>
+    <entity name="CSRDesignation" representedClassName=".CSRDesignation" syncable="YES">
+        <attribute name="bannerImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tiers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CSRTier" inverseName="designation" inverseEntity="CSRTier" syncable="YES"/>
+    </entity>
+    <entity name="CSRTier" representedClassName=".CSRTier" syncable="YES">
+        <attribute name="iconImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="designation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CSRDesignation" inverseName="tiers" inverseEntity="CSRDesignation" syncable="YES"/>
+    </entity>
+    <entity name="Enemy" representedClassName=".Enemy" syncable="YES">
+        <attribute name="faction" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="largeIconImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="overview" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="smallIconUrl" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="EnemyKill" representedClassName=".EnemyKill" syncable="YES">
+        <attribute name="attachments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalKills" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="carnageReportAI" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CarnageReport" inverseName="aiKills" inverseEntity="CarnageReport" syncable="YES"/>
+        <relationship name="carnageReportVehicle" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CarnageReport" inverseName="vehicleKills" inverseEntity="CarnageReport" syncable="YES"/>
+    </entity>
+    <entity name="GameBaseVariant" representedClassName=".GameBaseVariant" syncable="YES">
+        <attribute name="iconUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="supportedGameModes" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Map" representedClassName=".Map" syncable="YES">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="overview" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="supportedGameModes" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Match" representedClassName=".Match" syncable="YES">
+        <attribute name="completionDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="gameBaseVariantId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameMode" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="gameVariantId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameVariantOwnerType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isTeamGame" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="mapId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mapVariantId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mapVariantOwnerType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="matchDuration" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="matchPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="outcome" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="playlistId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seasonId" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="carnageReports" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CarnageReport" inverseName="match" inverseEntity="CarnageReport" syncable="YES"/>
+        <relationship name="spartan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Spartan" inverseName="matches" inverseEntity="Spartan" syncable="YES"/>
+        <relationship name="teams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="match" inverseEntity="Team" syncable="YES"/>
+    </entity>
+    <entity name="Medal" representedClassName=".Medal" syncable="YES">
+        <attribute name="classification" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="difficulty" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="overview" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="spriteHeight" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="spriteImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="spriteLocationX" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="spriteLocationY" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="spriteSheetHeight" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="spriteSheetWidth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="spriteWidth" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="MedalAward" representedClassName=".MedalAward" syncable="YES">
+        <attribute name="count" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="medalIdentifier" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="carnageReport" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CarnageReport" inverseName="medals" inverseEntity="CarnageReport" syncable="YES"/>
+        <relationship name="serviceRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRecord" inverseName="medalAwards" inverseEntity="ServiceRecord" syncable="YES"/>
+    </entity>
+    <entity name="OpponentDetail" representedClassName=".OpponentDetail" syncable="YES">
+        <attribute name="emblemUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gamertag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="killCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="killedByCarnageReport" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CarnageReport" inverseName="killedByOpponents" inverseEntity="CarnageReport" syncable="YES"/>
+        <relationship name="killedCarnageReport" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CarnageReport" inverseName="killedOpponents" inverseEntity="CarnageReport" syncable="YES"/>
+    </entity>
+    <entity name="Playlist" representedClassName=".Playlist" syncable="YES">
+        <attribute name="gameMode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="isRanked" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="overview" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="season" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Season" inverseName="playlists" inverseEntity="Season" syncable="YES"/>
+    </entity>
+    <entity name="Season" representedClassName=".Season" syncable="YES">
+        <attribute name="endDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="iconUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isActive" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDate" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="playlists" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Playlist" inverseName="season" inverseEntity="Playlist" syncable="YES"/>
+    </entity>
+    <entity name="ServiceRecord" representedClassName=".ServiceRecord" syncable="YES">
+        <attribute name="arenaPlaylistSeasonId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gamertag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="highestCSRPlaylistId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="highestCSRSeasonId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="resultCode" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="seasonId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="spartanRank" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalGamesCompleted" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalGamesLost" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalGamesTied" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalGamesWon" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalTimePlayed" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="baseStats" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="BaseStats" inverseName="serviceRecord" inverseEntity="BaseStats" syncable="YES"/>
+        <relationship name="highestCSRAttained" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AttainedCSR" inverseName="serviceRecord" inverseEntity="AttainedCSR" syncable="YES"/>
+        <relationship name="medalAwards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="MedalAward" inverseName="serviceRecord" inverseEntity="MedalAward" syncable="YES"/>
+        <relationship name="mostUsedWeapon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeaponStats" inverseName="mostUsedServiceRecord" inverseEntity="WeaponStats" syncable="YES"/>
+        <relationship name="spartan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Spartan" inverseName="serviceRecords" inverseEntity="Spartan" syncable="YES"/>
+        <relationship name="weaponStats" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WeaponStats" inverseName="serviceRecord" inverseEntity="WeaponStats" syncable="YES"/>
+    </entity>
+    <entity name="Spartan" representedClassName=".Spartan" syncable="YES">
+        <attribute name="displayGamertag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="emblemImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gamertag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="spartanImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="matches" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Match" inverseName="spartan" inverseEntity="Match" syncable="YES"/>
+        <relationship name="serviceRecords" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ServiceRecord" inverseName="spartan" inverseEntity="ServiceRecord" syncable="YES"/>
+    </entity>
+    <entity name="Team" representedClassName=".Team" syncable="YES">
+        <attribute name="identifier" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="rank" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="score" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="match" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Match" inverseName="teams" inverseEntity="Match" syncable="YES"/>
+    </entity>
+    <entity name="TeamColor" representedClassName=".TeamColor" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="iconUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="overview" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Vehicle" representedClassName=".Vehicle" syncable="YES">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isUsableByPlayer" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="largeIconUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="overview" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="smallIconUrl" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Weapon" representedClassName=".Weapon" syncable="YES">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isUsableByPlayer" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="largeIconUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="overview" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="smallIconUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="WeaponStats" representedClassName=".WeaponStats" syncable="YES">
+        <attribute name="attachments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalDamage" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="totalHeadshots" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalKills" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalPossessionTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="totalShotsFired" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="totalShotsLanded" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="carnageReport" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CarnageReport" inverseName="weaponStats" inverseEntity="CarnageReport" syncable="YES"/>
+        <relationship name="mostUsedCarnageReport" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CarnageReport" inverseName="mostUsedWeapon" inverseEntity="CarnageReport" syncable="YES"/>
+        <relationship name="mostUsedServiceRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRecord" inverseName="mostUsedWeapon" inverseEntity="ServiceRecord" syncable="YES"/>
+        <relationship name="serviceRecord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ServiceRecord" inverseName="weaponStats" inverseEntity="ServiceRecord" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="AttainedCSR" positionX="333" positionY="162" width="128" height="133"/>
+        <element name="BaseStats" positionX="-2" positionY="507" width="128" height="375"/>
+        <element name="CarnageReport" positionX="171" positionY="594" width="128" height="360"/>
+        <element name="CSRDesignation" positionX="-36" positionY="-114" width="128" height="103"/>
+        <element name="CSRTier" positionX="-225" positionY="-108" width="128" height="90"/>
+        <element name="Enemy" positionX="-225" positionY="126" width="128" height="135"/>
+        <element name="EnemyKill" positionX="-180" positionY="-63" width="128" height="120"/>
+        <element name="GameBaseVariant" positionX="-227" positionY="3" width="128" height="103"/>
+        <element name="Map" positionX="-38" positionY="9" width="128" height="118"/>
+        <element name="Match" positionX="171" positionY="-108" width="128" height="315"/>
+        <element name="Medal" positionX="-56" positionY="288" width="128" height="225"/>
+        <element name="MedalAward" positionX="-189" positionY="-72" width="128" height="105"/>
+        <element name="OpponentDetail" positionX="-198" positionY="-81" width="128" height="120"/>
+        <element name="Playlist" positionX="-416" positionY="-246" width="128" height="163"/>
+        <element name="Season" positionX="-378" positionY="-36" width="128" height="148"/>
+        <element name="ServiceRecord" positionX="178" positionY="162" width="128" height="330"/>
+        <element name="Spartan" positionX="-207" positionY="-90" width="128" height="135"/>
+        <element name="Team" positionX="-207" positionY="-90" width="128" height="105"/>
+        <element name="TeamColor" positionX="-371" positionY="132" width="128" height="118"/>
+        <element name="Vehicle" positionX="-378" positionY="288" width="128" height="135"/>
+        <element name="Weapon" positionX="-225" positionY="279" width="128" height="150"/>
+        <element name="WeaponStats" positionX="349" positionY="333" width="128" height="225"/>
+    </elements>
+</model>
