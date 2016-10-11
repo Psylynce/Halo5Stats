@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5C01E4BA1CA0AE0E00A24CE5 /* CarnageReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C01E4B91CA0AE0E00A24CE5 /* CarnageReportViewController.swift */; };
 		5C01E4BC1CA0AF3700A24CE5 /* ServiceRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C01E4BB1CA0AF3700A24CE5 /* ServiceRecordViewController.swift */; };
+		5C04764F1DAD74BF008B6706 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C04764E1DAD74BF008B6706 /* Keys.plist */; };
 		5C06DECD1D1CD52200B2B4E5 /* GamertagWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C06DECC1D1CD52200B2B4E5 /* GamertagWatcher.swift */; };
 		5C0D02EA1D2322B0009377DA /* MedalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D02E91D2322B0009377DA /* MedalListCell.swift */; };
 		5C0EB7DD1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0EB7BB1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift */; };
@@ -257,6 +258,7 @@
 /* Begin PBXFileReference section */
 		5C01E4B91CA0AE0E00A24CE5 /* CarnageReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarnageReportViewController.swift; sourceTree = "<group>"; };
 		5C01E4BB1CA0AF3700A24CE5 /* ServiceRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceRecordViewController.swift; sourceTree = "<group>"; };
+		5C04764E1DAD74BF008B6706 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		5C06DECC1D1CD52200B2B4E5 /* GamertagWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamertagWatcher.swift; sourceTree = "<group>"; };
 		5C0D02E91D2322B0009377DA /* MedalListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedalListCell.swift; sourceTree = "<group>"; };
 		5C0EB7BB1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CSRDesignation+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -1087,6 +1089,7 @@
 				5CFC5E281CB371920017F3C2 /* Font */,
 				5C2579651BF8FE3A008C5164 /* Assets.xcassets */,
 				5C25796A1BF8FE3A008C5164 /* Info.plist */,
+				5C04764E1DAD74BF008B6706 /* Keys.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1309,6 +1312,7 @@
 				5CFC5E301CB371C90017F3C2 /* kelson_extrabd.otf in Resources */,
 				5C2579611BF8FE3A008C5164 /* PlayerStats.storyboard in Resources */,
 				5C3AC25D1CCAB3F000DC72CF /* Settings.storyboard in Resources */,
+				5C04764F1DAD74BF008B6706 /* Keys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1678,6 +1682,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Halo5Stats/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JustinPowell.Halo5Stats;
 				PRODUCT_NAME = H5S;
 				PROVISIONING_PROFILE = "";
@@ -1692,6 +1697,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Halo5Stats/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JustinPowell.Halo5Stats;
 				PRODUCT_NAME = H5S;
 				PROVISIONING_PROFILE = "";

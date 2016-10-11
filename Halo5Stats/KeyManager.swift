@@ -11,9 +11,21 @@ final class KeyManager {
 
     static let sharedManager = KeyManager()
 
+    struct K {
+        static let fileName = "Keys"
+        static let fileType = "plist"
+        static let production = "production"
+        static let development = "development"
+    }
+
     var apiKey: String? {
-        guard let info = NSBundle.mainBundle().infoDictionary else { return nil }
-        guard let key = info["apiKey"] as? String else { return nil }
+        guard let path = NSBundle.mainBundle().pathForResource(K.fileName, ofType: K.fileType) else { return nil }
+        guard let keyInfo = NSDictionary(contentsOfFile: path) else { return nil }
+        var keyString = K.production
+        #if DEBUG
+            keyString = K.development
+        #endif
+        guard let key = keyInfo[keyString] as? String else { return nil }
         return key
     }
 }

@@ -2,8 +2,9 @@
 build/
 DerivedData
 
-## Custom Scripts
+## Custom
 keyManager.sh
+Halo5Stats/Keys.plist
 
 ## Various settings
 *.pbxuser
