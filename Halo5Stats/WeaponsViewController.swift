@@ -36,7 +36,7 @@ extension WeaponsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let weapon = viewModel.weapons[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("WeaponCell", forIndexPath: indexPath)
-        cell.textLabel?.text = weapon.weaponId
+        cell.textLabel?.text = weapon.name
         return cell
     }
 }

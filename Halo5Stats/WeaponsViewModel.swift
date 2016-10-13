@@ -12,6 +12,6 @@ class WeaponsViewModel {
     let weapons: [WeaponModel]
 
     init(weapons: [WeaponModel]) {
-        self.weapons = weapons
+        self.weapons = weapons.sort { $0.name < $1.name }
     }
 }

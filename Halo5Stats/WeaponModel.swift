@@ -10,6 +10,8 @@ import UIKit
 
 struct WeaponModel {
     var weapon: Weapon?
+    var name: String
+    var overview: String
     var weaponId: String
     var attachments: [Int]
     var shotsFired: Int
@@ -27,6 +29,8 @@ struct WeaponModel {
     static func convert(weapon: WeaponStats) -> WeaponModel? {
         guard let identifier = weapon.identifier else { return nil }
         let weaponData = Weapon.weapon(forIdentifier: identifier)
+        guard let name = weaponData?.name else { return nil }
+        guard let overview = weaponData?.overview else { return nil }
         guard let shotsFired = weapon.totalShotsFired as? Int else { return nil }
         guard let shotsLanded = weapon.totalShotsLanded as? Int else { return nil }
         guard let headshots = weapon.totalHeadshots as? Int else { return nil }
@@ -35,7 +39,7 @@ struct WeaponModel {
         guard let smallUrlString = weaponData?.smallIconUrl, smallUrl = NSURL(string: smallUrlString) else { return nil }
         guard let largeUrlString = weaponData?.largeIconUrl, largeUrl = NSURL(string: largeUrlString) else { return nil }
 
-        let model = WeaponModel(weapon: weaponData, weaponId: identifier, attachments: [], shotsFired: shotsFired, shotsLanded: shotsLanded, headshots: headshots, kills: kills, damageDealt: damage.roundedToTwo(), smallIconUrl: smallUrl, largeIconUrl: largeUrl)
+        let model = WeaponModel(weapon: weaponData, name: name, overview: overview, weaponId: identifier, attachments: [], shotsFired: shotsFired, shotsLanded: shotsLanded, headshots: headshots, kills: kills, damageDealt: damage.roundedToTwo(), smallIconUrl: smallUrl, largeIconUrl: largeUrl)
 
         return model
     }
