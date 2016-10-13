@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="zWp-O4-xb0">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--Weapons View Controller-->
+        <scene sceneID="m8j-D1-hBA">
+            <objects>
+                <viewController id="zWp-O4-xb0" customClass="WeaponsViewController" customModule="H5S" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nk7-36-Osx"/>
+                        <viewControllerLayoutGuide type="bottom" id="ldT-Gd-mcI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fZr-0Q-aff">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="h29-fc-G7w">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="WeaponCell" id="ypO-Yg-4yu">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ypO-Yg-4yu" id="iFR-rJ-7ir">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="h29-fc-G7w" secondAttribute="trailing" id="18U-dz-cQC"/>
+                            <constraint firstItem="ldT-Gd-mcI" firstAttribute="top" secondItem="h29-fc-G7w" secondAttribute="bottom" id="97d-4h-Phv"/>
+                            <constraint firstItem="h29-fc-G7w" firstAttribute="top" secondItem="nk7-36-Osx" secondAttribute="bottom" id="jev-Ey-lDx"/>
+                            <constraint firstItem="h29-fc-G7w" firstAttribute="leading" secondItem="fZr-0Q-aff" secondAttribute="leading" id="ziA-Yy-cTn"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="h29-fc-G7w" id="Z7A-fN-aVP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NYz-W5-ech" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1493" y="538"/>
+        </scene>
+    </scenes>
+</document>

@@ -16,13 +16,14 @@ enum ServiceRecordSection {
     case AllMedals
     case MostUsedWeaponTitle
     case MostUsedWeapon
+    case Weapons
     case Stats
 
     var color: UIColor? {
         switch self {
         case .Games, .TopMedalsTitle, .TopMedals, .AllMedals:
             return UIColor(haloColor: .Elephant)
-        case .HighestCSR:
+        case .HighestCSR, .Weapons:
             return UIColor(haloColor: .Cinder)
         default:
             return nil
@@ -37,6 +38,8 @@ enum ServiceRecordSection {
             return "Most Used Weapon"
         case .AllMedals:
             return "See Awarded Medals"
+        case .Weapons:
+            return "All Weapon Stats"
         default:
             return ""
         }
@@ -90,6 +93,9 @@ class ServiceRecordViewModel {
 
         if record.mostUsedWeapon != nil {
             sections += [.MostUsedWeaponTitle, .MostUsedWeapon]
+        }
+        if !record.weapons.isEmpty {
+            sections += [.Weapons]
         }
 
         sections += [.Stats]

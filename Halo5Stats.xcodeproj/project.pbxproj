@@ -10,6 +10,9 @@
 		5C01E4BA1CA0AE0E00A24CE5 /* CarnageReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C01E4B91CA0AE0E00A24CE5 /* CarnageReportViewController.swift */; };
 		5C01E4BC1CA0AF3700A24CE5 /* ServiceRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C01E4BB1CA0AF3700A24CE5 /* ServiceRecordViewController.swift */; };
 		5C04764F1DAD74BF008B6706 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C04764E1DAD74BF008B6706 /* Keys.plist */; };
+		5C0476511DAFE340008B6706 /* Weapons.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C0476501DAFE340008B6706 /* Weapons.storyboard */; };
+		5C0476531DAFE396008B6706 /* WeaponsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476521DAFE396008B6706 /* WeaponsViewController.swift */; };
+		5C0476551DAFE3CB008B6706 /* WeaponsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476541DAFE3CB008B6706 /* WeaponsViewModel.swift */; };
 		5C06DECD1D1CD52200B2B4E5 /* GamertagWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C06DECC1D1CD52200B2B4E5 /* GamertagWatcher.swift */; };
 		5C0D02EA1D2322B0009377DA /* MedalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D02E91D2322B0009377DA /* MedalListCell.swift */; };
 		5C0EB7DD1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0EB7BB1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift */; };
@@ -259,6 +262,9 @@
 		5C01E4B91CA0AE0E00A24CE5 /* CarnageReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarnageReportViewController.swift; sourceTree = "<group>"; };
 		5C01E4BB1CA0AF3700A24CE5 /* ServiceRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceRecordViewController.swift; sourceTree = "<group>"; };
 		5C04764E1DAD74BF008B6706 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		5C0476501DAFE340008B6706 /* Weapons.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Weapons.storyboard; sourceTree = "<group>"; };
+		5C0476521DAFE396008B6706 /* WeaponsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponsViewController.swift; sourceTree = "<group>"; };
+		5C0476541DAFE3CB008B6706 /* WeaponsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponsViewModel.swift; sourceTree = "<group>"; };
 		5C06DECC1D1CD52200B2B4E5 /* GamertagWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamertagWatcher.swift; sourceTree = "<group>"; };
 		5C0D02E91D2322B0009377DA /* MedalListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedalListCell.swift; sourceTree = "<group>"; };
 		5C0EB7BB1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CSRDesignation+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -745,6 +751,7 @@
 				5C2579A41BF92855008C5164 /* Main.storyboard */,
 				5CA1137C1CADDC6F005CB675 /* SignIn.storyboard */,
 				5C3AC25C1CCAB3F000DC72CF /* Settings.storyboard */,
+				5C0476501DAFE340008B6706 /* Weapons.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -771,6 +778,7 @@
 				5C01E4BB1CA0AF3700A24CE5 /* ServiceRecordViewController.swift */,
 				5CFBE4A51D21D09800C87819 /* AllMedalsViewController.swift */,
 				5CB538B21D2A024500B75241 /* MedalDetailViewController.swift */,
+				5C0476521DAFE396008B6706 /* WeaponsViewController.swift */,
 			);
 			name = PlayerStats;
 			sourceTree = "<group>";
@@ -819,6 +827,7 @@
 				5CFC94981CC7E62700BDD58E /* ServiceRecordViewModel.swift */,
 				5CFBE4A71D21D0E200C87819 /* AllMedalsViewModel.swift */,
 				5CB538B61D2C6DC600B75241 /* MedalDetailViewModel.swift */,
+				5C0476541DAFE3CB008B6706 /* WeaponsViewModel.swift */,
 			);
 			name = PlayerStats;
 			sourceTree = "<group>";
@@ -1296,6 +1305,7 @@
 				5CFC5E321CB371C90017F3C2 /* kelson_md.otf in Resources */,
 				5CA1137D1CADDC6F005CB675 /* SignIn.storyboard in Resources */,
 				5C2579691BF8FE3A008C5164 /* LaunchScreen.storyboard in Resources */,
+				5C0476511DAFE340008B6706 /* Weapons.storyboard in Resources */,
 				5C742D331CA8CCEC001BBCD7 /* GamertagView.xib in Resources */,
 				5C2579661BF8FE3A008C5164 /* Assets.xcassets in Resources */,
 				5C2579921BF901A1008C5164 /* GameHistory.storyboard in Resources */,
@@ -1411,6 +1421,7 @@
 				5C5B12F71CB604A80016E914 /* DateFormatter.swift in Sources */,
 				5C0EB7F11C83F57400F9DFE6 /* Season+CoreDataProperties.swift in Sources */,
 				5CDE5DF71D4AFA9D0044D341 /* KeyboardController.swift in Sources */,
+				5C0476551DAFE3CB008B6706 /* WeaponsViewModel.swift in Sources */,
 				5CA113861CAE4040005CB675 /* ProfileService.swift in Sources */,
 				5C15AAF11C210891007F84DB /* SilentCondition.swift in Sources */,
 				5C3779C11C8FC70D00A9AFF5 /* NSNumber+Extensions.swift in Sources */,
@@ -1524,6 +1535,7 @@
 				5CDE5DE81D45C2A90044D341 /* WeaponCellModel.swift in Sources */,
 				5C3AC2611CCEAEA100DC72CF /* DurationFormatter.swift in Sources */,
 				5C3AC2671CCFE6EC00DC72CF /* SpartanModel.swift in Sources */,
+				5C0476531DAFE396008B6706 /* WeaponsViewController.swift in Sources */,
 				5C960EA61C65ACA500178AB1 /* ServiceRecordRequest.swift in Sources */,
 				5C0EB7FB1C83F57400F9DFE6 /* Map+CoreDataProperties.swift in Sources */,
 				5C3AC25B1CCAB39100DC72CF /* SettingsViewController.swift in Sources */,
