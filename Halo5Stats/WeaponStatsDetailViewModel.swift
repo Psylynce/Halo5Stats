@@ -8,5 +8,12 @@
 import Foundation
 
 class WeaponStatsDetailViewModel {
-    
+
+    let weapon: WeaponModel
+    let imageManager: ImageManager
+
+    init(weapon: WeaponModel, imageManager: ImageManager) {
+        self.weapon = weapon
+        self.imageManager = imageManager
+    }
 }

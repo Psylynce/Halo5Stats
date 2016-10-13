@@ -10,6 +10,7 @@ import Foundation
 class WeaponsViewModel {
 
     let weapons: [WeaponModel]
+    let imageManager = ImageManager()
 
     init(weapons: [WeaponModel]) {
         self.weapons = weapons.sort { $0.name < $1.name }

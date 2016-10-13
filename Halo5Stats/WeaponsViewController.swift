@@ -41,8 +41,11 @@ extension WeaponsViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+        let weapon = viewModel.weapons[indexPath.row]
         let vc = StoryboardScene.Weapons.weaponStatsDetailViewController()
+        vc.viewModel = WeaponStatsDetailViewModel(weapon: weapon, imageManager: viewModel.imageManager)
+
         navigationController?.pushViewController(vc, animated: true)
     }
 }
