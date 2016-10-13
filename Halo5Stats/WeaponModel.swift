@@ -27,7 +27,6 @@ struct WeaponModel {
     static func convert(weapon: WeaponStats) -> WeaponModel? {
         guard let identifier = weapon.identifier else { return nil }
         let weaponData = Weapon.weapon(forIdentifier: identifier)
-//        guard let attachments = weapon.attachments else { return nil }
         guard let shotsFired = weapon.totalShotsFired as? Int else { return nil }
         guard let shotsLanded = weapon.totalShotsLanded as? Int else { return nil }
         guard let headshots = weapon.totalHeadshots as? Int else { return nil }
@@ -58,7 +57,7 @@ struct WeaponModel {
     }
 
     func percentageDetails(gameMode: GameMode) -> [PercentageDetail] {
-        return [(value: shotsFired, color: UIColor(haloColor: .Bismark)), (value: shotsLanded, color: gameMode.color())]
+        return [(value: shotsFired, color: UIColor(haloColor: .Bismark)), (value: shotsLanded, color: gameMode.color)]
     }
 }
 

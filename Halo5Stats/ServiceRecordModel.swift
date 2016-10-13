@@ -41,7 +41,7 @@ struct ServiceRecordModel {
     }
 
     func percentageDetails(gameMode: GameMode) -> [PercentageDetail] {
-        return [(value: totalGamesWon, color: gameMode.color()), (value: totalGamesLost, color: UIColor(haloColor: .Bismark)), (value: totalGamesTied, color: UIColor(haloColor: .SpringGreen))]
+        return [(value: totalGamesWon, color: gameMode.color), (value: totalGamesLost, color: UIColor(haloColor: .Bismark)), (value: totalGamesTied, color: UIColor(haloColor: .SpringGreen))]
     }
 
     // MARK: - Private Methods

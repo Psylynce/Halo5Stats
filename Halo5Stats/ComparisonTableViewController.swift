@@ -140,8 +140,8 @@ extension ComparisonTableViewController: UITableViewDataSource, UITableViewDeleg
         let section = viewModel.sections[section]
         let view = SectionHeaderView.loadFromNib()
         view.titleLabel.text = section.title
-        view.startColor = section.gameMode.color()
-        view.endColor = section.gameMode.color().darker()
+        view.startColor = section.gameMode.color
+        view.endColor = section.gameMode.color.darker()
         
         return view
     }

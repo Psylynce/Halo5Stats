@@ -142,7 +142,7 @@ class ServiceRecordViewController: UITableViewController {
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             guard let record = viewModel.record() else { return }
             let vc = StoryboardScene.PlayerStats.allMedalsViewController()
-            vc.title = "\(viewModel.gameMode.title()) Career Medals"
+            vc.title = "\(viewModel.gameMode.title) Career Medals"
             vc.viewModel = AllMedalsViewModel(medals: record.medals)
 
             navigationController?.pushViewController(vc, animated: true)

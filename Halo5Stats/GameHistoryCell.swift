@@ -33,7 +33,7 @@ class GameHistoryCell: UITableViewCell {
         mapImageView.image(forUrl: match.mapImageUrl)
 
         gameTypeLabel.text = match.gameType.uppercaseString
-        gameTypeLabel.textColor = match.gameMode?.color()
+        gameTypeLabel.textColor = match.gameMode?.color
         mapNameLabel.text = match.mapName
         dateLabel.text = DateFormatter.string(fromDate: match.date, format: .MonthDayYear)
 
