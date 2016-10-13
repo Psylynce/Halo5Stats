@@ -15,6 +15,7 @@
 		5C0476551DAFE3CB008B6706 /* WeaponsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476541DAFE3CB008B6706 /* WeaponsViewModel.swift */; };
 		5C0476571DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476561DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift */; };
 		5C0476591DAFF984008B6706 /* WeaponStatsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476581DAFF984008B6706 /* WeaponStatsDetailViewController.swift */; };
+		5C04765B1DB01973008B6706 /* WeaponStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C04765A1DB01973008B6706 /* WeaponStatsCell.swift */; };
 		5C06DECD1D1CD52200B2B4E5 /* GamertagWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C06DECC1D1CD52200B2B4E5 /* GamertagWatcher.swift */; };
 		5C0D02EA1D2322B0009377DA /* MedalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D02E91D2322B0009377DA /* MedalListCell.swift */; };
 		5C0EB7DD1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0EB7BB1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift */; };
@@ -269,6 +270,7 @@
 		5C0476541DAFE3CB008B6706 /* WeaponsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponsViewModel.swift; sourceTree = "<group>"; };
 		5C0476561DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponStatsDetailViewModel.swift; sourceTree = "<group>"; };
 		5C0476581DAFF984008B6706 /* WeaponStatsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponStatsDetailViewController.swift; sourceTree = "<group>"; };
+		5C04765A1DB01973008B6706 /* WeaponStatsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponStatsCell.swift; sourceTree = "<group>"; };
 		5C06DECC1D1CD52200B2B4E5 /* GamertagWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamertagWatcher.swift; sourceTree = "<group>"; };
 		5C0D02E91D2322B0009377DA /* MedalListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedalListCell.swift; sourceTree = "<group>"; };
 		5C0EB7BB1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CSRDesignation+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -1194,6 +1196,7 @@
 			isa = PBXGroup;
 			children = (
 				5CFC94AE1CC8306300BDD58E /* WeaponCell.swift */,
+				5C04765A1DB01973008B6706 /* WeaponStatsCell.swift */,
 			);
 			name = PlayerStats;
 			sourceTree = "<group>";
@@ -1440,6 +1443,7 @@
 				5CF8C3571D34AE1600E815EA /* SettingsCell.swift in Sources */,
 				5C3AC25F1CCE74E900DC72CF /* PercentageCircleView.swift in Sources */,
 				5CA221271CB475460006A795 /* Dynamic.swift in Sources */,
+				5C04765B1DB01973008B6706 /* WeaponStatsCell.swift in Sources */,
 				5CFC946B1CC2AF8E00BDD58E /* MedalAward+CoreDataProperties.swift in Sources */,
 				5C960E9F1C65A0E100178AB1 /* DownloadRequestOperation.swift in Sources */,
 				5C0476571DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift in Sources */,

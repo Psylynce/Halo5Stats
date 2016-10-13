@@ -14,5 +14,6 @@ class WeaponsViewModel {
 
     init(weapons: [WeaponModel]) {
         self.weapons = weapons.sort { $0.name < $1.name }
+        imageManager.style = .large
     }
 }

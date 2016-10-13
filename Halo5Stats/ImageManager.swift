@@ -11,6 +11,7 @@ protocol CacheableImageModel {
     var typeIdentifier: String { get }
     var cacheIdentifier: String { get }
     var imageURL: NSURL { get }
+    var largeImageURL: NSURL? { get }
     var placeholderImage: UIImage? { get }
 }
 
@@ -31,9 +32,15 @@ class ImageManager {
         static let allowCaching = true
     }
 
+    enum Style {
+        case small
+        case large
+    }
+
     // MARK: - Properties
 
     let fetchQueue = OperationQueue()
+    var style: Style = .small
 
     // MARK: - Internal
 
@@ -57,7 +64,7 @@ class ImageManager {
         }
 
         let fetchOperation = NSBlockOperation { [weak self] () -> Void in
-            let imageUrl = model.imageURL
+            let imageUrl = self?.style == .small ? model.imageURL : (model.largeImageURL ?? model.imageURL)
             let task = NSURLSession.halo5ConfiguredSession().dataTaskWithURL(imageUrl, completionHandler: { (data, response, error) -> Void in
                 if let _ = error {
                     if let completion = completion {
@@ -113,7 +120,10 @@ class ImageManager {
     }
 
     private func cacheFilename(model: CacheableImageModel) -> String {
-        let imageName = "\(model.typeIdentifier)_\(model.cacheIdentifier)"
+        var imageName = "\(model.typeIdentifier)_\(model.cacheIdentifier)"
+        if style == .large {
+            imageName += "_large"
+        }
 
         return imageName
     }

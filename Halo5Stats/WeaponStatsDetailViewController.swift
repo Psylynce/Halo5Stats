@@ -77,6 +77,6 @@ class WeaponStatsDetailViewController: UIViewController {
         accuracyLabel.text = "\(viewModel.weapon.accuracy)"
         shotsFiredLabel.text = "\(viewModel.weapon.shotsFired)"
         shotsLandedLabel.text = "\(viewModel.weapon.shotsLanded)"
-        weaponImageView.image(forUrl: viewModel.weapon.largeIconUrl)
+        weaponImageView.image = viewModel.imageManager.cachedImage(viewModel.weapon)
     }
 }

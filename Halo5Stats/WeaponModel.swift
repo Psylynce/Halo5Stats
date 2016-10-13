@@ -94,6 +94,10 @@ extension WeaponModel: CacheableImageModel {
         return smallIconUrl
     }
 
+    var largeImageURL: NSURL? {
+        return largeIconUrl
+    }
+
     var placeholderImage: UIImage? {
         return UIImage(named: "Weapon")
     }
