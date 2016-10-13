@@ -39,4 +39,10 @@ extension WeaponsViewController: UITableViewDataSource, UITableViewDelegate {
         cell.textLabel?.text = weapon.name
         return cell
     }
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let vc = StoryboardScene.Weapons.weaponStatsDetailViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }

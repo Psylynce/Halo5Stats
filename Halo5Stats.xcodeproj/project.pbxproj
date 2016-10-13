@@ -13,6 +13,8 @@
 		5C0476511DAFE340008B6706 /* Weapons.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C0476501DAFE340008B6706 /* Weapons.storyboard */; };
 		5C0476531DAFE396008B6706 /* WeaponsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476521DAFE396008B6706 /* WeaponsViewController.swift */; };
 		5C0476551DAFE3CB008B6706 /* WeaponsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476541DAFE3CB008B6706 /* WeaponsViewModel.swift */; };
+		5C0476571DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476561DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift */; };
+		5C0476591DAFF984008B6706 /* WeaponStatsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476581DAFF984008B6706 /* WeaponStatsDetailViewController.swift */; };
 		5C06DECD1D1CD52200B2B4E5 /* GamertagWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C06DECC1D1CD52200B2B4E5 /* GamertagWatcher.swift */; };
 		5C0D02EA1D2322B0009377DA /* MedalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D02E91D2322B0009377DA /* MedalListCell.swift */; };
 		5C0EB7DD1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0EB7BB1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift */; };
@@ -265,6 +267,8 @@
 		5C0476501DAFE340008B6706 /* Weapons.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Weapons.storyboard; sourceTree = "<group>"; };
 		5C0476521DAFE396008B6706 /* WeaponsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponsViewController.swift; sourceTree = "<group>"; };
 		5C0476541DAFE3CB008B6706 /* WeaponsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponsViewModel.swift; sourceTree = "<group>"; };
+		5C0476561DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponStatsDetailViewModel.swift; sourceTree = "<group>"; };
+		5C0476581DAFF984008B6706 /* WeaponStatsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponStatsDetailViewController.swift; sourceTree = "<group>"; };
 		5C06DECC1D1CD52200B2B4E5 /* GamertagWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamertagWatcher.swift; sourceTree = "<group>"; };
 		5C0D02E91D2322B0009377DA /* MedalListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedalListCell.swift; sourceTree = "<group>"; };
 		5C0EB7BB1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CSRDesignation+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -779,6 +783,7 @@
 				5CFBE4A51D21D09800C87819 /* AllMedalsViewController.swift */,
 				5CB538B21D2A024500B75241 /* MedalDetailViewController.swift */,
 				5C0476521DAFE396008B6706 /* WeaponsViewController.swift */,
+				5C0476581DAFF984008B6706 /* WeaponStatsDetailViewController.swift */,
 			);
 			name = PlayerStats;
 			sourceTree = "<group>";
@@ -828,6 +833,7 @@
 				5CFBE4A71D21D0E200C87819 /* AllMedalsViewModel.swift */,
 				5CB538B61D2C6DC600B75241 /* MedalDetailViewModel.swift */,
 				5C0476541DAFE3CB008B6706 /* WeaponsViewModel.swift */,
+				5C0476561DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift */,
 			);
 			name = PlayerStats;
 			sourceTree = "<group>";
@@ -1394,6 +1400,7 @@
 				5CBEC7AB1D3206E2005C7E34 /* SectionHeaderView.swift in Sources */,
 				5CE2541A1CBAFDE4009720F2 /* ImageCell.swift in Sources */,
 				5C0EB7E01C83F57400F9DFE6 /* TeamColor.swift in Sources */,
+				5C0476591DAFF984008B6706 /* WeaponStatsDetailViewController.swift in Sources */,
 				5C960EA11C65A2DB00178AB1 /* ParseRequestOperation.swift in Sources */,
 				5C15AAE91C210891007F84DB /* OperationCondition.swift in Sources */,
 				5C38D8701C9236D500BEECF5 /* CSRTier.swift in Sources */,
@@ -1435,6 +1442,7 @@
 				5CA221271CB475460006A795 /* Dynamic.swift in Sources */,
 				5CFC946B1CC2AF8E00BDD58E /* MedalAward+CoreDataProperties.swift in Sources */,
 				5C960E9F1C65A0E100178AB1 /* DownloadRequestOperation.swift in Sources */,
+				5C0476571DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift in Sources */,
 				5C7224A21D048AEF0093E556 /* VideoViewController.swift in Sources */,
 				5CEC3B1A1CDC00C700BE386C /* CompareViewModel.swift in Sources */,
 				5CFC946D1CC2AF8E00BDD58E /* EnemyKill+CoreDataProperties.swift in Sources */,

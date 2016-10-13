@@ -49,5 +49,24 @@
             </objects>
             <point key="canvasLocation" x="1493" y="538"/>
         </scene>
+        <!--Weapon Stats Detail View Controller-->
+        <scene sceneID="JlX-k9-6hp">
+            <objects>
+                <viewController storyboardIdentifier="WeaponStatsDetailViewController" id="FBR-R7-1bR" customClass="WeaponStatsDetailViewController" customModule="H5S" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cPq-o0-FLn"/>
+                        <viewControllerLayoutGuide type="bottom" id="2j8-b7-EfW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bPS-d8-yne">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xPp-Jy-KX0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2121" y="538"/>
+        </scene>
     </scenes>
 </document>
