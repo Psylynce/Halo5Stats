@@ -16,6 +16,7 @@ struct ServiceRecordModel {
     var spartanRank: Int?
     var stats: StatsModel
     var mostUsedWeapon: WeaponModel?
+    var weapons: [WeaponModel]
     var medals: [MedalModel]
     var topMedals: [MedalModel]
     var highestAttainedCSR: CSRModel?
@@ -23,6 +24,7 @@ struct ServiceRecordModel {
     static func convert(serviceRecord record: ServiceRecord) -> ServiceRecordModel? {
         guard let baseStats = record.baseStats, stats = StatsModel.convert(baseStats) else { return nil }
         let mostUsedWeapon = ServiceRecordModel.mostUsedWeapon(record)
+        let weapons = ServiceRecordModel.weapons(record)
         let medals = ServiceRecordModel.medals(record)
         let topMedals = ServiceRecordModel.updateTopMedals(medals)
 
@@ -33,7 +35,7 @@ struct ServiceRecordModel {
         let spartanRank = record.spartanRank?.integerValue
         let highestAttainedCSR = ServiceRecordModel.updateHighestCSR(record)
 
-        let model = ServiceRecordModel(totalGamesCompleted: gamesCompleted, totalGamesWon: gamesWon, totalGamesLost: gamesLost, totalGamesTied: gamesTied, spartanRank: spartanRank, stats: stats, mostUsedWeapon: mostUsedWeapon, medals: medals, topMedals: topMedals, highestAttainedCSR: highestAttainedCSR)
+        let model = ServiceRecordModel(totalGamesCompleted: gamesCompleted, totalGamesWon: gamesWon, totalGamesLost: gamesLost, totalGamesTied: gamesTied, spartanRank: spartanRank, stats: stats, mostUsedWeapon: mostUsedWeapon, weapons: weapons, medals: medals, topMedals: topMedals, highestAttainedCSR: highestAttainedCSR)
 
         return model
     }
@@ -51,9 +53,22 @@ struct ServiceRecordModel {
         return model
     }
 
+    private static func weapons(record: ServiceRecord) -> [WeaponModel] {
+        guard let weapons = record.weaponStats?.allObjects as? [WeaponStats] else { return [] }
+        var newWeapons = [WeaponModel]()
+
+        for weapon in weapons {
+            if let model = WeaponModel.convert(weapon) {
+                newWeapons.append(model)
+            }
+        }
+
+        return newWeapons
+    }
+
     private static func medals(record: ServiceRecord) -> [MedalModel] {
         guard let medals = record.medalAwards?.allObjects as? [MedalAward] else { return [] }
-        var newMedals: [MedalModel] = []
+        var newMedals = [MedalModel]()
 
         for medal in medals {
             if let model = MedalModel.convert(medal) {

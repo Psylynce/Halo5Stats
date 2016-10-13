@@ -90,7 +90,7 @@ class ServiceRecordViewController: UITableViewController {
         switch section {
         case .TopMedalsTitle, .MostUsedWeaponTitle:
             let cell = tableView.dequeueReusableCellWithIdentifier("TitleCell", forIndexPath: indexPath) as! TitleCell
-            cell.configure(section.title().uppercaseString)
+            cell.configure(section.title.uppercaseString)
 
             return cell
         case .HighestCSR:
@@ -128,7 +128,7 @@ class ServiceRecordViewController: UITableViewController {
             return cell
         case .AllMedals:
             let cell = tableView.dequeueReusableCellWithIdentifier("SelectionCell", forIndexPath: indexPath)
-            cell.textLabel?.text = section.title()
+            cell.textLabel?.text = section.title
 
             return cell
         }

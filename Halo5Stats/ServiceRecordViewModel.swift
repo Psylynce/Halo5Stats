@@ -29,7 +29,7 @@ enum ServiceRecordSection {
         }
     }
 
-    func title() -> String {
+    var title: String {
         switch self {
         case .TopMedalsTitle:
             return "Top Medals"
