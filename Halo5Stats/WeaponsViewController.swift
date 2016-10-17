@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WeaponsViewController: UIViewController {
+class WeaponsViewController: UIViewController, ParallaxScrollingTableView {
     
     @IBOutlet var tableView: UITableView!
 
@@ -31,6 +31,7 @@ class WeaponsViewController: UIViewController {
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.backgroundColor = UIColor(haloColor: .Cinder)
     }
 
     private func updateVisibleCells() {
@@ -51,8 +52,9 @@ extension WeaponsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let weapon = viewModel.weapons[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("WeaponCell", forIndexPath: indexPath) as! WeaponStatsCell
+        let isEven = indexPath.row % 2 == 0
         cell.weapon = weapon
-        cell.configure(viewModel.imageManager.cachedImage(weapon))
+        cell.configure(viewModel.imageManager.cachedImage(weapon), isEven: isEven)
     
         return cell
     }
@@ -61,7 +63,7 @@ extension WeaponsViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: false)
         let weapon = viewModel.weapons[indexPath.row]
         let vc = StoryboardScene.Weapons.weaponStatsDetailViewController()
-        vc.viewModel = WeaponStatsDetailViewModel(weapon: weapon, imageManager: viewModel.imageManager)
+        vc.viewModel = WeaponStatsDetailViewModel(weapon: weapon, gameMode: viewModel.gameMode, imageManager: viewModel.imageManager)
 
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -104,6 +106,16 @@ extension WeaponsViewController: UIScrollViewDelegate {
 
         if !isScrolling && scrollView == tableView {
             updateVisibleCells()
+        }
+    }
+
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if let indexPaths = tableView.indexPathsForVisibleRows {
+            for indexPath in indexPaths {
+                if let cell = tableView.cellForRowAtIndexPath(indexPath) as? ParallaxScrollingCell {
+                    cellImageOffset(tableView, cell: cell, indexPath: indexPath)
+                }
+            }
         }
     }
 }

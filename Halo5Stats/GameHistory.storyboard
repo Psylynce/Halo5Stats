@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pWO-CG-T6t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pWO-CG-T6t">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -208,27 +208,15 @@
                                         <constraint firstItem="0sZ-Wz-Azn" firstAttribute="top" secondItem="7jY-Te-n5b" secondAttribute="bottom" constant="1" id="15z-h1-A4Y"/>
                                         <constraint firstAttribute="trailing" secondItem="seM-Wl-F0o" secondAttribute="trailing" id="MVr-CW-6xK"/>
                                         <constraint firstAttribute="bottom" secondItem="seM-Wl-F0o" secondAttribute="bottom" id="NQe-Ys-T7Z"/>
-                                        <constraint firstItem="7jY-Te-n5b" firstAttribute="leading" secondItem="T0q-SF-ll4" secondAttribute="leading" id="Ohx-dD-3oJ"/>
                                         <constraint firstItem="0sZ-Wz-Azn" firstAttribute="leading" secondItem="3fe-vb-Vw4" secondAttribute="leading" constant="10" id="QpZ-cM-5WS"/>
                                         <constraint firstAttribute="trailing" secondItem="0sZ-Wz-Azn" secondAttribute="trailing" constant="10" id="SzG-RZ-owQ"/>
-                                        <constraint firstItem="0sZ-Wz-Azn" firstAttribute="top" secondItem="7jY-Te-n5b" secondAttribute="bottom" constant="8" id="Zbx-xR-6cc"/>
                                         <constraint firstItem="seM-Wl-F0o" firstAttribute="top" secondItem="3fe-vb-Vw4" secondAttribute="top" id="dk8-Ag-maS"/>
                                         <constraint firstItem="0sZ-Wz-Azn" firstAttribute="top" secondItem="ZdM-5m-FLN" secondAttribute="bottom" constant="-25" id="fOT-V4-3Ut"/>
                                         <constraint firstItem="7jY-Te-n5b" firstAttribute="centerX" secondItem="3fe-vb-Vw4" secondAttribute="centerX" id="lNS-LE-b3J"/>
                                         <constraint firstAttribute="bottom" secondItem="0sZ-Wz-Azn" secondAttribute="bottom" constant="10" id="lUg-du-VU5"/>
-                                        <constraint firstItem="ZdM-5m-FLN" firstAttribute="centerY" secondItem="3fe-vb-Vw4" secondAttribute="centerY" id="mMH-9v-RMd"/>
                                         <constraint firstItem="ZdM-5m-FLN" firstAttribute="centerX" secondItem="3fe-vb-Vw4" secondAttribute="centerX" id="nq1-e0-1PM"/>
                                         <constraint firstItem="seM-Wl-F0o" firstAttribute="leading" secondItem="3fe-vb-Vw4" secondAttribute="leading" id="sB6-nh-MmT"/>
-                                        <constraint firstItem="ZdM-5m-FLN" firstAttribute="leading" secondItem="3fe-vb-Vw4" secondAttribute="leading" constant="10" id="w5n-uH-cO1"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="Zbx-xR-6cc"/>
-                                            <exclude reference="mMH-9v-RMd"/>
-                                            <exclude reference="w5n-uH-cO1"/>
-                                            <exclude reference="Ohx-dD-3oJ"/>
-                                        </mask>
-                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="containerView" destination="0sZ-Wz-Azn" id="CPD-oJ-lg4"/>

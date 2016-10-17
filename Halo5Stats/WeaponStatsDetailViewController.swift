@@ -74,7 +74,8 @@ class WeaponStatsDetailViewController: UIViewController {
         weaponDescriptionLabel.text = viewModel.weapon.overview
         killsLabel.text = "\(viewModel.weapon.kills)"
         headshotsLabel.text = "\(viewModel.weapon.headshots)"
-        accuracyLabel.text = "\(viewModel.weapon.accuracy)"
+        accuracyLabel.text = "\(viewModel.weapon.accuracy)%"
+        percentageView.details = viewModel.weapon.percentageDetails(viewModel.gameMode)
         shotsFiredLabel.text = "\(viewModel.weapon.shotsFired)"
         shotsLandedLabel.text = "\(viewModel.weapon.shotsLanded)"
         weaponImageView.image = viewModel.imageManager.cachedImage(viewModel.weapon)

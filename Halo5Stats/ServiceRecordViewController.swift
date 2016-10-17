@@ -150,7 +150,7 @@ class ServiceRecordViewController: UITableViewController {
             guard let record = viewModel.record() else { return }
             let vc = StoryboardScene.Weapons.weaponsViewController()
             vc.title = "\(viewModel.gameMode.title) Weapon Stats"
-            vc.viewModel = WeaponsViewModel(weapons: record.weapons)
+            vc.viewModel = WeaponsViewModel(weapons: record.weapons, gameMode: viewModel.gameMode)
 
             navigationController?.pushViewController(vc, animated: true)
         default:
