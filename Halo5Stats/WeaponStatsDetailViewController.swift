@@ -11,17 +11,15 @@ class WeaponStatsDetailViewController: UIViewController {
 
     @IBOutlet var weaponImageView: UIImageView!
     @IBOutlet var weaponNameLabel: UILabel!
+    @IBOutlet var weaponNameUnderlineView: UIView!
     @IBOutlet var weaponDescriptionLabel: UILabel!
-    @IBOutlet var killsHeaderLabel: UILabel!
-    @IBOutlet var headshotsHeaderLabel: UILabel!
     @IBOutlet var killsLabel: UILabel!
     @IBOutlet var headshotsLabel: UILabel!
-    @IBOutlet var percentageView: PercentageCircleView!
     @IBOutlet var accuracyLabel: UILabel!
-    @IBOutlet var shotsFiredHeaderLabel: UILabel!
     @IBOutlet var shotsFiredLabel: UILabel!
-    @IBOutlet var shotsLandedHeaderLabel: UILabel!
     @IBOutlet var shotsLandedLabel: UILabel!
+    @IBOutlet var subHeaderLabels: [UILabel]!
+    @IBOutlet var subHeaderUnderlineViews: [UIView]!
 
     var viewModel: WeaponStatsDetailViewModel!
 
@@ -32,41 +30,55 @@ class WeaponStatsDetailViewController: UIViewController {
         setupData()
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+
+        navigationController?.presentTransparentNavigationBar()
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        navigationController?.hideTransparentNavigationBar()
+    }
+
     private func setupAppearance() {
         view.backgroundColor = UIColor(haloColor: .Cinder)
 
-        weaponNameLabel.font = UIFont.kelson(.Regular, size: 16)
+        weaponNameLabel.font = UIFont.kelson(.Regular, size: 24)
         weaponNameLabel.textColor = UIColor(haloColor: .WhiteSmoke)
 
-        weaponDescriptionLabel.font = UIFont.kelson(.Regular, size: 14)
+        weaponNameUnderlineView.backgroundColor = UIColor(haloColor: .WhiteSmoke)
+
+        weaponDescriptionLabel.font = UIFont.kelson(.Light, size: 14)
         weaponDescriptionLabel.textColor = UIColor(haloColor: .WhiteSmoke)
 
-        killsHeaderLabel.font = UIFont.kelson(.Light, size: 14)
-        killsHeaderLabel.textColor = UIColor(haloColor: .CuriousBlue)
-
-        headshotsHeaderLabel.font = UIFont.kelson(.Light, size: 14)
-        headshotsHeaderLabel.textColor = UIColor(haloColor: .CuriousBlue)
-
-        killsLabel.font = UIFont.kelson(.Regular, size: 14)
+        killsLabel.font = UIFont.kelson(.Bold, size: 18)
         killsLabel.textColor = UIColor(haloColor: .WhiteSmoke)
 
         headshotsLabel.font = UIFont.kelson(.Regular, size: 14)
         headshotsLabel.textColor = UIColor(haloColor: .WhiteSmoke)
 
-        accuracyLabel.font = UIFont.kelson(.Light, size: 14)
+        accuracyLabel.font = UIFont.kelson(.Bold, size: 18)
         accuracyLabel.textColor = UIColor(haloColor: .WhiteSmoke)
-
-        shotsFiredHeaderLabel.font = UIFont.kelson(.Light, size: 14)
-        shotsFiredHeaderLabel.textColor = UIColor(haloColor: .CuriousBlue)
-
-        shotsLandedHeaderLabel.font = UIFont.kelson(.Light, size: 14)
-        shotsLandedHeaderLabel.textColor = UIColor(haloColor: .CuriousBlue)
 
         shotsFiredLabel.font = UIFont.kelson(.Regular, size: 14)
         shotsFiredLabel.textColor = UIColor(haloColor: .WhiteSmoke)
 
         shotsLandedLabel.font = UIFont.kelson(.Regular, size: 14)
         shotsLandedLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+
+        subHeaderLabels.forEach {
+            $0.font = UIFont.kelson(.Light, size: 14)
+            $0.textColor = UIColor(haloColor: .WhiteSmoke)
+            $0.text = $0.text?.uppercaseString
+        }
+
+        subHeaderUnderlineViews.forEach {
+            $0.backgroundColor = UIColor(haloColor: .CuriousBlue)
+        }
+
+        hideBackButtonTitle()
     }
 
     private func setupData() {
@@ -75,7 +87,6 @@ class WeaponStatsDetailViewController: UIViewController {
         killsLabel.text = "\(viewModel.weapon.kills)"
         headshotsLabel.text = "\(viewModel.weapon.headshots)"
         accuracyLabel.text = "\(viewModel.weapon.accuracy)%"
-        percentageView.details = viewModel.weapon.percentageDetails(viewModel.gameMode)
         shotsFiredLabel.text = "\(viewModel.weapon.shotsFired)"
         shotsLandedLabel.text = "\(viewModel.weapon.shotsLanded)"
         weaponImageView.image = viewModel.imageManager.cachedImage(viewModel.weapon)
