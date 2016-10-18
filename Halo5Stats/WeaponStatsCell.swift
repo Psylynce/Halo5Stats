@@ -29,6 +29,12 @@ class WeaponStatsCell: UITableViewCell {
         setupAppearance()
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        contentView.horizontalGradient(weapon.type.color, endColor: weapon.type.color.darker(0.95))
+    }
+
     private func setupAppearance() {
         weaponNameLabel.textColor = UIColor(haloColor: .WhiteSmoke)
         weaponNameLabel.font = UIFont.kelson(.Bold, size: 32)
@@ -53,9 +59,8 @@ class WeaponStatsCell: UITableViewCell {
         accuracyLabel.text = "\(weapon.accuracy)%"
         weaponImageView.image = cachedImage
 
-        contentView.backgroundColor = isEven ? UIColor(haloColor: .Cinder) : UIColor(haloColor: .Elephant)
         let selectionView = UIView()
-        selectionView.backgroundColor = contentView.backgroundColor?.lighter(0.15)
+        selectionView.backgroundColor = weapon.type.color.darker()
         selectedBackgroundView = selectionView
     }
 }

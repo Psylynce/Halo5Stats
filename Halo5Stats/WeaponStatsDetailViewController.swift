@@ -43,7 +43,7 @@ class WeaponStatsDetailViewController: UIViewController {
     }
 
     private func setupAppearance() {
-        view.backgroundColor = UIColor(haloColor: .Cinder)
+        view.verticalGradient(startColor: viewModel.weapon.type.color.darker(), endColor: UIColor(haloColor: .Cinder))
 
         weaponNameLabel.font = UIFont.kelson(.Regular, size: 24)
         weaponNameLabel.textColor = UIColor(haloColor: .WhiteSmoke)

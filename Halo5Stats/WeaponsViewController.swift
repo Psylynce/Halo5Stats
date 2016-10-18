@@ -17,6 +17,7 @@ class WeaponsViewController: UIViewController, ParallaxScrollingTableView {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupAppearance()
         setupTableView()
     }
 
@@ -28,10 +29,21 @@ class WeaponsViewController: UIViewController, ParallaxScrollingTableView {
 
     // MARK: Private
 
+    private func setupAppearance() {
+        let filterButtonImage = UIImage(named: "Filter")?.imageWithRenderingMode(.AlwaysTemplate)
+        let filterButton = UIBarButtonItem(image: filterButtonImage, style: .Plain, target: self, action: #selector(filterButtonTapped))
+        filterButton.tintColor = UIColor(haloColor: .WhiteSmoke)
+        navigationItem.rightBarButtonItem = filterButton
+    }
+
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor(haloColor: .Cinder)
+    }
+
+    @objc private func filterButtonTapped() {
+
     }
 
     private func updateVisibleCells() {

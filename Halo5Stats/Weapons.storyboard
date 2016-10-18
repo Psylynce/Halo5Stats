@@ -31,6 +31,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="150"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jvG-Rh-QcK">
+                                                    <rect key="frame" x="487" y="20" width="206" height="110"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="jvG-Rh-QcK" secondAttribute="height" multiplier="15:8" id="HRB-cl-vvk"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhv-Hs-OeY">
                                                     <rect key="frame" x="10" y="45" width="532" height="60"/>
                                                     <subviews>
@@ -82,12 +88,6 @@
                                                         <constraint firstItem="N68-5U-1Yi" firstAttribute="leading" secondItem="9fl-I2-ut4" secondAttribute="trailing" constant="5" id="zLL-Cn-AKy"/>
                                                     </constraints>
                                                 </view>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jvG-Rh-QcK">
-                                                    <rect key="frame" x="487" y="20" width="206" height="110"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="jvG-Rh-QcK" secondAttribute="height" multiplier="15:8" id="HRB-cl-vvk"/>
-                                                    </constraints>
-                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="hhv-Hs-OeY" firstAttribute="centerY" secondItem="iFR-rJ-7ir" secondAttribute="centerY" id="Cc6-Hp-cqe"/>

@@ -9,6 +9,33 @@
 import UIKit
 
 struct WeaponModel {
+
+    enum Type {
+        case grenade
+        case turret
+        case vehicle
+        case standard
+        case power
+        case unknown
+
+        var color: UIColor {
+            switch self {
+            case .grenade:
+                return UIColor.blueColor()
+            case .turret:
+                return UIColor.redColor()
+            case .vehicle:
+                return UIColor.greenColor()
+            case .standard:
+                return UIColor.brownColor()
+            case .power:
+                return UIColor.purpleColor()
+            case .unknown:
+                return UIColor.whiteColor()
+            }
+        }
+    }
+
     var weapon: Weapon?
     var name: String
     var overview: String?
@@ -24,6 +51,25 @@ struct WeaponModel {
 
     var accuracy: Double {
         return percentage()
+    }
+
+    var type: Type {
+        guard let typeString = weapon?.type?.lowercaseString else { return .unknown }
+
+        switch typeString {
+        case "grenade":
+            return .grenade
+        case "turret":
+            return .turret
+        case "vehicle":
+            return .vehicle
+        case "standard":
+            return .standard
+        case "power":
+            return .power
+        default:
+            return .unknown
+        }
     }
 
     static func convert(weapon: WeaponStats) -> WeaponModel? {
