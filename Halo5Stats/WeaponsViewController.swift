@@ -19,6 +19,7 @@ class WeaponsViewController: UIViewController, ParallaxScrollingTableView {
 
         setupAppearance()
         setupTableView()
+        setupBindAndFires()
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -29,10 +30,21 @@ class WeaponsViewController: UIViewController, ParallaxScrollingTableView {
 
     // MARK: Private
 
-    private func setupAppearance() {
+    private var filterButton: UIBarButtonItem {
         let filterButtonImage = UIImage(named: "Filter")?.imageWithRenderingMode(.AlwaysTemplate)
         let filterButton = UIBarButtonItem(image: filterButtonImage, style: .Plain, target: self, action: #selector(filterButtonTapped))
         filterButton.tintColor = UIColor(haloColor: .WhiteSmoke)
+        return filterButton
+    }
+
+    private func setupBindAndFires() {
+        viewModel.selectedFilter.bindAndFire { [weak self] (_) in
+            self?.viewModel.filterWeapons()
+            self?.tableView.reloadData()
+        }
+    }
+
+    private func setupAppearance() {
         navigationItem.rightBarButtonItem = filterButton
     }
 
@@ -43,7 +55,18 @@ class WeaponsViewController: UIViewController, ParallaxScrollingTableView {
     }
 
     @objc private func filterButtonTapped() {
+        let vc = StoryboardScene.Weapons.weaponsFilterViewController()
+        vc.modalPresentationStyle = .Popover
+        vc.preferredContentSize = CGSize(width: 250, height: 265)
+        vc.popoverPresentationController?.delegate = self
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        vc.delegate = self
 
+        if let option = viewModel.selectedFilter.value {
+            vc.viewModel.selectedOption.value = option
+        }
+
+        presentViewController(vc, animated: true, completion: nil)
     }
 
     private func updateVisibleCells() {
@@ -82,6 +105,12 @@ extension WeaponsViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 150
+    }
+}
+
+extension WeaponsViewController: WeaponsFilterDelegate {
+    func selectedFilter(option: WeaponsFilterViewModel.FilterOption) {
+        viewModel.selectedFilter.value = option
     }
 }
 
@@ -129,5 +158,12 @@ extension WeaponsViewController: UIScrollViewDelegate {
                 }
             }
         }
+    }
+}
+
+extension WeaponsViewController: UIPopoverPresentationControllerDelegate {
+
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
     }
 }

@@ -136,6 +136,11 @@ struct StoryboardScene {
         static func weaponStatsDetailViewController() -> WeaponStatsDetailViewController {
             return StoryboardScene.Weapons.WeaponStatsDetailViewControllerScene.viewController() as! WeaponStatsDetailViewController
         }
+
+        case WeaponsFilterViewControllerScene = "WeaponsFilterViewController"
+        static func weaponsFilterViewController() -> WeaponsFilterViewController {
+            return StoryboardScene.Weapons.WeaponsFilterViewControllerScene.viewController() as! WeaponsFilterViewController
+        }
     }
 }
 

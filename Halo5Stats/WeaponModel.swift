@@ -10,7 +10,7 @@ import UIKit
 
 struct WeaponModel {
 
-    enum Type {
+    enum WeaponType {
         case grenade
         case turret
         case vehicle
@@ -53,7 +53,7 @@ struct WeaponModel {
         return percentage()
     }
 
-    var type: Type {
+    var type: WeaponType {
         guard let typeString = weapon?.type?.lowercaseString else { return .unknown }
 
         switch typeString {
