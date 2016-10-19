@@ -105,6 +105,21 @@ class SpartansViewController: UITableViewController {
         return 25
     }
 
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        return [deleteAction]
+    }
+
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        let section = viewModel.sections.value[indexPath.section]
+
+        switch section {
+        case .Default:
+            return false
+        default:
+            return true
+        }
+    }
+
     // MARK: - Private 
 
     private func setupAppearance() {
@@ -155,6 +170,35 @@ class SpartansViewController: UITableViewController {
                 self?.viewModel.selectedSpartans.value = []
             }
         }
+    }
+
+    private var deleteAction: UITableViewRowAction {
+        let deleteAction = UITableViewRowAction(style: .Default, title: "Delete") { [weak self] (action, indexPath) in
+            guard let strongSelf = self else {
+                self?.showDeletionError()
+                return
+            }
+
+            let spartan = strongSelf.viewModel.spartan(forIndexPath: indexPath)
+            Spartan.deleteSpartan(spartan.gamertag) { [weak self] (success) in
+                if success {
+                    self?.viewModel.fetchSpartans()
+                } else {
+                    self?.showDeletionError()
+                }
+            }
+        }
+        deleteAction.backgroundColor = UIColor.redColor()
+
+        return deleteAction
+    }
+
+    private func showDeletionError() {
+        let operation = AlertOperation()
+        operation.title = "Error Deleting Spartan"
+        operation.message = "Sorry, that Spartan was not able to be deleted at this time. Please try again."
+
+        UIApplication.appController().operationQueue.addOperation(operation)
     }
 }
 

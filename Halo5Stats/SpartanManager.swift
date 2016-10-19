@@ -25,6 +25,18 @@ class SpartanManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
 
+    func deleteSpartan(gamertag: String) {
+        guard spartanIsSaved(gamertag.lowercaseString) == true else { return }
+
+        var savedSpartans = self.savedSpartans()
+        guard let index = savedSpartans.indexOf(gamertag.lowercaseString) else { return }
+
+        savedSpartans.removeAtIndex(index)
+
+        NSUserDefaults.standardUserDefaults().setValue(savedSpartans, forKey: K.savedSpartansKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+
     func spartanIsSaved(gamertag: String) -> Bool {
         let savedSpartans = self.savedSpartans()
 
