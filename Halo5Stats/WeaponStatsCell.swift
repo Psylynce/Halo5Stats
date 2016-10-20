@@ -32,7 +32,8 @@ class WeaponStatsCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        contentView.horizontalGradient(weapon.type.color, endColor: weapon.type.color.darker(0.95))
+//        contentView.horizontalGradient(weapon.type.color, endColor: weapon.type.color.darker(0.95))
+        contentView.horizontalGradient(weapon.type.color, endColor: UIColor(haloColor: .blueCharcoal))
     }
 
     private func setupAppearance() {

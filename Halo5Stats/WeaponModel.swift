@@ -21,15 +21,15 @@ struct WeaponModel {
         var color: UIColor {
             switch self {
             case .grenade:
-                return UIColor.blueColor()
+                return UIColor(haloColor: .grenades)
             case .turret:
-                return UIColor.redColor()
+                return UIColor(haloColor: .turrets)
             case .vehicle:
-                return UIColor.greenColor()
+                return UIColor(haloColor: .vehicles)
             case .standard:
-                return UIColor.brownColor()
+                return UIColor(haloColor: .standardWeapons)
             case .power:
-                return UIColor.purpleColor()
+                return UIColor(haloColor: .powerWeapons)
             case .unknown:
                 return UIColor.whiteColor()
             }
