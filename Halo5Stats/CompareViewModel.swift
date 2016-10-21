@@ -24,7 +24,7 @@ enum CompareSection {
     }
 
     var title: String {
-        return gameMode.title()
+        return gameMode.title
     }
 }
 

@@ -31,6 +31,10 @@ extension UIView {
         self.layer.insertSublayer(layer, atIndex: 0)
     }
 
+    func horizontalGradient(startColor: UIColor, endColor: UIColor) {
+        gradient(startColor: startColor, endColor: endColor, startPoint: CGPoint(x: 0.0, y: 0.0), endPoint: CGPoint(x: 1.0, y: 0.0))
+    }
+
     func verticalGradient(startColor startColor: UIColor, endColor: UIColor) {
         gradient(startColor: startColor, endColor: endColor, startPoint: CGPoint(x: 0.0, y: 0.0), endPoint: CGPoint(x: 0.0, y: 1.0))
     }

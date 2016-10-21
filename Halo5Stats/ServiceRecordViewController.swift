@@ -90,7 +90,7 @@ class ServiceRecordViewController: UITableViewController {
         switch section {
         case .TopMedalsTitle, .MostUsedWeaponTitle:
             let cell = tableView.dequeueReusableCellWithIdentifier("TitleCell", forIndexPath: indexPath) as! TitleCell
-            cell.configure(section.title().uppercaseString)
+            cell.configure(section.title.uppercaseString)
 
             return cell
         case .HighestCSR:
@@ -126,24 +126,31 @@ class ServiceRecordViewController: UITableViewController {
             cell.collectionView.userInteractionEnabled = false
 
             return cell
-        case .AllMedals:
+        case .AllMedals, .Weapons:
             let cell = tableView.dequeueReusableCellWithIdentifier("SelectionCell", forIndexPath: indexPath)
-            cell.textLabel?.text = section.title()
+            cell.textLabel?.text = section.title
 
             return cell
         }
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let section = viewModel.sections.value[indexPath.section]
 
         switch section {
         case .AllMedals, .TopMedals:
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
             guard let record = viewModel.record() else { return }
             let vc = StoryboardScene.PlayerStats.allMedalsViewController()
-            vc.title = "\(viewModel.gameMode.title()) Career Medals"
+            vc.title = "\(viewModel.gameMode.title) Career Medals"
             vc.viewModel = AllMedalsViewModel(medals: record.medals)
+
+            navigationController?.pushViewController(vc, animated: true)
+        case .Weapons:
+            guard let record = viewModel.record() else { return }
+            let vc = StoryboardScene.Weapons.weaponsViewController()
+            vc.title = "\(viewModel.gameMode.title) Weapon Stats"
+            vc.viewModel = WeaponsViewModel(weapons: record.weapons, gameMode: viewModel.gameMode)
 
             navigationController?.pushViewController(vc, animated: true)
         default:
@@ -156,9 +163,9 @@ class ServiceRecordViewController: UITableViewController {
 
         cell.backgroundColor = section.color
 
-        if section == .AllMedals {
+        if section == .AllMedals || section == .Weapons {
             let selectionView = UIView()
-            selectionView.backgroundColor = UIColor(haloColor: .Elephant).lighter()
+            selectionView.backgroundColor = section.color?.lighter()
             cell.selectedBackgroundView = selectionView
         }
     }
@@ -172,7 +179,7 @@ class ServiceRecordViewController: UITableViewController {
         let section = viewModel.sections.value[section]
 
         switch section {
-        case .MostUsedWeapon:
+        case .Weapons:
             return 30
         default:
             return 0

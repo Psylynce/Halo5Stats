@@ -53,7 +53,7 @@ class GamesCell: UITableViewCell {
 
         totalGamesLabel.text = "\(record.totalGamesCompleted)"
         gamesWonLabel.text = "\(record.totalGamesWon)"
-        gamesWonTitleLabel.textColor = gameMode.color()
+        gamesWonTitleLabel.textColor = gameMode.color
         gamesLostLabel.text = "\(record.totalGamesLost)"
         gamesTiedLabel.text = "\(record.totalGamesTied)"
     }

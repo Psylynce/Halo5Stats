@@ -67,6 +67,6 @@ class WeaponCell: UITableViewCell {
 
         weaponImageView.image(forUrl: weapon.largeIconUrl)
         percentageView.details = weapon.percentageDetails(gameMode)
-        landedTitleLabel.textColor = gameMode.color()
+        landedTitleLabel.textColor = gameMode.color
     }
 }

@@ -10,6 +10,14 @@
 		5C01E4BA1CA0AE0E00A24CE5 /* CarnageReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C01E4B91CA0AE0E00A24CE5 /* CarnageReportViewController.swift */; };
 		5C01E4BC1CA0AF3700A24CE5 /* ServiceRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C01E4BB1CA0AF3700A24CE5 /* ServiceRecordViewController.swift */; };
 		5C04764F1DAD74BF008B6706 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C04764E1DAD74BF008B6706 /* Keys.plist */; };
+		5C0476511DAFE340008B6706 /* Weapons.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C0476501DAFE340008B6706 /* Weapons.storyboard */; };
+		5C0476531DAFE396008B6706 /* WeaponsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476521DAFE396008B6706 /* WeaponsViewController.swift */; };
+		5C0476551DAFE3CB008B6706 /* WeaponsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476541DAFE3CB008B6706 /* WeaponsViewModel.swift */; };
+		5C0476571DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476561DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift */; };
+		5C0476591DAFF984008B6706 /* WeaponStatsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0476581DAFF984008B6706 /* WeaponStatsDetailViewController.swift */; };
+		5C04765B1DB01973008B6706 /* WeaponStatsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C04765A1DB01973008B6706 /* WeaponStatsCell.swift */; };
+		5C04765D1DB68F22008B6706 /* WeaponsFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C04765C1DB68F21008B6706 /* WeaponsFilterViewController.swift */; };
+		5C04765F1DB68F85008B6706 /* WeaponsFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C04765E1DB68F85008B6706 /* WeaponsFilterViewModel.swift */; };
 		5C06DECD1D1CD52200B2B4E5 /* GamertagWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C06DECC1D1CD52200B2B4E5 /* GamertagWatcher.swift */; };
 		5C0D02EA1D2322B0009377DA /* MedalListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0D02E91D2322B0009377DA /* MedalListCell.swift */; };
 		5C0EB7DD1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0EB7BB1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift */; };
@@ -259,6 +267,14 @@
 		5C01E4B91CA0AE0E00A24CE5 /* CarnageReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarnageReportViewController.swift; sourceTree = "<group>"; };
 		5C01E4BB1CA0AF3700A24CE5 /* ServiceRecordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceRecordViewController.swift; sourceTree = "<group>"; };
 		5C04764E1DAD74BF008B6706 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		5C0476501DAFE340008B6706 /* Weapons.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Weapons.storyboard; sourceTree = "<group>"; };
+		5C0476521DAFE396008B6706 /* WeaponsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponsViewController.swift; sourceTree = "<group>"; };
+		5C0476541DAFE3CB008B6706 /* WeaponsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponsViewModel.swift; sourceTree = "<group>"; };
+		5C0476561DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponStatsDetailViewModel.swift; sourceTree = "<group>"; };
+		5C0476581DAFF984008B6706 /* WeaponStatsDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponStatsDetailViewController.swift; sourceTree = "<group>"; };
+		5C04765A1DB01973008B6706 /* WeaponStatsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponStatsCell.swift; sourceTree = "<group>"; };
+		5C04765C1DB68F21008B6706 /* WeaponsFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponsFilterViewController.swift; sourceTree = "<group>"; };
+		5C04765E1DB68F85008B6706 /* WeaponsFilterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeaponsFilterViewModel.swift; sourceTree = "<group>"; };
 		5C06DECC1D1CD52200B2B4E5 /* GamertagWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GamertagWatcher.swift; sourceTree = "<group>"; };
 		5C0D02E91D2322B0009377DA /* MedalListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedalListCell.swift; sourceTree = "<group>"; };
 		5C0EB7BB1C83F57400F9DFE6 /* CSRDesignation+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CSRDesignation+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -745,6 +761,7 @@
 				5C2579A41BF92855008C5164 /* Main.storyboard */,
 				5CA1137C1CADDC6F005CB675 /* SignIn.storyboard */,
 				5C3AC25C1CCAB3F000DC72CF /* Settings.storyboard */,
+				5C0476501DAFE340008B6706 /* Weapons.storyboard */,
 			);
 			name = Storyboards;
 			sourceTree = "<group>";
@@ -771,6 +788,9 @@
 				5C01E4BB1CA0AF3700A24CE5 /* ServiceRecordViewController.swift */,
 				5CFBE4A51D21D09800C87819 /* AllMedalsViewController.swift */,
 				5CB538B21D2A024500B75241 /* MedalDetailViewController.swift */,
+				5C0476521DAFE396008B6706 /* WeaponsViewController.swift */,
+				5C0476581DAFF984008B6706 /* WeaponStatsDetailViewController.swift */,
+				5C04765C1DB68F21008B6706 /* WeaponsFilterViewController.swift */,
 			);
 			name = PlayerStats;
 			sourceTree = "<group>";
@@ -819,6 +839,9 @@
 				5CFC94981CC7E62700BDD58E /* ServiceRecordViewModel.swift */,
 				5CFBE4A71D21D0E200C87819 /* AllMedalsViewModel.swift */,
 				5CB538B61D2C6DC600B75241 /* MedalDetailViewModel.swift */,
+				5C0476541DAFE3CB008B6706 /* WeaponsViewModel.swift */,
+				5C0476561DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift */,
+				5C04765E1DB68F85008B6706 /* WeaponsFilterViewModel.swift */,
 			);
 			name = PlayerStats;
 			sourceTree = "<group>";
@@ -1179,6 +1202,7 @@
 			isa = PBXGroup;
 			children = (
 				5CFC94AE1CC8306300BDD58E /* WeaponCell.swift */,
+				5C04765A1DB01973008B6706 /* WeaponStatsCell.swift */,
 			);
 			name = PlayerStats;
 			sourceTree = "<group>";
@@ -1296,6 +1320,7 @@
 				5CFC5E321CB371C90017F3C2 /* kelson_md.otf in Resources */,
 				5CA1137D1CADDC6F005CB675 /* SignIn.storyboard in Resources */,
 				5C2579691BF8FE3A008C5164 /* LaunchScreen.storyboard in Resources */,
+				5C0476511DAFE340008B6706 /* Weapons.storyboard in Resources */,
 				5C742D331CA8CCEC001BBCD7 /* GamertagView.xib in Resources */,
 				5C2579661BF8FE3A008C5164 /* Assets.xcassets in Resources */,
 				5C2579921BF901A1008C5164 /* GameHistory.storyboard in Resources */,
@@ -1372,6 +1397,7 @@
 				5C0EB7E91C83F57400F9DFE6 /* BaseStats+CoreDataProperties.swift in Sources */,
 				5CF8C3471D32C81C00E815EA /* SelectableButton.swift in Sources */,
 				5CFC94531CC0A2D100BDD58E /* MatchPlayerModel.swift in Sources */,
+				5C04765F1DB68F85008B6706 /* WeaponsFilterViewModel.swift in Sources */,
 				5C161BFB1C8D2E8600D4B946 /* NSPredicate+Extensions.swift in Sources */,
 				5CEC3B161CD9585200BE386C /* FavoritesManager.swift in Sources */,
 				5C15AAEC1C210891007F84DB /* OperationQueue.swift in Sources */,
@@ -1384,6 +1410,7 @@
 				5CBEC7AB1D3206E2005C7E34 /* SectionHeaderView.swift in Sources */,
 				5CE2541A1CBAFDE4009720F2 /* ImageCell.swift in Sources */,
 				5C0EB7E01C83F57400F9DFE6 /* TeamColor.swift in Sources */,
+				5C0476591DAFF984008B6706 /* WeaponStatsDetailViewController.swift in Sources */,
 				5C960EA11C65A2DB00178AB1 /* ParseRequestOperation.swift in Sources */,
 				5C15AAE91C210891007F84DB /* OperationCondition.swift in Sources */,
 				5C38D8701C9236D500BEECF5 /* CSRTier.swift in Sources */,
@@ -1411,6 +1438,7 @@
 				5C5B12F71CB604A80016E914 /* DateFormatter.swift in Sources */,
 				5C0EB7F11C83F57400F9DFE6 /* Season+CoreDataProperties.swift in Sources */,
 				5CDE5DF71D4AFA9D0044D341 /* KeyboardController.swift in Sources */,
+				5C0476551DAFE3CB008B6706 /* WeaponsViewModel.swift in Sources */,
 				5CA113861CAE4040005CB675 /* ProfileService.swift in Sources */,
 				5C15AAF11C210891007F84DB /* SilentCondition.swift in Sources */,
 				5C3779C11C8FC70D00A9AFF5 /* NSNumber+Extensions.swift in Sources */,
@@ -1422,8 +1450,10 @@
 				5CF8C3571D34AE1600E815EA /* SettingsCell.swift in Sources */,
 				5C3AC25F1CCE74E900DC72CF /* PercentageCircleView.swift in Sources */,
 				5CA221271CB475460006A795 /* Dynamic.swift in Sources */,
+				5C04765B1DB01973008B6706 /* WeaponStatsCell.swift in Sources */,
 				5CFC946B1CC2AF8E00BDD58E /* MedalAward+CoreDataProperties.swift in Sources */,
 				5C960E9F1C65A0E100178AB1 /* DownloadRequestOperation.swift in Sources */,
+				5C0476571DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift in Sources */,
 				5C7224A21D048AEF0093E556 /* VideoViewController.swift in Sources */,
 				5CEC3B1A1CDC00C700BE386C /* CompareViewModel.swift in Sources */,
 				5CFC946D1CC2AF8E00BDD58E /* EnemyKill+CoreDataProperties.swift in Sources */,
@@ -1524,6 +1554,7 @@
 				5CDE5DE81D45C2A90044D341 /* WeaponCellModel.swift in Sources */,
 				5C3AC2611CCEAEA100DC72CF /* DurationFormatter.swift in Sources */,
 				5C3AC2671CCFE6EC00DC72CF /* SpartanModel.swift in Sources */,
+				5C0476531DAFE396008B6706 /* WeaponsViewController.swift in Sources */,
 				5C960EA61C65ACA500178AB1 /* ServiceRecordRequest.swift in Sources */,
 				5C0EB7FB1C83F57400F9DFE6 /* Map+CoreDataProperties.swift in Sources */,
 				5C3AC25B1CCAB39100DC72CF /* SettingsViewController.swift in Sources */,
@@ -1534,6 +1565,7 @@
 				5C0EB7E31C83F57400F9DFE6 /* Playlist+CoreDataProperties.swift in Sources */,
 				5CFC94B31CC944D500BDD58E /* MedalCellModel.swift in Sources */,
 				5C3009541D1E373100B50B88 /* CSRModel.swift in Sources */,
+				5C04765D1DB68F22008B6706 /* WeaponsFilterViewController.swift in Sources */,
 				5CFC945E1CC17C9900BDD58E /* ApplicationViewModel.swift in Sources */,
 				5C38D87C1C93EF9D00BEECF5 /* MatchesRequest.swift in Sources */,
 				5C960E7B1C59D54000178AB1 /* NSURLSessionExtension.swift in Sources */,

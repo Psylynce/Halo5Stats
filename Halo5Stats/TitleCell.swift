@@ -28,7 +28,7 @@ class TitleCell: UITableViewCell {
         titleLabel.text = text
 
         if let mode = gameMode {
-            titleLabel.textColor = mode.color()
+            titleLabel.textColor = mode.color
         }
     }
 }

@@ -46,6 +46,13 @@ extension UIColor {
         case Elephant = "22353c"
         case Bismark = "446A78"
         case SpringGreen = "00ff90"
+        case blueCharcoal = "282c33"
+        case standardWeapons = "273744"
+        case powerWeapons = "2e3e42"
+        case vehicles = "26292f"
+        case grenades = "3c3e41"
+        case turrets = "353031"
+        case unknown = "2f2e39"
     }
 
     func lighter(amount: CGFloat = 0.25) -> UIColor {
