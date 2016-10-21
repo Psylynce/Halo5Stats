@@ -9,12 +9,27 @@ import UIKit
 
 struct CSRModel {
 
+    enum CSRType: String {
+        case bronze = "bronze"
+        case silver = "silver"
+        case gold = "gold"
+        case platinum = "platinum"
+        case diamond = "diamond"
+        case onyx = "onyx"
+        case champion = "champion"
+        case unknown = ""
+    }
+
     var name: String
     var csr: Int
     var tier: Int
     var rank: Int?
     var designationId: Int
     var csrImageUrl: NSURL
+
+    var type: CSRType {
+        return CSRType(rawValue: name.lowercaseString) ?? .unknown
+    }
 
     static func convert(csr: AttainedCSR) -> CSRModel? {
         guard let designationId = csr.designationId as? Int else { return nil }
