@@ -42,6 +42,18 @@ class FavoritesManager {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
 
+    func deleteSpartan(gamertag: String) {
+        guard isFavorite(gamertag) else { return }
+
+        var favorites = self.favorites()
+        guard let index = favorites.indexOf(gamertag) else { return }
+
+        favorites.removeAtIndex(index)
+
+        NSUserDefaults.standardUserDefaults().setObject(favorites, forKey: K.favoritesKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+
     func isFavorite(gamertag: String) -> Bool {
         let favorites = self.favorites()
 

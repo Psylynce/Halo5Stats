@@ -41,6 +41,19 @@ class Spartan: NSManagedObject {
         self.displayGamertag = gamertag
     }
 
+    static func deleteSpartan(gamertag: String, context: NSManagedObjectContext = UIApplication.appController().managedObjectContext(), completion: (success: Bool) -> Void) {
+        guard let spartan = Spartan.spartan(gamertag) else {
+            completion(success: false)
+            return
+        }
+
+        context.deleteObject(spartan)
+        SpartanManager.sharedManager.deleteSpartan(gamertag)
+        FavoritesManager.sharedManager.deleteSpartan(gamertag)
+        completion(success: true)
+        UIApplication.appController().persistenceController.save()
+    }
+
     static func spartan(gamertag: String) -> Spartan? {
         let context = UIApplication.appController().managedObjectContext()
         let predicate = NSPredicate.predicate(withGamertag: gamertag.lowercaseString)
