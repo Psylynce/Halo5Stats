@@ -51,6 +51,7 @@ class Spartan: NSManagedObject {
         SpartanManager.sharedManager.deleteSpartan(gamertag)
         FavoritesManager.sharedManager.deleteSpartan(gamertag)
         completion(success: true)
+        UIApplication.appController().persistenceController.save()
     }
 
     static func spartan(gamertag: String) -> Spartan? {
