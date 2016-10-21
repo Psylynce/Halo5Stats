@@ -31,7 +31,24 @@ struct WeaponModel {
             case .power:
                 return UIColor(haloColor: .powerWeapons)
             case .unknown:
-                return UIColor.whiteColor()
+                return UIColor(haloColor: .unknown)
+            }
+        }
+
+        var image: UIImage {
+            switch self {
+            case .grenade:
+                return UIImage(named: "grenades")!
+            case .turret:
+                return UIImage(named: "turrets")!
+            case .vehicle:
+                return UIImage(named: "vehicles")!
+            case .standard:
+                return UIImage(named: "standardWeapons")!
+            case .power:
+                return UIImage(named: "powerWeapons")!
+            case .unknown:
+                return UIImage(named: "unknown")!
             }
         }
     }

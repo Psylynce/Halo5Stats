@@ -52,6 +52,7 @@ extension UIColor {
         case vehicles = "26292f"
         case grenades = "3c3e41"
         case turrets = "353031"
+        case unknown = "2f2e39"
     }
 
     func lighter(amount: CGFloat = 0.25) -> UIColor {

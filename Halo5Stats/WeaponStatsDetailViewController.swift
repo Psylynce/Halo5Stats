@@ -9,6 +9,7 @@ import UIKit
 
 class WeaponStatsDetailViewController: UIViewController {
 
+    @IBOutlet var backgroundImageView: UIImageView!
     @IBOutlet var weaponImageView: UIImageView!
     @IBOutlet var weaponNameLabel: UILabel!
     @IBOutlet var weaponNameUnderlineView: UIView!
@@ -44,6 +45,7 @@ class WeaponStatsDetailViewController: UIViewController {
 
     private func setupAppearance() {
         view.verticalGradient(startColor: viewModel.weapon.type.color.darker(), endColor: UIColor(haloColor: .Cinder))
+        backgroundImageView.image = viewModel.weapon.type.image
 
         weaponNameLabel.font = UIFont.kelson(.Regular, size: 24)
         weaponNameLabel.textColor = UIColor(haloColor: .WhiteSmoke)

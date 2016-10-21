@@ -57,7 +57,7 @@ class WeaponsViewController: UIViewController, ParallaxScrollingTableView {
     @objc private func filterButtonTapped() {
         let vc = StoryboardScene.Weapons.weaponsFilterViewController()
         vc.modalPresentationStyle = .Popover
-        vc.preferredContentSize = CGSize(width: 250, height: 265)
+        vc.preferredContentSize = CGSize(width: 250, height: 308)
         vc.popoverPresentationController?.delegate = self
         vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         vc.delegate = self

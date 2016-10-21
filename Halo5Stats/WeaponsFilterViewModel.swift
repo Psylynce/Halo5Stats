@@ -16,6 +16,7 @@ class WeaponsFilterViewModel {
         case vehicle = "Vehicles"
         case grenade = "Grenades"
         case turret = "Turrets"
+        case unknown = "Other Weapons"
 
         var weaponType: WeaponModel.WeaponType {
             switch self {
@@ -31,10 +32,12 @@ class WeaponsFilterViewModel {
                 return .grenade
             case .turret:
                 return .turret
+            case .unknown:
+                return .unknown
             }
         }
     }
 
-    var options: [FilterOption] = [.all, .standard, .power, .vehicle, .grenade, .turret]
+    var options: [FilterOption] = [.all, .standard, .power, .vehicle, .grenade, .turret, .unknown]
     var selectedOption: Dynamic<FilterOption> = Dynamic(.all)
 }
