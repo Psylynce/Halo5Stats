@@ -60,7 +60,7 @@ struct APIConstants {
             }
         }
 
-        func color() -> UIColor {
+        var color: UIColor {
             switch self {
             case .Arena:
                 return UIColor(haloColor: .ArenaAccent)
@@ -71,7 +71,7 @@ struct APIConstants {
             }
         }
 
-        func title() -> String {
+        var title: String {
             switch self {
             case .Arena:
                 return "Arena"

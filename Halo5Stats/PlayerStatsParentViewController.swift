@@ -140,7 +140,7 @@ class PlayerStatsParentViewController: UIViewController {
         }
 
         if let vc = viewControllers[currentIndex] as? ServiceRecordViewController {
-            spartanImageView.updateBorderColor(with: vc.viewModel.gameMode.color())
+            spartanImageView.updateBorderColor(with: vc.viewModel.gameMode.color)
             headerImageView.image = vc.viewModel.gameMode.image
         }
 
@@ -165,7 +165,7 @@ class PlayerStatsParentViewController: UIViewController {
 
     private func setupSlider() {
         guard let vc = viewControllers[currentIndex] as? ServiceRecordViewController else { return }
-        sliderView.backgroundColor = vc.viewModel.gameMode.color()
+        sliderView.backgroundColor = vc.viewModel.gameMode.color
     }
 
     @IBAction func arenaButtonTapped(sender: UIButton) {
@@ -200,7 +200,7 @@ class PlayerStatsParentViewController: UIViewController {
     private func animateHeader() {
         guard let vc = viewControllers[currentIndex] as? ServiceRecordViewController else { return }
 
-        spartanImageView.updateBorderColor(with: vc.viewModel.gameMode.color())
+        spartanImageView.updateBorderColor(with: vc.viewModel.gameMode.color)
         UIView.transitionWithView(headerImageView, duration: 0.3, options: [.TransitionCrossDissolve, .CurveEaseInOut], animations: { [weak self] in
             self?.headerImageView.image = vc.viewModel.gameMode.image
             }, completion: nil)
@@ -208,7 +208,7 @@ class PlayerStatsParentViewController: UIViewController {
         sliderViewLeadingConstraint.constant = CGFloat(currentIndex) * sliderView.bounds.width
 
         UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
-            self.sliderView.backgroundColor = vc.viewModel.gameMode.color()
+            self.sliderView.backgroundColor = vc.viewModel.gameMode.color
             self.view.layoutIfNeeded()
             }, completion: nil)
     }

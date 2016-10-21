@@ -125,6 +125,23 @@ struct StoryboardScene {
             return StoryboardScene.Settings.initialViewController() as! SettingsViewController
         }
     }
+    enum Weapons: String, StoryboardSceneType {
+        static let storyboardName = "Weapons"
+
+        static func weaponsViewController() -> WeaponsViewController {
+            return StoryboardScene.Weapons.initialViewController() as! WeaponsViewController
+        }
+
+        case WeaponStatsDetailViewControllerScene = "WeaponStatsDetailViewController"
+        static func weaponStatsDetailViewController() -> WeaponStatsDetailViewController {
+            return StoryboardScene.Weapons.WeaponStatsDetailViewControllerScene.viewController() as! WeaponStatsDetailViewController
+        }
+
+        case WeaponsFilterViewControllerScene = "WeaponsFilterViewController"
+        static func weaponsFilterViewController() -> WeaponsFilterViewController {
+            return StoryboardScene.Weapons.WeaponsFilterViewControllerScene.viewController() as! WeaponsFilterViewController
+        }
+    }
 }
 
 struct StoryboardSegue {

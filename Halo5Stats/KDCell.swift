@@ -58,11 +58,11 @@ class KDCell: UITableViewCell {
 
     func configure(stats: StatsModel, gameMode: GameMode, gamesCompleted: Int) {
         titleLabels.forEach {
-            $0.textColor = gameMode.color()
+            $0.textColor = gameMode.color
         }
 
         secondaryTitleLabels.forEach {
-            $0.textColor = gameMode.color()
+            $0.textColor = gameMode.color
         }
 
         kdLabel.text = "\(stats.killDeathRatio())"

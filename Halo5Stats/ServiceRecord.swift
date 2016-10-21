@@ -110,8 +110,8 @@ extension ServiceRecord: ManagedObjectTypeProtocol {
 
                 if let identifier = weaponId[JSONKeys.WeaponStats.identifier] as? UInt {
                     let stringID = "\(identifier)"
-                    if let weapon = self.weaponStats(forIdentifier: stringID) {
-                        weapon.update(withData: weapon, context: context)
+                    if let coreWeapon = self.weaponStats(forIdentifier: stringID) {
+                        coreWeapon.update(withData: weapon, context: context)
                     } else {
                         let newWeapon: WeaponStats = context.insertObject()
                         newWeapon.update(withData: weapon, context: context)
