@@ -11,7 +11,7 @@ struct ProfileService {
 
     static let spartanHeadRect = CGRect(x: 75, y: 15, width: 250, height: 250)
 
-    static func emblemUrl(forGamertag gamertag: String) -> NSURL {
+    static func emblemUrl(forGamertag gamertag: String) -> URL {
         let emblemSubs = [
             APIConstants.GamertagKey : gamertag,
             APIConstants.ProfileTypeKey : APIConstants.emblem
@@ -19,7 +19,7 @@ struct ProfileService {
         let emblemEndpoint = Endpoint(service: APIConstants.ProfileService, path: APIConstants.Profile)
         let emblemUrl = emblemEndpoint.url(withSubstitutions: emblemSubs)
 
-        return emblemUrl
+        return emblemUrl as URL
     }
 
     enum SpartanImageCropStyle: String {
@@ -27,7 +27,7 @@ struct ProfileService {
         case full = "full"
     }
 
-    static func spartanImageUrl(forGamertag gamertag: String, size: String = "256", crop: SpartanImageCropStyle = .full) -> NSURL {
+    static func spartanImageUrl(forGamertag gamertag: String, size: String = "256", crop: SpartanImageCropStyle = .full) -> URL {
         let spartanImageSubs = [
             APIConstants.GamertagKey : gamertag,
             APIConstants.ProfileTypeKey : APIConstants.spartan
@@ -39,7 +39,7 @@ struct ProfileService {
         let spartanImageEndpoint = Endpoint(service: APIConstants.ProfileService, path: APIConstants.Profile, parameters: params)
         let spartanImageUrl = spartanImageEndpoint.url(withSubstitutions: spartanImageSubs)
 
-        return spartanImageUrl
+        return spartanImageUrl as URL
     }
 }
 

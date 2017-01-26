@@ -21,7 +21,7 @@ extension Season: ManagedObjectTypeProtocol {
         return "Season"
     }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
         guard let seasons = data[JSONKeys.Season.seasons] as? [AnyObject] else { return }
 
         for season in seasons {
@@ -36,7 +36,7 @@ extension Season: ManagedObjectTypeProtocol {
                 $0.name = season[JSONKeys.name] as? String
                 $0.startDate = season[JSONKeys.Season.startDate] as? String
                 $0.endDate = season[JSONKeys.Season.endDate] as? String
-                $0.isActive = season[JSONKeys.Season.isActive] as? Bool
+                $0.isActive = season[JSONKeys.Season.isActive] as? Bool as NSNumber?
                 $0.iconUrl = season[JSONKeys.iconUrl] as? String
                 $0.identifier = identifier
 
@@ -56,8 +56,8 @@ extension Season: ManagedObjectTypeProtocol {
                             $0.overview = playlist[JSONKeys.overview] as? String
                             $0.gameMode = playlist[JSONKeys.Playlist.gameMode] as? String
                             $0.imageUrl = playlist[JSONKeys.imageUrl] as? String
-                            $0.isActive = playlist[JSONKeys.Playlist.isActive] as? Bool
-                            $0.isRanked = playlist[JSONKeys.Playlist.isRanked] as? Bool
+                            $0.isActive = playlist[JSONKeys.Playlist.isActive] as? Bool as NSNumber?
+                            $0.isRanked = playlist[JSONKeys.Playlist.isRanked] as? Bool as NSNumber?
                             $0.identifier = playlistIdentifier
 
                             playlists += [$0]

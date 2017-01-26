@@ -21,7 +21,7 @@ extension OpponentDetail: ManagedObjectTypeProtocol {
 
     func update(withData data: AnyObject, context: NSManagedObjectContext) {
         gamertag = data[JSONKeys.OpponentDetail.gamertag] as? String
-        killCount = data[JSONKeys.OpponentDetail.totalKills] as? Int
+        killCount = data[JSONKeys.OpponentDetail.totalKills] as? Int as NSNumber?
 
         if let gt = gamertag {
             emblemUrl = ProfileService.emblemUrl(forGamertag: gt).absoluteString

@@ -134,7 +134,7 @@ struct APIConstants {
     static let ProfileSpartanCrop = "crop"
     
     // MARK: - Base Path constructor
-    static func basePath(service: String) -> String {
+    static func basePath(_ service: String) -> String {
         return "\(service)/\(Halo5Title)/"
     }
     

@@ -22,11 +22,11 @@ struct CarnageReportRequest: RequestProtocol {
         return "\(matchId)_CarnageReport"
     }
 
-    var url: NSURL {
+    var url: URL {
         let endpoint = Endpoint(service: APIConstants.StatsService, path: path)
         let url = endpoint.url()
 
-        return url
+        return url as URL
     }
 
     var cacheKey: String {
@@ -41,22 +41,22 @@ struct CarnageReportRequest: RequestProtocol {
 
     // MARK: Private
 
-    private static func parseCarnageReport() -> ((name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void) {
-        func parse(name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void {
-            let matchId = name.componentsSeparatedByString("_")[0]
+    fileprivate static func parseCarnageReport() -> ((_ name: String, _ context: NSManagedObjectContext, _ data: [String : AnyObject]) -> Void) {
+        func parse(_ name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void {
+            let matchId = name.components(separatedBy: "_")[0]
             CarnageReport.parse(data, matchId: matchId, context: context)
         }
 
         return parse
     }
 
-    private var matchId: String {
-        let pathArray = path.componentsSeparatedByString("/")
+    fileprivate var matchId: String {
+        let pathArray = path.components(separatedBy: "/")
 
         if pathArray.count == 3 {
             return pathArray[2]
         } else {
-            return path.stringByReplacingOccurrencesOfString("/", withString: "_")
+            return path.replacingOccurrences(of: "/", with: "_")
         }
     }
 }

@@ -25,14 +25,14 @@ class GameHistoryCell: UITableViewCell {
 
     let placeholder = UIImage(named: "MapPlaceholder")
 
-    func configure(match: MatchModel) {
+    func configure(_ match: MatchModel) {
         if let gameTypeImageUrl = match.gameTypeIconUrl {
-            gameTypeImageView.tintedImage(forUrl: gameTypeImageUrl, color: UIColor.whiteColor())
+            gameTypeImageView.tintedImage(forUrl: gameTypeImageUrl, color: UIColor.white)
         }
 
         mapImageView.image(forUrl: match.mapImageUrl)
 
-        gameTypeLabel.text = match.gameType.uppercaseString
+        gameTypeLabel.text = match.gameType.uppercased()
         gameTypeLabel.textColor = match.gameMode?.color
         mapNameLabel.text = match.mapName
         dateLabel.text = DateFormatter.string(fromDate: match.date, format: .MonthDayYear)
@@ -47,9 +47,9 @@ class GameHistoryCell: UITableViewCell {
         super.awakeFromNib()
 
         clipsToBounds = true
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
-        imageView?.backgroundColor = UIColor.clearColor()
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
+        imageView?.backgroundColor = UIColor.clear
         
         setupInitialPosition()
         let white = UIColor(haloColor: .WhiteSmoke)
@@ -68,7 +68,7 @@ class GameHistoryCell: UITableViewCell {
         
         mapNameLabel.font = UIFont.kelson(.Light, size: 24)
         mapNameLabel.textColor = white
-        selectionStyle = .None
+        selectionStyle = .none
     }
 
     override func prepareForReuse() {

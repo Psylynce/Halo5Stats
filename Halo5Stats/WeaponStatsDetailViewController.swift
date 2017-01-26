@@ -31,19 +31,19 @@ class WeaponStatsDetailViewController: UIViewController {
         setupData()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         navigationController?.presentTransparentNavigationBar()
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         navigationController?.hideTransparentNavigationBar()
     }
 
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         view.verticalGradient(startColor: viewModel.weapon.type.color.darker(), endColor: UIColor(haloColor: .Cinder))
         backgroundImageView.image = viewModel.weapon.type.image
 
@@ -73,7 +73,7 @@ class WeaponStatsDetailViewController: UIViewController {
         subHeaderLabels.forEach {
             $0.font = UIFont.kelson(.Light, size: 14)
             $0.textColor = UIColor(haloColor: .WhiteSmoke)
-            $0.text = $0.text?.uppercaseString
+            $0.text = $0.text?.uppercased()
         }
 
         subHeaderUnderlineViews.forEach {
@@ -83,7 +83,7 @@ class WeaponStatsDetailViewController: UIViewController {
         hideBackButtonTitle()
     }
 
-    private func setupData() {
+    fileprivate func setupData() {
         weaponNameLabel.text = viewModel.weapon.name
         weaponDescriptionLabel.text = viewModel.weapon.overview
         killsLabel.text = "\(viewModel.weapon.kills)"

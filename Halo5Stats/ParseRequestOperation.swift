@@ -12,11 +12,11 @@ import CoreData
 class ParseRequestOperation: Operation {
     
     let request: RequestProtocol
-    let cacheFile: NSURL
+    let cacheFile: URL
     
     // MARK: Initialization
     
-    init(request: RequestProtocol, cacheFile: NSURL) {
+    init(request: RequestProtocol, cacheFile: URL) {
         self.request = request
         self.cacheFile = cacheFile
         super.init()
@@ -24,7 +24,7 @@ class ParseRequestOperation: Operation {
     }
     
     override func execute() {
-        guard let stream = NSInputStream(URL: cacheFile) else {
+        guard let stream = InputStream(url: cacheFile) else {
             finish()
             return
         }
@@ -36,7 +36,7 @@ class ParseRequestOperation: Operation {
         }
         
         do {
-            let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: [])
+            let json = try JSONSerialization.jsonObject(with: stream, options: [])
             let jsonDict = FileManager.sharedManager.ensureJSONDict(json, key: request.jsonKey)
             parse(jsonDict)
         }
@@ -47,15 +47,15 @@ class ParseRequestOperation: Operation {
     
     // MARK: Private
 
-    private func parse(data: [String : AnyObject]) {
+    fileprivate func parse(_ data: [String : AnyObject]) {
         let controller = UIApplication.appController().persistenceController
-        let context = controller.createChildContext()
+        let context = controller?.createChildContext()
         
-        context.performBlock {
-            self.request.parseBlock(name: self.request.name, context: context, data: data)
+        context?.perform {
+            self.request.parseBlock(self.request.name, context!, data)
             
-            controller.saveChildContext(context)
-            controller.save()
+            controller?.saveChildContext(context)
+            controller?.save()
             
             self.finish()
         }

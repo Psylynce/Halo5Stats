@@ -46,29 +46,29 @@ class PlayerStatsParentViewController: UIViewController {
         setupAppearance()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         setupHeader()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         navigationController?.presentTransparentNavigationBar()
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         navigationController?.hideTransparentNavigationBar()
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        guard let id = segue.identifier, statsSegue = StoryboardSegue.PlayerStats(rawValue: id) else { return }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let id = segue.identifier, let statsSegue = StoryboardSegue.PlayerStats(rawValue: id) else { return }
         switch statsSegue {
         case .EmbedServiceRecord:
-            pageViewController = segue.destinationViewController as! UIPageViewController
+            pageViewController = segue.destination as! UIPageViewController
         }
     }
 
@@ -81,14 +81,14 @@ class PlayerStatsParentViewController: UIViewController {
     lazy var arenaServiceRecordViewController = StoryboardScene.PlayerStats.serviceRecordTableViewController()
     lazy var warzoneServiceRecordViewController = StoryboardScene.PlayerStats.serviceRecordTableViewController()
     lazy var customServiceRecordViewController = StoryboardScene.PlayerStats.serviceRecordTableViewController()
-    private var viewControllers: [UIViewController] = []
-    private var currentIndex: Int = 0 {
+    fileprivate var viewControllers: [UIViewController] = []
+    fileprivate var currentIndex: Int = 0 {
         didSet {
             animateHeader()
         }
     }
 
-    private func setupPageViewController() {
+    fileprivate func setupPageViewController() {
         pageViewController.view.backgroundColor = UIColor(haloColor: .Cinder)
         pageViewController.delegate = self
         pageViewController.dataSource = self
@@ -102,7 +102,7 @@ class PlayerStatsParentViewController: UIViewController {
         customServiceRecordViewController.delegate = self
 
         viewControllers = [arenaServiceRecordViewController, warzoneServiceRecordViewController, customServiceRecordViewController]
-        pageViewController.setViewControllers([viewControllers[0]], direction: .Forward, animated: true) { (_) in }
+        pageViewController.setViewControllers([viewControllers[0]], direction: .forward, animated: true) { (_) in }
     }
 
     // MARK: - PlayerStatsParentViewController
@@ -110,24 +110,24 @@ class PlayerStatsParentViewController: UIViewController {
     var pageViewController: UIPageViewController!
     var viewModel = PlayerStatsParentViewModel()
 
-    private var shouldShrinkHeader: Bool = true
-    private var effectView: UIVisualEffectView = {
-        let blur = UIBlurEffect(style: .Dark)
+    fileprivate var shouldShrinkHeader: Bool = true
+    fileprivate var effectView: UIVisualEffectView = {
+        let blur = UIBlurEffect(style: .dark)
         let effectView = UIVisualEffectView(effect: blur)
         effectView.alpha = K.defaultBlurAlpha
 
         return effectView
     }()
 
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         setupPageViewController()
         setupButtons()
         setupSlider()
         setupHeader()
     }
 
-    private func setupHeader() {
-        headerImageView.contentMode = .ScaleAspectFill
+    fileprivate func setupHeader() {
+        headerImageView.contentMode = .scaleAspectFill
         effectView.frame = view.bounds
         headerImageView.addSubview(effectView)
 
@@ -152,83 +152,83 @@ class PlayerStatsParentViewController: UIViewController {
         hideBackButtonTitle()
     }
 
-    private func setupButtons() {
+    fileprivate func setupButtons() {
         buttons.forEach {
-            $0.setTitleColor(UIColor(haloColor: .WhiteSmoke), forState: .Normal)
+            $0.setTitleColor(UIColor(haloColor: .WhiteSmoke), for: UIControlState())
             $0.titleLabel?.font = UIFont.kelson(.Regular, size: 18.0)
         }
 
-        arenaButton.setTitle("Arena", forState: .Normal)
-        warzoneButton.setTitle("Warzone", forState: .Normal)
-        customButton.setTitle("Custom", forState: .Normal)
+        arenaButton.setTitle("Arena", for: UIControlState())
+        warzoneButton.setTitle("Warzone", for: UIControlState())
+        customButton.setTitle("Custom", for: UIControlState())
     }
 
-    private func setupSlider() {
+    fileprivate func setupSlider() {
         guard let vc = viewControllers[currentIndex] as? ServiceRecordViewController else { return }
         sliderView.backgroundColor = vc.viewModel.gameMode.color
     }
 
-    @IBAction func arenaButtonTapped(sender: UIButton) {
+    @IBAction func arenaButtonTapped(_ sender: UIButton) {
         if currentIndex == 1 {
-            pageViewController.setViewControllers([viewControllers[0]], direction: .Reverse, animated: true, completion: nil)
+            pageViewController.setViewControllers([viewControllers[0]], direction: .reverse, animated: true, completion: nil)
         } else if currentIndex == 2 {
-            pageViewController.setViewControllers([viewControllers[1]], direction: .Reverse, animated: true, completion: nil)
-            pageViewController.setViewControllers([viewControllers[0]], direction: .Reverse, animated: true, completion: nil)
+            pageViewController.setViewControllers([viewControllers[1]], direction: .reverse, animated: true, completion: nil)
+            pageViewController.setViewControllers([viewControllers[0]], direction: .reverse, animated: true, completion: nil)
         }
         currentIndex = 0
     }
 
-    @IBAction func warzoneButtonTapped(sender: UIButton) {
+    @IBAction func warzoneButtonTapped(_ sender: UIButton) {
         if currentIndex == 0 {
-            pageViewController.setViewControllers([viewControllers[1]], direction: .Forward, animated: true, completion: nil)
+            pageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true, completion: nil)
         } else if currentIndex == 2 {
-            pageViewController.setViewControllers([viewControllers[1]], direction: .Reverse, animated: true, completion: nil)
+            pageViewController.setViewControllers([viewControllers[1]], direction: .reverse, animated: true, completion: nil)
         }
         currentIndex = 1
     }
 
-    @IBAction func customButtonTapped(sender: UIButton) {
+    @IBAction func customButtonTapped(_ sender: UIButton) {
         if currentIndex == 0 {
-            pageViewController.setViewControllers([viewControllers[1]], direction: .Forward, animated: true, completion: nil)
-            pageViewController.setViewControllers([viewControllers[2]], direction: .Forward, animated: true, completion: nil)
+            pageViewController.setViewControllers([viewControllers[1]], direction: .forward, animated: true, completion: nil)
+            pageViewController.setViewControllers([viewControllers[2]], direction: .forward, animated: true, completion: nil)
         } else if currentIndex == 1 {
-            pageViewController.setViewControllers([viewControllers[2]], direction: .Forward, animated: true, completion: nil)
+            pageViewController.setViewControllers([viewControllers[2]], direction: .forward, animated: true, completion: nil)
         }
         currentIndex = 2
     }
 
-    private func animateHeader() {
+    fileprivate func animateHeader() {
         guard let vc = viewControllers[currentIndex] as? ServiceRecordViewController else { return }
 
         spartanImageView.updateBorderColor(with: vc.viewModel.gameMode.color)
-        UIView.transitionWithView(headerImageView, duration: 0.3, options: [.TransitionCrossDissolve, .CurveEaseInOut], animations: { [weak self] in
+        UIView.transition(with: headerImageView, duration: 0.3, options: .transitionCrossDissolve, animations: { [weak self] in
             self?.headerImageView.image = vc.viewModel.gameMode.image
             }, completion: nil)
 
         sliderViewLeadingConstraint.constant = CGFloat(currentIndex) * sliderView.bounds.width
 
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.sliderView.backgroundColor = vc.viewModel.gameMode.color
             self.view.layoutIfNeeded()
             }, completion: nil)
     }
 
-    private func shrinkHeaderView() {
+    fileprivate func shrinkHeaderView() {
         headerViewHeightConstraint.constant = K.shrunkenHeaderHeight
         spartanImageViewTopConstraint.constant = K.shrunkenSpartanImageViewTop
 
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.effectView.alpha = K.shrunkenBlurAlpha
             self.spartanImageView.layer.transform = CATransform3DMakeScale(0, 0, 0)
             self.view.layoutIfNeeded()
             }, completion: nil)
     }
 
-    private func expandHeaderView() {
+    fileprivate func expandHeaderView() {
         headerViewHeightConstraint.constant = K.defaultHeaderHeight
         spartanImageViewTopConstraint.constant = K.defaultSpartanImageViewTop
 
-        UIView.animateWithDuration(0.3, delay: 0, options: .CurveEaseInOut, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions(), animations: {
             self.effectView.alpha = K.defaultBlurAlpha
             self.spartanImageView.layer.transform = CATransform3DMakeScale(1, 1, 0)
             self.view.layoutIfNeeded()
@@ -238,8 +238,8 @@ class PlayerStatsParentViewController: UIViewController {
 
 extension PlayerStatsParentViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
 
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        guard var index = viewControllers.indexOf(viewController) else { return nil }
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        guard var index = viewControllers.index(of: viewController) else { return nil }
 
         index += 1
         if index >= viewControllers.count {
@@ -249,8 +249,8 @@ extension PlayerStatsParentViewController: UIPageViewControllerDelegate, UIPageV
         return viewControllers[index]
     }
 
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        guard var index = viewControllers.indexOf(viewController) else { return nil }
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        guard var index = viewControllers.index(of: viewController) else { return nil }
 
         if index <= 0 {
             return nil
@@ -260,15 +260,15 @@ extension PlayerStatsParentViewController: UIPageViewControllerDelegate, UIPageV
         return viewControllers[index]
     }
 
-    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         guard let currentViewController = pageViewController.viewControllers?.last else { return }
-        currentIndex = viewControllers.indexOf(currentViewController)!
+        currentIndex = viewControllers.index(of: currentViewController)!
     }
 }
 
 extension PlayerStatsParentViewController: ServiceRecordScrollViewDelegate {
 
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset.y
         
         if offset > 0 && shouldShrinkHeader {
@@ -283,10 +283,10 @@ extension PlayerStatsParentViewController: ServiceRecordScrollViewDelegate {
 
 extension PlayerStatsParentViewController: GamertagWatcher {
 
-    func defaultGamertagChanged(notification: NSNotification) {
+    func defaultGamertagChanged(_ notification: Notification) {
         viewModel = PlayerStatsParentViewModel()
         currentIndex = 0
-        navigationController?.popToRootViewControllerAnimated(false)
+        _ = navigationController?.popToRootViewController(animated: false)
         setupAppearance()
     }
 }

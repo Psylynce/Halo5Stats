@@ -8,16 +8,16 @@
 import UIKit
 
 @objc protocol GamertagWatcher {
-    func defaultGamertagChanged(notification: NSNotification)
+    func defaultGamertagChanged(_ notification: Notification)
 }
 
 extension GamertagWatcher where Self: UIViewController {
 
     func addGamertagWatcher() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(defaultGamertagChanged(_:)), name: GamertagManager.K.notificationName, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(defaultGamertagChanged(_:)), name: NSNotification.Name(rawValue: GamertagManager.K.notificationName), object: nil)
     }
 
     func removeGamertagWatcher() {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }

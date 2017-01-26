@@ -13,7 +13,7 @@ struct TeamModel {
     var identifier: Int
     var teamColor: TeamColor?
 
-    static func teams(match: Match) -> [TeamModel] {
+    static func teams(_ match: Match) -> [TeamModel] {
         guard let teams = match.teams?.allObjects as? [Team] else { return [] }
 
         var models: [TeamModel] = []
@@ -24,18 +24,18 @@ struct TeamModel {
             }
         }
 
-        return models.sort { $0.rank < $1.rank }
+        return models.sorted { $0.rank < $1.rank }
     }
 
-    static func convert(team: Team) -> TeamModel? {
-        guard let rank = team.rank as? Int, score = team.score as? Int, identifier = team.identifier as? Int else { return nil }
+    static func convert(_ team: Team) -> TeamModel? {
+        guard let rank = team.rank as? Int, let score = team.score as? Int, let identifier = team.identifier as? Int else { return nil }
 
         let teamColor = TeamColor.teamColor(forIdentifier: identifier)
 
         return TeamModel(rank: rank, score: score, identifier: identifier, teamColor: teamColor)
     }
 
-    static func displayItems(teams: [TeamModel]) -> [DisplayItem] {
+    static func displayItems(_ teams: [TeamModel]) -> [DisplayItem] {
         return teams.map { $0 as DisplayItem }
     }
 }
@@ -50,9 +50,9 @@ extension TeamModel: DisplayItem {
         return "\(score)"
     }
 
-    var url: NSURL? {
-        guard let teamDetail = teamColor, urlString = teamDetail.iconUrl else { return nil }
+    var url: URL? {
+        guard let teamDetail = teamColor, let urlString = teamDetail.iconUrl else { return nil }
 
-        return NSURL(string: urlString)
+        return URL(string: urlString)
     }
 }

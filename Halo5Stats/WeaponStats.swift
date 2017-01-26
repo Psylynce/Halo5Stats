@@ -19,7 +19,7 @@ extension WeaponStats: ManagedObjectTypeProtocol {
         return "WeaponStats"
     }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
 
     }
 
@@ -29,13 +29,13 @@ extension WeaponStats: ManagedObjectTypeProtocol {
                 identifier = "\(numIdentifier)"
             }
             let attach = weaponId[JSONKeys.WeaponStats.attachments] as? [String]
-            attachments = attach?.joinWithSeparator(",")
+            attachments = attach?.joined(separator: ",")
         }
-        totalShotsFired = data[JSONKeys.WeaponStats.totalShotsFired] as? Int
-        totalShotsLanded = data[JSONKeys.WeaponStats.totalShotsLanded] as? Int
-        totalHeadshots = data[JSONKeys.WeaponStats.totalHeadshots] as? Int
-        totalKills = data[JSONKeys.WeaponStats.totalKills] as? Int
-        totalDamage = data[JSONKeys.WeaponStats.totalDamage] as? Double
+        totalShotsFired = data[JSONKeys.WeaponStats.totalShotsFired] as? Int as NSNumber?
+        totalShotsLanded = data[JSONKeys.WeaponStats.totalShotsLanded] as? Int as NSNumber?
+        totalHeadshots = data[JSONKeys.WeaponStats.totalHeadshots] as? Int as NSNumber?
+        totalKills = data[JSONKeys.WeaponStats.totalKills] as? Int as NSNumber?
+        totalDamage = data[JSONKeys.WeaponStats.totalDamage] as? Double as NSNumber?
         totalPossessionTime = data[JSONKeys.WeaponStats.totalPossessionTime] as? String
     }
 }

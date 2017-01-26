@@ -8,22 +8,22 @@
 import UIKit
 
 enum ServiceRecordSection {
-    case HighestCSR
-    case Games
-    case KDAndKDA
-    case TopMedalsTitle
-    case TopMedals
-    case AllMedals
-    case MostUsedWeaponTitle
-    case MostUsedWeapon
-    case Weapons
-    case Stats
+    case highestCSR
+    case games
+    case kdAndKDA
+    case topMedalsTitle
+    case topMedals
+    case allMedals
+    case mostUsedWeaponTitle
+    case mostUsedWeapon
+    case weapons
+    case stats
 
     var color: UIColor? {
         switch self {
-        case .Games, .TopMedalsTitle, .TopMedals, .AllMedals:
+        case .games, .topMedalsTitle, .topMedals, .allMedals:
             return UIColor(haloColor: .Elephant)
-        case .HighestCSR, .Weapons:
+        case .highestCSR, .weapons:
             return UIColor(haloColor: .Cinder)
         default:
             return nil
@@ -32,24 +32,24 @@ enum ServiceRecordSection {
 
     var title: String {
         switch self {
-        case .TopMedalsTitle:
+        case .topMedalsTitle:
             return "Top Medals"
-        case .MostUsedWeaponTitle:
+        case .mostUsedWeaponTitle:
             return "Most Used Weapon"
-        case .AllMedals:
+        case .allMedals:
             return "See Awarded Medals"
-        case .Weapons:
+        case .weapons:
             return "All Weapon Stats"
         default:
             return ""
         }
     }
 
-    func dataSource(record: ServiceRecordModel) -> ScoreCollectionViewDataSource? {
+    func dataSource(_ record: ServiceRecordModel) -> ScoreCollectionViewDataSource? {
         switch self {
-        case .TopMedals:
+        case .topMedals:
             return MedalCellModel(medals: record.topMedals)
-        case .Stats:
+        case .stats:
             return PlayerStatsCellModel(stats: record.stats)
         default:
             return nil
@@ -71,7 +71,7 @@ class ServiceRecordViewModel {
         fetchServiceRecord(force: false) {}
     }
 
-    func fetchServiceRecord(force force: Bool, completion: Void -> Void) {
+    func fetchServiceRecord(force: Bool, completion: @escaping (Void) -> Void) {
         requestServiceRecord(force) {
             completion()
         }
@@ -82,45 +82,45 @@ class ServiceRecordViewModel {
         var sections: [ServiceRecordSection] = []
 
         if record.highestAttainedCSR != nil {
-            sections += [.HighestCSR]
+            sections += [.highestCSR]
         }
 
-        sections += [.Games, .KDAndKDA]
+        sections += [.games, .kdAndKDA]
 
         if !record.topMedals.isEmpty {
-            sections += [.TopMedalsTitle, .TopMedals, .AllMedals]
+            sections += [.topMedalsTitle, .topMedals, .allMedals]
         }
 
         if record.mostUsedWeapon != nil {
-            sections += [.MostUsedWeaponTitle, .MostUsedWeapon]
+            sections += [.mostUsedWeaponTitle, .mostUsedWeapon]
         }
         if !record.weapons.isEmpty {
-            sections += [.Weapons]
+            sections += [.weapons]
         }
 
-        sections += [.Stats]
+        sections += [.stats]
 
         self.sections.value = sections
     }
 
     func record() -> ServiceRecordModel? {
-        guard let record = serviceRecord.value.first where serviceRecord.value.count == 1 else { return nil }
+        guard let record = serviceRecord.value.first, serviceRecord.value.count == 1 else { return nil }
 
         return record
     }
 
     // MARK: - Private
 
-    private func setRecord(forSpartan spartan: Spartan) {
-        guard let record = spartan.serviceRecord(forType: gameMode.rawValue), convertedRecord = ServiceRecordModel.convert(serviceRecord: record) else { return }
-        dispatch_async(dispatch_get_main_queue()) { [weak self] in
+    fileprivate func setRecord(forSpartan spartan: Spartan) {
+        guard let record = spartan.serviceRecord(forType: gameMode.rawValue), let convertedRecord = ServiceRecordModel.convert(serviceRecord: record) else { return }
+        DispatchQueue.main.async { [weak self] in
             self?.serviceRecord.value = [convertedRecord]
             self?.setupSections()
         }
     }
 
-    private func requestServiceRecord(force: Bool, completion: Void -> Void) {
-        guard let gamertag = self.gamertag, spartan = Spartan.spartan(gamertag) else { return }
+    fileprivate func requestServiceRecord(_ force: Bool, completion: @escaping (Void) -> Void) {
+        guard let gamertag = self.gamertag, let spartan = Spartan.spartan(gamertag) else { return }
 
         let requestType = NetworkRequestManager.RequestType.requestType(forGameMode: gameMode)
         guard NetworkRequestManager.sharedManager.shouldSendRequest(requestType, force: force) else {
@@ -131,7 +131,7 @@ class ServiceRecordViewModel {
 
         let request = ServiceRecordRequest(gamertags: [gamertag], gameMode: gameMode)
         let operation = APIRequestOperation(request: request) {
-            dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 self?.setRecord(forSpartan: spartan)
                 completion()
             }

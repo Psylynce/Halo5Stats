@@ -9,14 +9,14 @@ import Foundation
 
 class WeaponsViewModel {
 
-    private let allWeapons: [WeaponModel]
+    fileprivate let allWeapons: [WeaponModel]
     var weapons: [WeaponModel]
     let gameMode: GameMode
     let imageManager = ImageManager()
     var selectedFilter: Dynamic<WeaponsFilterViewModel.FilterOption?> = Dynamic(nil)
 
     init(weapons: [WeaponModel], gameMode: GameMode) {
-        let sortedWeapons = weapons.sort { $0.name < $1.name }
+        let sortedWeapons = weapons.sorted { $0.name < $1.name }
         self.weapons = sortedWeapons
         self.allWeapons = sortedWeapons
         self.gameMode = gameMode

@@ -28,50 +28,50 @@ class LoadingIndicator: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        let center = CGPoint(x: CGRectGetMidX(bounds), y: CGRectGetMidY(bounds))
+        let center = CGPoint(x: bounds.midX, y: bounds.midY)
         let startAngle = CGFloat(-M_PI_2)
         let endAngle = startAngle + CGFloat(M_PI * 2)
         let path = UIBezierPath(arcCenter: center, radius: circleRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
 
         circleLayer.position = center
-        circleLayer.path = path.CGPath
+        circleLayer.path = path.cgPath
     }
 
     // MARK: - Internal
 
-    func show(animate animate: Bool = true) {
-        hidden = false
+    func show(animate: Bool = true) {
+        isHidden = false
         self.animate = animate
     }
 
     func hide() {
         animate = false
-        hidden = true
+        isHidden = true
     }
 
     // MARK: - Private
 
-    private func setupAppearance() {
-        hidden = true
+    fileprivate func setupAppearance() {
+        isHidden = true
         circleLayer.frame = bounds
         circleLayer.lineWidth = 2
-        circleLayer.fillColor = UIColor.clearColor().CGColor
-        circleLayer.strokeColor = circleColor.CGColor
+        circleLayer.fillColor = UIColor.clear.cgColor
+        circleLayer.strokeColor = circleColor.cgColor
         layer.addSublayer(circleLayer)
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
     }
 
-    private func updateAnimations() {
+    fileprivate func updateAnimations() {
         if animate {
-            circleLayer.addAnimation(strokeEndAnimation, forKey: "strokeEnd")
-            circleLayer.addAnimation(strokeStartAnimation, forKey: "strokeStart")
-            circleLayer.addAnimation(rotationAnimation, forKey: "transform.rotation")
+            circleLayer.add(strokeEndAnimation, forKey: "strokeEnd")
+            circleLayer.add(strokeStartAnimation, forKey: "strokeStart")
+            circleLayer.add(rotationAnimation, forKey: "transform.rotation")
         } else {
             circleLayer.removeAllAnimations()
         }
     }
 
-    private let strokeEndAnimation: CAAnimation = {
+    fileprivate let strokeEndAnimation: CAAnimation = {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.fromValue = 0
         animation.toValue = 1
@@ -86,7 +86,7 @@ class LoadingIndicator: UIView {
         return group
     }()
 
-    private let strokeStartAnimation: CAAnimation = {
+    fileprivate let strokeStartAnimation: CAAnimation = {
         let animation = CABasicAnimation(keyPath: "strokeStart")
         animation.beginTime = 0.5
         animation.fromValue = 0
@@ -102,7 +102,7 @@ class LoadingIndicator: UIView {
         return group
     }()
 
-    private let rotationAnimation: CAAnimation = {
+    fileprivate let rotationAnimation: CAAnimation = {
         let animation = CABasicAnimation(keyPath: "transform.rotation")
         animation.fromValue = 0
         animation.toValue = M_PI * 2

@@ -24,12 +24,12 @@ struct MetadataRequest: RequestProtocol {
         return "\(metadataType.rawValue) Request"
     }
     
-    var url: NSURL {
+    var url: URL {
         let substitutions = [APIConstants.MetadataKey : metadataType.rawValue]
         let endpoint = Endpoint(service: APIConstants.MetadataService, path: APIConstants.Metadata)
         let url = endpoint.url(withSubstitutions: substitutions)
         
-        return url
+        return url as URL
     }
     
     var cacheKey: String {
@@ -44,10 +44,10 @@ struct MetadataRequest: RequestProtocol {
     
     // MARK: Private
     
-    private static func parseMetadata() -> ((name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void) {
-        func parse(name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void {            
-            let metadataTypeString = name.stringByReplacingOccurrencesOfString("Request", withString: "")
-                .stringByReplacingOccurrencesOfString(" ", withString: "")
+    fileprivate static func parseMetadata() -> ((_ name: String, _ context: NSManagedObjectContext, _ data: [String : AnyObject]) -> Void) {
+        func parse(_ name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void {            
+            let metadataTypeString = name.replacingOccurrences(of: "Request", with: "")
+                .replacingOccurrences(of: " ", with: "")
             guard let metadataType = APIConstants.MetadataType(rawValue: metadataTypeString) else {
                 print("Something went wrong!")
                 return

@@ -10,18 +10,18 @@ import UIKit
 protocol CacheableImageModel {
     var typeIdentifier: String { get }
     var cacheIdentifier: String { get }
-    var imageURL: NSURL { get }
-    var largeImageURL: NSURL? { get }
+    var imageURL: URL { get }
+    var largeImageURL: URL? { get }
     var placeholderImage: UIImage? { get }
 }
 
 protocol ImageRequestFetchCoordinator {
-    func fetchImage(presenter: ImagePresenter, model: CacheableImageModel)
+    func fetchImage(_ presenter: ImagePresenter, model: CacheableImageModel)
 }
 
 protocol ImagePresenter {
-    func initiateImageRequest(coordinator: ImageRequestFetchCoordinator)
-    func displayImage(model: CacheableImageModel, image: UIImage)
+    func initiateImageRequest(_ coordinator: ImageRequestFetchCoordinator)
+    func displayImage(_ model: CacheableImageModel, image: UIImage)
 }
 
 class ImageManager {
@@ -44,7 +44,7 @@ class ImageManager {
 
     // MARK: - Internal
 
-    func cachedImage(model: CacheableImageModel) -> UIImage? {
+    func cachedImage(_ model: CacheableImageModel) -> UIImage? {
         guard Behaviors.allowCaching else { return nil }
 
         if let image = getCachedImage(model) {
@@ -54,25 +54,25 @@ class ImageManager {
         return nil
     }
 
-    func fetchImage(model: CacheableImageModel, cachedOnly: Bool = false, completion: ((model: CacheableImageModel, image: UIImage?) -> Void)?) {
+    func fetchImage(_ model: CacheableImageModel, cachedOnly: Bool = false, completion: ((_ model: CacheableImageModel, _ image: UIImage?) -> Void)?) {
         if let cachedImage = cachedImage(model) {
             if let completion = completion {
-                completion(model: model, image: cachedImage)
+                completion(model, cachedImage)
             }
 
             return
         }
 
-        let fetchOperation = NSBlockOperation { [weak self] () -> Void in
+        let fetchOperation = Foundation.BlockOperation { [weak self] () -> Void in
             let imageUrl = self?.style == .small ? model.imageURL : (model.largeImageURL ?? model.imageURL)
-            let task = NSURLSession.halo5ConfiguredSession().dataTaskWithURL(imageUrl, completionHandler: { (data, response, error) -> Void in
+            let task = URLSession.halo5ConfiguredSession().dataTask(with: imageUrl, completionHandler: { (data, response, error) -> Void in
                 if let _ = error {
                     if let completion = completion {
                         completion(model: model, image: model.placeholderImage)
                     }
                 }
 
-                if let data = data, image = UIImage(data: data) {
+                if let data = data, let image = UIImage(data: data) {
                     self?.cacheImage(model, image: image)
 
                     if let completion = completion {
@@ -93,13 +93,13 @@ class ImageManager {
 
     // MARK: - Private
 
-    private func getCachedImage(model: CacheableImageModel) -> UIImage? {
+    fileprivate func getCachedImage(_ model: CacheableImageModel) -> UIImage? {
         let imageName = cacheFilename(model)
 
         if let cache = cacheDirectory() {
-            let imageUrl = cache.URLByAppendingPathComponent(imageName)
+            let imageUrl = cache.appendingPathComponent(imageName)
 
-            if let data = NSData.init(contentsOfURL: imageUrl) {
+            if let data = try? Data.init(contentsOf: imageUrl) {
                 if let cachedImage = UIImage(data: data) {
                     return cachedImage
                 }
@@ -109,17 +109,17 @@ class ImageManager {
         return nil
     }
 
-    private func cacheImage(model: CacheableImageModel, image: UIImage) {
+    fileprivate func cacheImage(_ model: CacheableImageModel, image: UIImage) {
         let imageName = cacheFilename(model)
 
         if let cache = cacheDirectory() {
-            let imageUrl = cache.URLByAppendingPathComponent(imageName)
+            let imageUrl = cache.appendingPathComponent(imageName)
 
-            UIImagePNGRepresentation(image)?.writeToURL(imageUrl, atomically: true)
+            try? UIImagePNGRepresentation(image)?.write(to: imageUrl, options: [.atomic])
         }
     }
 
-    private func cacheFilename(model: CacheableImageModel) -> String {
+    fileprivate func cacheFilename(_ model: CacheableImageModel) -> String {
         var imageName = "\(model.typeIdentifier)_\(model.cacheIdentifier)"
         if style == .large {
             imageName += "_large"
@@ -128,10 +128,10 @@ class ImageManager {
         return imageName
     }
 
-    private func cacheDirectory() -> NSURL? {
-        let cacheDirectory: NSSearchPathDirectory = .CachesDirectory
+    fileprivate func cacheDirectory() -> URL? {
+        let cacheDirectory: Foundation.FileManager.SearchPathDirectory = .cachesDirectory
         
-        if let searchUrl = NSFileManager.defaultManager().URLsForDirectory(cacheDirectory, inDomains: .UserDomainMask).last {
+        if let searchUrl = Foundation.FileManager.default.urls(for: cacheDirectory, in: .userDomainMask).last {
             return searchUrl
         }
         

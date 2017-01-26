@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MatchFilterDelegate: class {
-    func applyFilters(model: MatchFilterViewModel)
+    func applyFilters(_ model: MatchFilterViewModel)
 }
 
 class MatchFilterViewModel {

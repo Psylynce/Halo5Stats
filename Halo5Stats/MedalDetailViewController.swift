@@ -26,13 +26,13 @@ class MedalDetailViewController: UIViewController {
         setupDismissal()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         animateViews(open: true, completion: nil)
     }
 
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         radialView.alpha = 0
         imageView = UIImageView(frame: openingFrame)
         view.addSubview(imageView)
@@ -40,7 +40,7 @@ class MedalDetailViewController: UIViewController {
         setupLabels()
     }
 
-    private func setupLabels() {
+    fileprivate func setupLabels() {
         nameLabel.textColor = UIColor(haloColor: .WhiteSmoke)
         descriptionLabel.textColor = UIColor(haloColor: .WhiteSmoke)
         countDifficultyLabel.textColor = UIColor(haloColor: .WhiteSmoke)
@@ -58,16 +58,16 @@ class MedalDetailViewController: UIViewController {
         countDifficultyLabel.attributedText = attributedMedalText
     }
 
-    private var attributedMedalText: NSAttributedString {
+    fileprivate var attributedMedalText: NSAttributedString {
         let classification = "Classification:"
         let difficulty = "Difficulty:"
         let count = "Count:"
         let finalText = "\(classification) \(viewModel.medal.classification.normalizedFromCapitalizedString)\n\(difficulty) \(viewModel.medal.difficulty)\n\(count) \(viewModel.medal.count)"
         let nsText = finalText as NSString
-        let classificationRange = nsText.rangeOfString(classification)
-        let difficultyRange = nsText.rangeOfString(difficulty)
-        let countRange = nsText.rangeOfString(count)
-        let font = UIFont.kelson(.Light, size: 14) ?? UIFont.systemFontOfSize(14)
+        let classificationRange = nsText.range(of: classification)
+        let difficultyRange = nsText.range(of: difficulty)
+        let countRange = nsText.range(of: count)
+        let font = UIFont.kelson(.Light, size: 14) ?? UIFont.systemFont(ofSize: 14)
         let boldAttributes = [NSFontAttributeName : font]
 
         let final = NSMutableAttributedString(string: finalText)
@@ -78,7 +78,7 @@ class MedalDetailViewController: UIViewController {
         return final
     }
 
-    private func animateViews(open open: Bool, completion: (Void -> Void)?) {
+    fileprivate func animateViews(open: Bool, completion: ((Void) -> Void)?) {
         if open {
             animateOpen()
         } else {
@@ -86,10 +86,10 @@ class MedalDetailViewController: UIViewController {
         }
     }
 
-    private func animateOpen() {
+    fileprivate func animateOpen() {
         let frame = endingFrame
 
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 20.0, options: .CurveEaseInOut, animations: { [weak self] in
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 20.0, options: UIViewAnimationOptions(), animations: { [weak self] in
             self?.imageView.frame = frame
             self?.radialView.alpha = 1
             self?.nameLabel.alpha = 1
@@ -98,11 +98,11 @@ class MedalDetailViewController: UIViewController {
             }, completion: nil)
     }
 
-    private func animateClose(completion: (Void -> Void)?) {
+    fileprivate func animateClose(_ completion: ((Void) -> Void)?) {
         let frame = openingFrame
 
-        UIView.animateWithDuration(0.2, delay: 0.2, options: .CurveEaseInOut, animations: { [weak self] in
-            self?.imageView.frame = frame
+        UIView.animate(withDuration: 0.2, delay: 0.2, options: UIViewAnimationOptions(), animations: { [weak self] in
+            self?.imageView.frame = frame!
             self?.radialView.alpha = 0
             self?.nameLabel.alpha = 0
             self?.descriptionLabel.alpha = 0
@@ -114,7 +114,7 @@ class MedalDetailViewController: UIViewController {
         })
     }
 
-    private var endingFrame: CGRect {
+    fileprivate var endingFrame: CGRect {
         let endingSize: CGFloat = 100
         let halfImageView: CGFloat = endingSize / 2
         let origin = CGPoint(x: view.frame.size.width / 2 - halfImageView, y: view.frame.size.height / 3 - halfImageView)
@@ -124,14 +124,14 @@ class MedalDetailViewController: UIViewController {
         return frame
     }
 
-    private func setupDismissal() {
+    fileprivate func setupDismissal() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismiss))
         view.addGestureRecognizer(tap)
     }
 
-    @objc private func dismiss() {
+    @objc fileprivate func dismiss() {
         animateViews(open: false) { [weak self] in
-            self?.dismissViewControllerAnimated(false, completion: nil)
+            self?.dismiss(animated: false, completion: nil)
         }
     }
 }

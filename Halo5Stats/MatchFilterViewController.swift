@@ -34,14 +34,14 @@ class MatchFilterViewController: UIViewController {
         setupAppearance()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         viewsToInitialValues()
         initialConstraintValues()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         animateOpen()
@@ -50,92 +50,92 @@ class MatchFilterViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-        gradientBackgroundView.verticalGradient(startColor: UIColor(haloColor: .CuriousBlue), endColor: UIColor.clearColor())
+        gradientBackgroundView.verticalGradient(startColor: UIColor(haloColor: .CuriousBlue), endColor: UIColor.clear)
     }
 
-    @IBAction func closeButtonTapped(sender: UIButton) {
+    @IBAction func closeButtonTapped(_ sender: UIButton) {
         close(applyFilters: false)
     }
     
-    @IBAction func applyButtonTapped(sender: UIButton) {
+    @IBAction func applyButtonTapped(_ sender: UIButton) {
         close(applyFilters: true)
     }
 
-    @IBAction func arenaButtonTapped(sender: UIButton) {
+    @IBAction func arenaButtonTapped(_ sender: UIButton) {
         viewModel.arenaSelected.value = !viewModel.arenaSelected.value
     }
 
-    @IBAction func warzoneButtonTapped(sender: UIButton) {
+    @IBAction func warzoneButtonTapped(_ sender: UIButton) {
         viewModel.warzoneSelected.value = !viewModel.warzoneSelected.value
     }
 
-    @IBAction func customsButtonTapped(sender: UIButton) {
+    @IBAction func customsButtonTapped(_ sender: UIButton) {
         viewModel.customsSelected.value = !viewModel.customsSelected.value
     }
     
     // MARK: - Private
 
-    private func setupBindAndFires() {
+    fileprivate func setupBindAndFires() {
         viewModel.arenaSelected.bindAndFire { [weak self] (selected) in
-            let color = selected ? UIColor.greenColor() : UIColor(haloColor: .WhiteSmoke)
-            self?.arenaButton.setTitleColor(color, forState: .Normal)
+            let color = selected ? UIColor.green : UIColor(haloColor: .WhiteSmoke)
+            self?.arenaButton.setTitleColor(color, for: UIControlState())
         }
 
         viewModel.warzoneSelected.bindAndFire { [weak self] (selected) in
-            let color = selected ? UIColor.greenColor() : UIColor(haloColor: .WhiteSmoke)
-            self?.warzoneButton.setTitleColor(color, forState: .Normal)
+            let color = selected ? UIColor.green : UIColor(haloColor: .WhiteSmoke)
+            self?.warzoneButton.setTitleColor(color, for: UIControlState())
         }
 
         viewModel.customsSelected.bindAndFire { [weak self] (selected) in
-            let color = selected ? UIColor.greenColor() : UIColor(haloColor: .WhiteSmoke)
-            self?.customsButton.setTitleColor(color, forState: .Normal)
+            let color = selected ? UIColor.green : UIColor(haloColor: .WhiteSmoke)
+            self?.customsButton.setTitleColor(color, for: UIControlState())
         }
     }
 
-    private func close(applyFilters apply: Bool) {
+    fileprivate func close(applyFilters apply: Bool) {
         closeAnimation() { [weak self] in
             if apply {
                 self?.viewModel.applyFilters()
             }
 
-            self?.dismissViewControllerAnimated(false) {}
+            self?.dismiss(animated: false) {}
         }
     }
 
-    private func setupAppearance() {
-        view.backgroundColor = UIColor.clearColor()
+    fileprivate func setupAppearance() {
+        view.backgroundColor = UIColor.clear
 
-        closeButton.setTitle("Cancel", forState: .Normal)
-        closeButton.setTitleColor(UIColor(haloColor: .WhiteSmoke), forState: .Normal)
+        closeButton.setTitle("Cancel", for: UIControlState())
+        closeButton.setTitleColor(UIColor(haloColor: .WhiteSmoke), for: UIControlState())
 
-        applyButton.setTitle("Apply", forState: .Normal)
-        applyButton.setTitleColor(UIColor(haloColor: .WhiteSmoke), forState: .Normal)
+        applyButton.setTitle("Apply", for: UIControlState())
+        applyButton.setTitleColor(UIColor(haloColor: .WhiteSmoke), for: UIControlState())
 
-        gradientBackgroundView.backgroundColor = UIColor.clearColor()
+        gradientBackgroundView.backgroundColor = UIColor.clear
 
-        arenaButton.setTitle("ARENA", forState: .Normal)
-        warzoneButton.setTitle("WARZONE", forState: .Normal)
-        customsButton.setTitle("CUSTOMS", forState: .Normal)
+        arenaButton.setTitle("ARENA", for: UIControlState())
+        warzoneButton.setTitle("WARZONE", for: UIControlState())
+        customsButton.setTitle("CUSTOMS", for: UIControlState())
 
         filterButtons.forEach {
-            $0.setTitleColor(UIColor(haloColor: .WhiteSmoke), forState: .Normal)
+            $0.setTitleColor(UIColor(haloColor: .WhiteSmoke), for: UIControlState())
             $0.titleLabel?.font = UIFont.kelson(.Bold, size: 16)
         }
     }
 
-    private func viewsToInitialValues() {
+    fileprivate func viewsToInitialValues() {
         gradientBackgroundView.alpha = 0
         closeButton.alpha = 0
         blurView.alpha = 0
     }
 
-    private func viewsToFinalValues() {
+    fileprivate func viewsToFinalValues() {
         gradientBackgroundView.alpha = 1
         closeButton.alpha = 1
         blurView.alpha = 1
     }
 
-    private func initialConstraintValues() {
+    fileprivate func initialConstraintValues() {
         warzoneTopConstraint.constant = -50
         arenaTopConstraint.constant = -50
         arenaTrailingConstraint.constant = 0 - warzoneButton.frame.width
@@ -143,7 +143,7 @@ class MatchFilterViewController: UIViewController {
         customsLeadingConstraint.constant = 0 - warzoneButton.frame.width
     }
 
-    private func finalConstraintValues() {
+    fileprivate func finalConstraintValues() {
         warzoneTopConstraint.constant = 75
         arenaTopConstraint.constant = 75
         arenaTrailingConstraint.constant = 30
@@ -151,24 +151,24 @@ class MatchFilterViewController: UIViewController {
         customsLeadingConstraint.constant = 30
     }
 
-    private func animateOpen() {
+    fileprivate func animateOpen() {
         finalConstraintValues()
-        UIView.animateWithDuration(0.3) { [weak self] in
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
             self?.viewsToFinalValues()
             self?.view.layoutIfNeeded()
-        }
+        }) 
     }
 
-    private func closeAnimation(completion: Void -> Void) {
+    fileprivate func closeAnimation(_ completion: @escaping (Void) -> Void) {
         initialConstraintValues()
-        UIView.animateWithDuration(0.3, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             [weak self] in
             self?.viewsToInitialValues()
             self?.view.layoutIfNeeded()
-            }) { (completed) in
+            }, completion: { (completed) in
                 if completed {
                     completion()
                 }
-        }
+        }) 
     }
 }

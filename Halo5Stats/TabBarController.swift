@@ -31,48 +31,48 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
     // MARK: Private
     
-    private func setupTabBarController() {
-        let statsImage = UIImage(named: "SR")?.imageWithRenderingMode(.AlwaysTemplate)
+    fileprivate func setupTabBarController() {
+        let statsImage = UIImage(named: "SR")?.withRenderingMode(.alwaysTemplate)
         let statsNC = UINavigationController(rootViewController: playerStatsParentViewController)
         playerStatsParentViewController.addGamertagWatcher()
         statsNC.tabBarItem = UITabBarItem(title: "Stats", image: statsImage, selectedImage: nil)
 
-        let historyImage = UIImage(named: "History")?.imageWithRenderingMode(.AlwaysTemplate)
+        let historyImage = UIImage(named: "History")?.withRenderingMode(.alwaysTemplate)
         let gameHistoryNC = UINavigationController(rootViewController: gameHistoryViewController)
         gameHistoryViewController.addGamertagWatcher()
         gameHistoryNC.tabBarItem = UITabBarItem(title: "History", image: historyImage, selectedImage: nil)
 
-        let compareImage = UIImage(named: "Compare")?.imageWithRenderingMode(.AlwaysTemplate)
+        let compareImage = UIImage(named: "Compare")?.withRenderingMode(.alwaysTemplate)
         let comparisonNC = UINavigationController(rootViewController: playerComparisonViewController)
         playerComparisonViewController.addGamertagWatcher()
         comparisonNC.tabBarItem = UITabBarItem(title: "Compare", image: compareImage, selectedImage: nil)
 
-        let settingsImage = UIImage(named: "Settings")?.imageWithRenderingMode(.AlwaysTemplate)
+        let settingsImage = UIImage(named: "Settings")?.withRenderingMode(.alwaysTemplate)
         let settingsNC = UINavigationController(rootViewController: settingsViewController)
         settingsNC.tabBarItem = UITabBarItem(title: "Settings", image: settingsImage, selectedImage: nil)
         
         setViewControllers([statsNC, gameHistoryNC, comparisonNC, settingsNC], animated: false)
     }
     
-    private func styleTabBar() {
+    fileprivate func styleTabBar() {
         UITabBar.appearance().barTintColor = UIColor(haloColor: .Black)
         UITabBar.appearance().tintColor = UIColor(haloColor: .WhiteSmoke)
-        UITabBar.appearance().translucent = false
+        UITabBar.appearance().isTranslucent = false
     }
     
-    private func styleNavBar() {
+    fileprivate func styleNavBar() {
         UINavigationBar.appearance().barTintColor = UIColor(haloColor: .Black)
         UINavigationBar.appearance().tintColor = UIColor(haloColor: .WhiteSmoke)
-        let font = UIFont.kelson(.Regular, size: 18) ?? UIFont.systemFontOfSize(18)
-        let titleAttributes: [String : AnyObject] = [NSForegroundColorAttributeName : UIColor.whiteColor(),
+        let font = UIFont.kelson(.Regular, size: 18) ?? UIFont.systemFont(ofSize: 18)
+        let titleAttributes: [String : AnyObject] = [NSForegroundColorAttributeName : UIColor.white,
                                NSFontAttributeName : font]
         UINavigationBar.appearance().titleTextAttributes = titleAttributes
-        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().isTranslucent = false
     }
     
     // MARK: - UITabBarControllerDelegate
     
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         return true
     }
 

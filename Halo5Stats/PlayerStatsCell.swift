@@ -35,14 +35,14 @@ class PlayerStatsCell: UITableViewCell {
             $0.font = UIFont.kelson(.Regular, size: 14.0)
         }
 
-        statViews.forEach { $0.backgroundColor = UIColor.clearColor() }
+        statViews.forEach { $0.backgroundColor = UIColor.clear }
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
-        selectionStyle = .None
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
+        selectionStyle = .none
     }
 
-    func configure(player: MatchPlayerModel, isTeamGame: Bool) {
+    func configure(_ player: MatchPlayerModel, isTeamGame: Bool) {
         let gamertag = player.didNotFinish ? "\(player.gamertag) DNF" : player.gamertag
         gamertagLabel.text = gamertag
         killLabel.text = "\(player.stats.kills)"
@@ -50,7 +50,7 @@ class PlayerStatsCell: UITableViewCell {
         deathLabel.text = "\(player.stats.deaths)"
         headshotLabel.text = "\(player.stats.headshots)"
 
-        if let teamDetails = player.teamColor, teamColor = teamDetails.color {
+        if let teamDetails = player.teamColor, let teamColor = teamDetails.color {
             let color = UIColor(hex: teamColor)
             let dark = color.darker()
             let darker = dark.darker()

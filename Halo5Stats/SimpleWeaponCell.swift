@@ -27,7 +27,7 @@ class SimpleWeaponCell: UICollectionViewCell {
         setupAppearance()
     }
 
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         titleLabels.forEach {
             $0.textColor = UIColor(haloColor: .CuriousBlue).lighter()
             $0.font = UIFont.kelson(.Light, size: 14)
@@ -52,10 +52,10 @@ class SimpleWeaponCell: UICollectionViewCell {
         imageView.image = weapon.placeholderImage
     }
 
-    func configure(item: DisplayItem, cachedImage: UIImage?) {
+    func configure(_ item: DisplayItem, cachedImage: UIImage?) {
         imageView.image = cachedImage
 
-        let numberComponents = item.number.componentsSeparatedByString("_")
+        let numberComponents = item.number.components(separatedBy: "_")
         guard numberComponents.count == 3 else { return }
 
         let kills = numberComponents[0]
@@ -70,11 +70,11 @@ class SimpleWeaponCell: UICollectionViewCell {
 
 extension SimpleWeaponCell: ImagePresenter {
 
-    func initiateImageRequest(coordinator: ImageRequestFetchCoordinator) {
+    func initiateImageRequest(_ coordinator: ImageRequestFetchCoordinator) {
         coordinator.fetchImage(self, model: weapon)
     }
 
-    func displayImage(model: CacheableImageModel, image: UIImage) {
+    func displayImage(_ model: CacheableImageModel, image: UIImage) {
         if model.cacheIdentifier == weapon.cacheIdentifier {
             imageView.image = image
         }

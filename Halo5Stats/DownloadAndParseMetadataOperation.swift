@@ -19,7 +19,7 @@ class DownloadAndParseMetadataOperation: GroupOperation {
     let teamColorOperation: APIRequestOperation
     let gameBaseVariantOperation: APIRequestOperation
 
-    init(completion: Void -> Void) {
+    init(completion: (Void) -> Void) {
         let csrRequest = MetadataRequest(metadataType: .CSRDesignations)
         csrOperation = APIRequestOperation(request: csrRequest) {
             print("CSR Designations downloaded and parsed")
@@ -65,7 +65,7 @@ class DownloadAndParseMetadataOperation: GroupOperation {
             print("Game Base Variants downloaded and parsed")
         }
 
-        let finishOperation = NSBlockOperation(block: completion)
+        let finishOperation = Foundation.BlockOperation(block: completion)
 
         weaponOperation.addDependency(csrOperation)
         vehicleOperation.addDependency(weaponOperation)

@@ -8,8 +8,8 @@
 import UIKit
 
 protocol SpartanCellDelegate: class {
-    func compareButtonTapped(spartan: SpartanModel)
-    func favoriteButtonTapped(cell: SpartanCell)
+    func compareButtonTapped(_ spartan: SpartanModel)
+    func favoriteButtonTapped(_ cell: SpartanCell)
 }
 
 class SpartanCell: UITableViewCell {
@@ -24,13 +24,13 @@ class SpartanCell: UITableViewCell {
             configure(cellModel.spartan)
 
             cellModel.isComparing.bindAndFire { [weak self] (isComparing) in
-                self?.compareButton.selected = isComparing
+                self?.compareButton.isSelected = isComparing
             }
 
             cellModel.isFavorite.bindAndFire { [weak self] (isFavorite) in
                 let image = isFavorite ? UIImage(named: "Star_Filled") : UIImage(named: "Star")
-                self?.favoriteButton.setImage(image?.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
-                self?.favoriteButton.imageView?.tintColor = isFavorite ? UIColor(haloColor: .WhiteSmoke) : UIColor(haloColor: .WhiteSmoke).colorWithAlphaComponent(0.4)
+                self?.favoriteButton.setImage(image?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+                self?.favoriteButton.imageView?.tintColor = isFavorite ? UIColor(haloColor: .WhiteSmoke) : UIColor(haloColor: .WhiteSmoke).withAlphaComponent(0.4)
             }
         }
     }
@@ -42,32 +42,32 @@ class SpartanCell: UITableViewCell {
         gamertagLabel.font = UIFont.kelson(.Regular, size: 18)
         gamertagLabel.textColor = UIColor(haloColor: .WhiteSmoke)
 
-        compareButton.setTitle("COMPARE", forState: .Normal)
+        compareButton.setTitle("COMPARE", for: UIControlState())
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
 
         emblemImageView.image = nil
-        accessoryType = .DisclosureIndicator
-        favoriteButton.hidden = false
+        accessoryType = .disclosureIndicator
+        favoriteButton.isHidden = false
     }
 
-    private func configure(spartan: SpartanModel) {
+    fileprivate func configure(_ spartan: SpartanModel) {
         gamertagLabel.text = spartan.displayGamertag
         emblemImageView.image(forUrl: spartan.emblemUrl)
     }
 
-    @IBAction func compareButtonTapped(sender: UIButton) {
+    @IBAction func compareButtonTapped(_ sender: UIButton) {
         cellModel.isComparing.value = !cellModel.isComparing.value
-        compareButton.selected = cellModel.isComparing.value
+        compareButton.isSelected = cellModel.isComparing.value
         delegate?.compareButtonTapped(cellModel.spartan)
     }
 
-    @IBAction func favoriteButtonTapped(sender: UIButton) {
+    @IBAction func favoriteButtonTapped(_ sender: UIButton) {
         cellModel.isFavorite.value = FavoritesManager.sharedManager.isFavorite(cellModel.spartan.gamertag)
         FavoritesManager.sharedManager.manageSpartan(cellModel.spartan.gamertag)
         delegate?.favoriteButtonTapped(self)

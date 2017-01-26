@@ -18,7 +18,7 @@ class DurationFormatter {
         case Seconds = "S"
     }
 
-    static func interval(forDuration duration: String) -> NSTimeInterval {
+    static func interval(forDuration duration: String) -> TimeInterval {
         var days = ""
         var hours = ""
         var minutes = ""
@@ -29,36 +29,36 @@ class DurationFormatter {
             return 0
         }
 
-        var clean = duration.componentsSeparatedByString(Delimeter.Start.rawValue)[1]
+        var clean = duration.components(separatedBy: Delimeter.Start.rawValue)[1]
 
-        if clean.containsString(Delimeter.Days.rawValue) {
-            days = clean.componentsSeparatedByString(Delimeter.Days.rawValue)[0]
-            clean = clean.componentsSeparatedByString(Delimeter.Days.rawValue)[1]
+        if clean.contains(Delimeter.Days.rawValue) {
+            days = clean.components(separatedBy: Delimeter.Days.rawValue)[0]
+            clean = clean.components(separatedBy: Delimeter.Days.rawValue)[1]
             if let daysDouble = Double(days) {
                 totalSeconds += daysDouble * 24 * 60 * 60
             }
         }
 
-        clean = clean.componentsSeparatedByString(Delimeter.Time.rawValue)[1]
+        clean = clean.components(separatedBy: Delimeter.Time.rawValue)[1]
 
-        if clean.containsString(Delimeter.Hours.rawValue) {
-            hours = clean.componentsSeparatedByString(Delimeter.Hours.rawValue)[0]
-            clean = clean.componentsSeparatedByString(Delimeter.Hours.rawValue)[1]
+        if clean.contains(Delimeter.Hours.rawValue) {
+            hours = clean.components(separatedBy: Delimeter.Hours.rawValue)[0]
+            clean = clean.components(separatedBy: Delimeter.Hours.rawValue)[1]
             if let hourDouble = Double(hours) {
                 totalSeconds += hourDouble * 60 * 60
             }
         }
 
-        if clean.containsString(Delimeter.Minutes.rawValue) {
-            minutes = clean.componentsSeparatedByString(Delimeter.Minutes.rawValue)[0]
-            clean = clean.componentsSeparatedByString(Delimeter.Minutes.rawValue)[1]
+        if clean.contains(Delimeter.Minutes.rawValue) {
+            minutes = clean.components(separatedBy: Delimeter.Minutes.rawValue)[0]
+            clean = clean.components(separatedBy: Delimeter.Minutes.rawValue)[1]
             if let minutesDouble = Double(minutes) {
                 totalSeconds += minutesDouble * 60
             }
         }
 
-        if clean.containsString(Delimeter.Seconds.rawValue) {
-            seconds = clean.componentsSeparatedByString(Delimeter.Seconds.rawValue)[0]
+        if clean.contains(Delimeter.Seconds.rawValue) {
+            seconds = clean.components(separatedBy: Delimeter.Seconds.rawValue)[0]
             if let secondsDouble = Double(seconds) {
                 totalSeconds += secondsDouble
             }
@@ -67,11 +67,11 @@ class DurationFormatter {
         return Double(totalSeconds)
     }
 
-    static func readableDuration(duration: String) -> String? {
+    static func readableDuration(_ duration: String) -> String? {
         let i = interval(forDuration: duration)
 
-        let formatter = NSDateComponentsFormatter()
-        return formatter.stringFromTimeInterval(i)
+        let formatter = DateComponentsFormatter()
+        return formatter.string(from: i)
     }
 
 }

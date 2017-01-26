@@ -19,7 +19,7 @@ final class KeyManager {
     }
 
     var apiKey: String? {
-        guard let path = NSBundle.mainBundle().pathForResource(K.fileName, ofType: K.fileType) else { return nil }
+        guard let path = Bundle.main.path(forResource: K.fileName, ofType: K.fileType) else { return nil }
         guard let keyInfo = NSDictionary(contentsOfFile: path) else { return nil }
         var keyString = K.production
         #if DEBUG

@@ -21,11 +21,11 @@ class CSRAndSRCell: UITableViewCell {
         setupAppearance()
     }
 
-    func configure(csr: CSRModel, spartanRank: Int) {
+    func configure(_ csr: CSRModel, spartanRank: Int) {
         highestCSRImageView.image(forUrl: csr.csrImageUrl)
         srValueLabel.text = "\(spartanRank)"
 
-        let correctType = csr.type.rawValue.capitalizedString
+        let correctType = csr.type.rawValue.capitalized
         switch csr.type {
         case .bronze, .silver, .gold, .platinum, .diamond:
             csrRankLabel.text = "\(correctType) \(csr.tier)"
@@ -42,7 +42,7 @@ class CSRAndSRCell: UITableViewCell {
         }
     }
 
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         highestCSRLabel.font = UIFont.kelson(.Regular, size: 16)
         highestCSRLabel.textColor = UIColor(haloColor: .WhiteSmoke)
         highestCSRLabel.text = "Highest CSR"
@@ -57,8 +57,8 @@ class CSRAndSRCell: UITableViewCell {
         srValueLabel.font = UIFont.kelson(.Bold, size: 75)
         srValueLabel.textColor = UIColor(haloColor: .WhiteSmoke)
 
-        backgroundColor = UIColor.clearColor()
-        contentView.backgroundColor = UIColor.clearColor()
-        selectionStyle = .None
+        backgroundColor = UIColor.clear
+        contentView.backgroundColor = UIColor.clear
+        selectionStyle = .none
     }
 }

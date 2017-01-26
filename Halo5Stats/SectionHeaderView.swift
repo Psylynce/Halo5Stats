@@ -20,7 +20,7 @@ class SectionHeaderView: UIView {
         titleLabel.font = UIFont.kelson(.Bold, size: 16)
         titleLabel.textColor = UIColor(haloColor: .WhiteSmoke)
 
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
     }
 
     override func layoutSubviews() {

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol WeaponsFilterDelegate: class {
-    func selectedFilter(option: WeaponsFilterViewModel.FilterOption)
+    func selectedFilter(_ option: WeaponsFilterViewModel.FilterOption)
 }
 
 class WeaponsFilterViewController: UIViewController {
@@ -28,13 +28,13 @@ class WeaponsFilterViewController: UIViewController {
 
     // MARK: Private
 
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor(haloColor: .Elephant)
     }
 
-    private func setupBindAndFires() {
+    fileprivate func setupBindAndFires() {
         viewModel.selectedOption.bindAndFire { [weak self] (_) in
             self?.tableView.reloadData()
         }
@@ -43,25 +43,25 @@ class WeaponsFilterViewController: UIViewController {
 
 extension WeaponsFilterViewController: UITableViewDataSource, UITableViewDelegate {
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.options.count
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let option = viewModel.options[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("FilterCell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath)
 
         cell.textLabel?.text = option.rawValue
         cell.textLabel?.font = UIFont.kelson(.Regular, size: 14)
         cell.textLabel?.textColor = UIColor(haloColor: .WhiteSmoke)
-        cell.accessoryType = option == viewModel.selectedOption.value ? .Checkmark : .None
+        cell.accessoryType = option == viewModel.selectedOption.value ? .checkmark : .none
         cell.tintColor = UIColor(haloColor: .WhiteSmoke)
         cell.backgroundColor = indexPath.row % 2 == 0 ? UIColor(haloColor: .Elephant) : UIColor(haloColor: .Cinder)
 
         return cell
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let option = viewModel.options[indexPath.row]
         viewModel.selectedOption.value = option
         delegate?.selectedFilter(option)

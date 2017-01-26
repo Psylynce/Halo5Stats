@@ -12,7 +12,7 @@ class WeaponsViewController: UIViewController, ParallaxScrollingTableView {
     @IBOutlet var tableView: UITableView!
 
     var viewModel: WeaponsViewModel!
-    private var isScrolling: Bool = false
+    fileprivate var isScrolling: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,7 @@ class WeaponsViewController: UIViewController, ParallaxScrollingTableView {
         setupBindAndFires()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         updateVisibleCells()
@@ -30,33 +30,33 @@ class WeaponsViewController: UIViewController, ParallaxScrollingTableView {
 
     // MARK: Private
 
-    private var filterButton: UIBarButtonItem {
-        let filterButtonImage = UIImage(named: "Filter")?.imageWithRenderingMode(.AlwaysTemplate)
-        let filterButton = UIBarButtonItem(image: filterButtonImage, style: .Plain, target: self, action: #selector(filterButtonTapped))
+    fileprivate var filterButton: UIBarButtonItem {
+        let filterButtonImage = UIImage(named: "Filter")?.withRenderingMode(.alwaysTemplate)
+        let filterButton = UIBarButtonItem(image: filterButtonImage, style: .plain, target: self, action: #selector(filterButtonTapped))
         filterButton.tintColor = UIColor(haloColor: .WhiteSmoke)
         return filterButton
     }
 
-    private func setupBindAndFires() {
+    fileprivate func setupBindAndFires() {
         viewModel.selectedFilter.bindAndFire { [weak self] (_) in
             self?.viewModel.filterWeapons()
             self?.tableView.reloadData()
         }
     }
 
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         navigationItem.rightBarButtonItem = filterButton
     }
 
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundColor = UIColor(haloColor: .Cinder)
     }
 
-    @objc private func filterButtonTapped() {
+    @objc fileprivate func filterButtonTapped() {
         let vc = StoryboardScene.Weapons.weaponsFilterViewController()
-        vc.modalPresentationStyle = .Popover
+        vc.modalPresentationStyle = .popover
         vc.preferredContentSize = CGSize(width: 250, height: 308)
         vc.popoverPresentationController?.delegate = self
         vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
@@ -66,10 +66,10 @@ class WeaponsViewController: UIViewController, ParallaxScrollingTableView {
             vc.viewModel.selectedOption.value = option
         }
 
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
 
-    private func updateVisibleCells() {
+    fileprivate func updateVisibleCells() {
         for cell in tableView.visibleCells {
             if let cell = cell as? ImagePresenter {
                 cell.initiateImageRequest(self)
@@ -80,13 +80,13 @@ class WeaponsViewController: UIViewController, ParallaxScrollingTableView {
 
 extension WeaponsViewController: UITableViewDataSource, UITableViewDelegate {
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.weapons.count
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let weapon = viewModel.weapons[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("WeaponCell", forIndexPath: indexPath) as! WeaponStatsCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "WeaponCell", for: indexPath) as! WeaponStatsCell
         let isEven = indexPath.row % 2 == 0
         cell.weapon = weapon
         cell.configure(viewModel.imageManager.cachedImage(weapon), isEven: isEven)
@@ -94,8 +94,8 @@ extension WeaponsViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: false)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
         let weapon = viewModel.weapons[indexPath.row]
         let vc = StoryboardScene.Weapons.weaponStatsDetailViewController()
         vc.viewModel = WeaponStatsDetailViewModel(weapon: weapon, gameMode: viewModel.gameMode, imageManager: viewModel.imageManager)
@@ -103,22 +103,22 @@ extension WeaponsViewController: UITableViewDataSource, UITableViewDelegate {
         navigationController?.pushViewController(vc, animated: true)
     }
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
 }
 
 extension WeaponsViewController: WeaponsFilterDelegate {
-    func selectedFilter(option: WeaponsFilterViewModel.FilterOption) {
+    func selectedFilter(_ option: WeaponsFilterViewModel.FilterOption) {
         viewModel.selectedFilter.value = option
     }
 }
 
 extension WeaponsViewController: ImageRequestFetchCoordinator {
-    func fetchImage(presenter: ImagePresenter, model: CacheableImageModel) {
+    func fetchImage(_ presenter: ImagePresenter, model: CacheableImageModel) {
         viewModel.imageManager.fetchImage(model) { (model, image) in
             if let image = image {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     presenter.displayImage(model, image: image)
                 })
             }
@@ -128,11 +128,11 @@ extension WeaponsViewController: ImageRequestFetchCoordinator {
 
 extension WeaponsViewController: UIScrollViewDelegate {
 
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         isScrolling = true
     }
 
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             isScrolling = false
         }
@@ -142,7 +142,7 @@ extension WeaponsViewController: UIScrollViewDelegate {
         }
     }
 
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         isScrolling = false
 
         if !isScrolling && scrollView == tableView {
@@ -150,10 +150,10 @@ extension WeaponsViewController: UIScrollViewDelegate {
         }
     }
 
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let indexPaths = tableView.indexPathsForVisibleRows {
             for indexPath in indexPaths {
-                if let cell = tableView.cellForRowAtIndexPath(indexPath) as? ParallaxScrollingCell {
+                if let cell = tableView.cellForRow(at: indexPath) as? ParallaxScrollingCell {
                     cellImageOffset(tableView, cell: cell, indexPath: indexPath)
                 }
             }
@@ -163,7 +163,7 @@ extension WeaponsViewController: UIScrollViewDelegate {
 
 extension WeaponsViewController: UIPopoverPresentationControllerDelegate {
 
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .None
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }

@@ -18,16 +18,16 @@ class SelectableButton: UIButton {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        layer.borderColor = selected ? selectedColor.CGColor : deselectedColor.CGColor
+        layer.borderColor = isSelected ? selectedColor.cgColor : deselectedColor.cgColor
     }
 
-    private let selectedColor = UIColor(haloColor: .WhiteSmoke)
-    private let deselectedColor = UIColor(haloColor: .WhiteSmoke).colorWithAlphaComponent(0.4)
+    fileprivate let selectedColor = UIColor(haloColor: .WhiteSmoke)
+    fileprivate let deselectedColor = UIColor(haloColor: .WhiteSmoke).withAlphaComponent(0.4)
 
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         titleLabel?.font = UIFont.kelson(.Regular, size: 12)
-        setTitleColor(selectedColor, forState: .Selected)
-        setTitleColor(deselectedColor, forState: .Normal)
+        setTitleColor(selectedColor, for: .selected)
+        setTitleColor(deselectedColor, for: UIControlState())
 
         layer.borderWidth = 1
         layer.cornerRadius = 2

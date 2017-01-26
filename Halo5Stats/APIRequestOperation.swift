@@ -14,7 +14,7 @@ class APIRequestOperation: GroupOperation {
     
     // MARK: Initialization
     
-    init(request: RequestProtocol, shouldParse: Bool = true, completion: Void -> Void) {
+    init(request: RequestProtocol, shouldParse: Bool = true, completion: (Void) -> Void) {
         let cacheFile = request.cacheFile
         
         downloadOperation = DownloadRequestOperation(request: request, cacheFile: cacheFile)

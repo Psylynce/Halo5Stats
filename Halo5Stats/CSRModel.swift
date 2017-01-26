@@ -25,20 +25,20 @@ struct CSRModel {
     var tier: Int
     var rank: Int?
     var designationId: Int
-    var csrImageUrl: NSURL
+    var csrImageUrl: URL
 
     var type: CSRType {
-        return CSRType(rawValue: name.lowercaseString) ?? .unknown
+        return CSRType(rawValue: name.lowercased()) ?? .unknown
     }
 
-    static func convert(csr: AttainedCSR) -> CSRModel? {
+    static func convert(_ csr: AttainedCSR) -> CSRModel? {
         guard let designationId = csr.designationId as? Int else { return nil }
         guard let designation = CSRDesignation.csrDesignation(designationId) else { return nil }
         guard let name = designation.name else { return nil }
         guard let newCsr = csr.csr as? Int else { return nil }
         guard let tierId = csr.tier as? Int else { return nil }
         guard let csrTier = designation.tier(tierId) else { return nil }
-        guard let iconUrlString = csrTier.iconImageUrl, url = NSURL(string: iconUrlString) else { return nil }
+        guard let iconUrlString = csrTier.iconImageUrl, let url = URL(string: iconUrlString) else { return nil }
 
         let rank = csr.rank as? Int
 

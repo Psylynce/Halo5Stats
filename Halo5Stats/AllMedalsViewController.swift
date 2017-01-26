@@ -21,23 +21,23 @@ class AllMedalsViewController: UIViewController {
         setupAppearance()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         updateVisibleCells()
     }
 
-    private func setupCollectionView() {
+    fileprivate func setupCollectionView() {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
 
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         hideBackButtonTitle()
     }
 
-    private func updateVisibleCells() {
-        for cell in collectionView.visibleCells() {
+    fileprivate func updateVisibleCells() {
+        for cell in collectionView.visibleCells {
             if let cell = cell as? MedalImagePresenter {
                 cell.initiateMedalImageRequest(self)
             }
@@ -47,56 +47,56 @@ class AllMedalsViewController: UIViewController {
 
 extension AllMedalsViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.allMedals.count
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let medal = viewModel.allMedals[indexPath.item]
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MedalListCell", forIndexPath: indexPath) as! MedalListCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MedalListCell", for: indexPath) as! MedalListCell
         cell.medal = medal
         cell.configure(viewModel.imageManager.cachedMedalImage(medal))
 
         return cell
     }
 
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        guard let cell = collectionView.cellForItemAtIndexPath(indexPath) as? MedalListCell else { return }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? MedalListCell else { return }
         let medal = cell.medal
 
-        let cellFrame = cell.convertRect(cell.medalImageView.frame, toView: collectionView)
-        let frame = collectionView.convertRect(cellFrame, toView: view.superview)
+        let cellFrame = cell.convert(cell.medalImageView.frame, to: collectionView)
+        let frame = collectionView.convert(cellFrame, to: view.superview)
 
         let detailVC = StoryboardScene.PlayerStats.medalDetailViewController()
-        detailVC.viewModel = MedalDetailViewModel(medal: medal, imageManager: viewModel.imageManager)
+        detailVC.viewModel = MedalDetailViewModel(medal: medal!, imageManager: viewModel.imageManager)
         detailVC.openingFrame = frame
-        detailVC.modalPresentationStyle = .OverFullScreen
+        detailVC.modalPresentationStyle = .overFullScreen
         
-        presentViewController(detailVC, animated: false, completion: nil)
+        present(detailVC, animated: false, completion: nil)
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width: CGFloat = collectionView.bounds.width / 5.0
         let height: CGFloat = 75
 
         return CGSize(width: width, height: height)
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
 }
 
 extension AllMedalsViewController: MedalImageRequestFetchCoordinator {
 
-    func fetchMedalImage(presenter: MedalImagePresenter, medal: MedalModel) {
+    func fetchMedalImage(_ presenter: MedalImagePresenter, medal: MedalModel) {
         viewModel.imageManager.fetchMedalImage(medal) { (medal, image) in
             if let image = image {
-                dispatch_async(dispatch_get_main_queue(), { 
+                DispatchQueue.main.async(execute: { 
                     presenter.displayMedalImage(medal, image: image)
                 })
             }
@@ -106,11 +106,11 @@ extension AllMedalsViewController: MedalImageRequestFetchCoordinator {
 
 extension AllMedalsViewController: UIScrollViewDelegate {
 
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         isScrolling = true
     }
 
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             isScrolling = false
         }
@@ -120,7 +120,7 @@ extension AllMedalsViewController: UIScrollViewDelegate {
         }
     }
 
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         isScrolling = false
 
         if !isScrolling && scrollView == collectionView {

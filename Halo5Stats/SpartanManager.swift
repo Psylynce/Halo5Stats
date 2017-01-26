@@ -15,36 +15,36 @@ class SpartanManager {
         static let savedSpartansKey = "savedSpartans"
     }
 
-    func saveSpartan(gamertag: String) {
-        guard spartanIsSaved(gamertag.lowercaseString) == false else { return }
+    func saveSpartan(_ gamertag: String) {
+        guard spartanIsSaved(gamertag.lowercased()) == false else { return }
 
         var savedSpartans = self.savedSpartans()
-        savedSpartans.append(gamertag.lowercaseString)
+        savedSpartans.append(gamertag.lowercased())
 
-        NSUserDefaults.standardUserDefaults().setValue(savedSpartans, forKey: K.savedSpartansKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.standard.setValue(savedSpartans, forKey: K.savedSpartansKey)
+        UserDefaults.standard.synchronize()
     }
 
-    func deleteSpartan(gamertag: String) {
-        guard spartanIsSaved(gamertag.lowercaseString) == true else { return }
+    func deleteSpartan(_ gamertag: String) {
+        guard spartanIsSaved(gamertag.lowercased()) == true else { return }
 
         var savedSpartans = self.savedSpartans()
-        guard let index = savedSpartans.indexOf(gamertag.lowercaseString) else { return }
+        guard let index = savedSpartans.index(of: gamertag.lowercased()) else { return }
 
-        savedSpartans.removeAtIndex(index)
+        savedSpartans.remove(at: index)
 
-        NSUserDefaults.standardUserDefaults().setValue(savedSpartans, forKey: K.savedSpartansKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.standard.setValue(savedSpartans, forKey: K.savedSpartansKey)
+        UserDefaults.standard.synchronize()
     }
 
-    func spartanIsSaved(gamertag: String) -> Bool {
+    func spartanIsSaved(_ gamertag: String) -> Bool {
         let savedSpartans = self.savedSpartans()
 
-        return savedSpartans.contains(gamertag.lowercaseString)
+        return savedSpartans.contains(gamertag.lowercased())
     }
 
     func savedSpartans() -> [String] {
-        guard let spartans = NSUserDefaults.standardUserDefaults().arrayForKey(K.savedSpartansKey) as? [String] else { return [] }
+        guard let spartans = UserDefaults.standard.array(forKey: K.savedSpartansKey) as? [String] else { return [] }
         return spartans
     }
 }

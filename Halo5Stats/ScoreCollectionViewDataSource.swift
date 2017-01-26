@@ -15,15 +15,15 @@ protocol ScoreCollectionViewDataSource {
 protocol DisplayItem {
     var title: String? { get }
     var number: String { get }
-    var url: NSURL? { get }
+    var url: URL? { get }
 }
 
 enum ScoreCollectionViewCellType {
-    case TeamScore
-    case PlayerScore
-    case Medals
-    case EnemyAIKills
-    case VehicleKills
-    case WeaponStats
-    case PlayerStats
+    case teamScore
+    case playerScore
+    case medals
+    case enemyAIKills
+    case vehicleKills
+    case weaponStats
+    case playerStats
 }

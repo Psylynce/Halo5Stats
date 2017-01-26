@@ -11,10 +11,10 @@ class StartupOperation: GroupOperation {
 
     let initializeObjectStoreOperation: InitializeObjectStoreOperation
 
-    init(completion: Void -> Void) {
+    init(completion: (Void) -> Void) {
         initializeObjectStoreOperation = InitializeObjectStoreOperation()
 
-        let finishOperation = NSBlockOperation(block: completion)
+        let finishOperation = Foundation.BlockOperation(block: completion)
         finishOperation.addDependency(initializeObjectStoreOperation)
 
         let operations = [initializeObjectStoreOperation, finishOperation]

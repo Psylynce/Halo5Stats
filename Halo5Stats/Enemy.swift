@@ -21,14 +21,14 @@ extension Enemy: ManagedObjectTypeProtocol {
         return "Enemy"
     }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
         guard let enemies = data[JSONKeys.Enemy.enemies] as? [AnyObject] else { return }
 
         for enemy in enemies {
             guard let identifier = enemy[JSONKeys.identifier] as? String else { continue }
             let predicate = NSPredicate.predicate(withIdentifier: identifier)
             
-            Enemy.findOrCreate(inContext: context, matchingPredicate: predicate) { 
+            Enemy.findOrCreate(inContext: context, matchingPredicate: predicate) {
                 $0.name = enemy[JSONKeys.name] as? String
                 $0.faction = enemy[JSONKeys.Enemy.faction] as? String
                 $0.overview = enemy[JSONKeys.overview] as? String

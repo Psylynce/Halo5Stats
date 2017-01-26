@@ -16,7 +16,7 @@ class WeaponCellModel: ScoreCollectionViewDataSource {
     }
 
     var type: ScoreCollectionViewCellType {
-        return .WeaponStats
+        return .weaponStats
     }
 
     var items: [DisplayItem] {

@@ -15,7 +15,7 @@ class DownloadSpartanDataOperation: GroupOperation {
     let downloadCustomOperation: APIRequestOperation
     let downloadMatchesOperation: APIRequestOperation
 
-    init(gamertag: String, completion: Void -> Void) {
+    init(gamertag: String, completion: (Void) -> Void) {
         setupSpartanOperation = SetupSpartanOperation(gamertag: gamertag)
 
         let arenaRequest = ServiceRecordRequest(gamertags: [gamertag], gameMode: .Arena)
@@ -38,7 +38,7 @@ class DownloadSpartanDataOperation: GroupOperation {
             print("Initial matches parsed for \(gamertag)")
         }
 
-        let finishOperation = NSBlockOperation(block: completion)
+        let finishOperation = Foundation.BlockOperation(block: completion)
 
         downloadArenaOperation.addDependency(setupSpartanOperation)
         downloadWarzoneOperation.addDependency(downloadArenaOperation)

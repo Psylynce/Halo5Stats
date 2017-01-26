@@ -7,15 +7,15 @@
 
 import Foundation
 
-extension NSURLSession {
+extension URLSession {
 
-    class func halo5ConfiguredSession() -> NSURLSession {
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+    class func halo5ConfiguredSession() -> URLSession {
+        let configuration = URLSessionConfiguration.default
         if let key = KeyManager.sharedManager.apiKey {
-            configuration.HTTPAdditionalHeaders = [APIConstants.KeyHeader : key]
+            configuration.httpAdditionalHeaders = [APIConstants.KeyHeader : key]
         }
         
-        let session = NSURLSession(configuration: configuration)
+        let session = URLSession(configuration: configuration)
         
         return session
     }

@@ -8,17 +8,17 @@
 import UIKit
 
 enum CompareSection {
-    case Arena
-    case Warzone
-    case Custom
+    case arena
+    case warzone
+    case custom
 
     var gameMode: GameMode {
         switch self {
-        case .Arena:
+        case .arena:
             return .Arena
-        case .Warzone:
+        case .warzone:
             return .Warzone
-        case .Custom:
+        case .custom:
             return .Custom
         }
     }
@@ -31,31 +31,31 @@ enum CompareSection {
 class CompareViewModel {
 
     var spartans: Dynamic<[SpartanModel]> = Dynamic([])
-    var sections: [CompareSection] = [.Arena, .Warzone, .Custom]
+    var sections: [CompareSection] = [.arena, .warzone, .custom]
     var arenaStats: Dynamic<[StatCompareItem]> = Dynamic([])
     var warzoneStats: Dynamic<[StatCompareItem]> = Dynamic([])
     var customStats: Dynamic<[StatCompareItem]> = Dynamic([])
 
     func numberOfRows(forSection section: CompareSection) -> Int {
         switch section {
-        case .Arena:
+        case .arena:
             return arenaStats.value.count
-        case .Warzone:
+        case .warzone:
             return warzoneStats.value.count
-        case .Custom:
+        case .custom:
             return customStats.value.count
         }
     }
 
-    func compareItem(indexPath: NSIndexPath) -> StatCompareItem {
+    func compareItem(_ indexPath: IndexPath) -> StatCompareItem {
         let section = sections[indexPath.section]
 
         switch section {
-        case .Arena:
+        case .arena:
             return arenaStats.value[indexPath.row]
-        case .Warzone:
+        case .warzone:
             return warzoneStats.value[indexPath.row]
-        case .Custom:
+        case .custom:
             return customStats.value[indexPath.row]
         }
     }
@@ -64,11 +64,11 @@ class CompareViewModel {
         let items = statsModel.comparisonItems()
 
         switch section {
-        case .Arena:
+        case .arena:
             arenaStats.value = items
-        case .Warzone:
+        case .warzone:
             warzoneStats.value = items
-        case .Custom:
+        case .custom:
             customStats.value = items
         }
     }

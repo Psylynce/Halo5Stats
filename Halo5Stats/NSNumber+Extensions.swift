@@ -18,6 +18,6 @@ extension NSNumber {
             print("Identifier could not be turned into a number")
             return nil
         }
-        self.init(integer: number)
+        self.init(value: number as Int)
     }
 }

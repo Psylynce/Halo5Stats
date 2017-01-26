@@ -17,8 +17,8 @@ class PercentageCircleView: UIView {
         }
     }
 
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
 
         if let sublayers = layer.sublayers {
             sublayers.forEach { $0.removeFromSuperlayer() }
@@ -28,17 +28,17 @@ class PercentageCircleView: UIView {
         drawLayers(details)
     }
 
-    private func drawCircle() {
+    fileprivate func drawCircle() {
         let arc = CAShapeLayer()
         arc.lineWidth = 10
-        arc.path = UIBezierPath(ovalInRect: CGRect(origin: bounds.origin, size: bounds.size)).CGPath
+        arc.path = UIBezierPath(ovalIn: CGRect(origin: bounds.origin, size: bounds.size)).cgPath
         arc.bounds = CGRect(origin: bounds.origin, size: bounds.size)
-        arc.fillColor = UIColor.clearColor().CGColor
+        arc.fillColor = UIColor.clear.cgColor
         arc.position = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
         layer.addSublayer(arc)
     }
 
-    private func drawLayers(details: [PercentageDetail]) {
+    fileprivate func drawLayers(_ details: [PercentageDetail]) {
         if details.count == 2 {
             drawRatio(details)
         } else {
@@ -46,9 +46,9 @@ class PercentageCircleView: UIView {
         }
     }
 
-    private func drawRatio(details: [PercentageDetail]) {
+    fileprivate func drawRatio(_ details: [PercentageDetail]) {
         guard details.count == 2 else { return }
-        let sorted = details.sort { $0.value > $1.value }
+        let sorted = details.sorted { $0.value > $1.value }
 
         let larger = sorted[0]
         let smaller = sorted[1]
@@ -59,7 +59,7 @@ class PercentageCircleView: UIView {
         drawPercentage(firstEndValue, endValue: 1, strokeColor: larger.color)
     }
 
-    private func drawTotal(details: [PercentageDetail]) {
+    fileprivate func drawTotal(_ details: [PercentageDetail]) {
         let max = maxValue(details)
         var startValue: CGFloat = 0
         var endValue: CGFloat = 0
@@ -82,7 +82,7 @@ class PercentageCircleView: UIView {
         }
     }
 
-    private func maxValue(details: [PercentageDetail]) -> CGFloat {
+    fileprivate func maxValue(_ details: [PercentageDetail]) -> CGFloat {
         var max: CGFloat = 0
 
         for detail in details {
@@ -92,15 +92,15 @@ class PercentageCircleView: UIView {
         return max
     }
 
-    private func drawPercentage(startValue: CGFloat, endValue: CGFloat, strokeColor: UIColor) {
+    fileprivate func drawPercentage(_ startValue: CGFloat, endValue: CGFloat, strokeColor: UIColor) {
         let layer = CAShapeLayer()
         layer.lineWidth = 10
-        layer.path = UIBezierPath(ovalInRect: CGRect(origin: bounds.origin, size: bounds.size)).CGPath
+        layer.path = UIBezierPath(ovalIn: CGRect(origin: bounds.origin, size: bounds.size)).cgPath
         layer.bounds = CGRect(origin: bounds.origin, size: bounds.size)
         layer.strokeStart = startValue
         layer.strokeEnd = endValue
-        layer.strokeColor = strokeColor.CGColor
-        layer.fillColor = UIColor.clearColor().CGColor
+        layer.strokeColor = strokeColor.cgColor
+        layer.fillColor = UIColor.clear.cgColor
         layer.position = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
 //        layer.addAnimation(clockWiseAnimation, forKey: "strokeEnd")
 
@@ -110,7 +110,7 @@ class PercentageCircleView: UIView {
         self.layer.addSublayer(layer)
     }
 
-    private let clockWiseAnimation: CAAnimation = {
+    fileprivate let clockWiseAnimation: CAAnimation = {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.fromValue = 0
         animation.duration = 0.5

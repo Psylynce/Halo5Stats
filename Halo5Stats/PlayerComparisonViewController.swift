@@ -20,13 +20,13 @@ class PlayerComparisonViewController: UIViewController {
         setupController()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         definesPresentationContext = true
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         definesPresentationContext = false
@@ -41,9 +41,9 @@ class PlayerComparisonViewController: UIViewController {
     lazy var spartansViewController = StoryboardScene.PlayerComparison.spartansViewController()
 
     var searchController: UISearchController!
-    private let gamertagValidator = GamertagValidator()
+    fileprivate let gamertagValidator = GamertagValidator()
 
-    private func setupController(shouldSetupSearch setupSearch: Bool = true) {
+    fileprivate func setupController(shouldSetupSearch setupSearch: Bool = true) {
         title = "Spartans"
         gamertagValidator.viewController = self
         spartansViewController.viewController = self
@@ -56,13 +56,13 @@ class PlayerComparisonViewController: UIViewController {
         }
     }
 
-    private func setupNavBar() {
-        let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(searchButtonTapped))
+    fileprivate func setupNavBar() {
+        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonTapped))
         navigationItem.leftBarButtonItem = searchButton
         navigationItem.titleView = nil
     }
 
-    private func setupSearchController() {
+    fileprivate func setupSearchController() {
         searchController = UISearchController(searchResultsController: nil)
         searchController.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
@@ -70,22 +70,22 @@ class PlayerComparisonViewController: UIViewController {
         searchController.searchResultsUpdater = self
 
         searchController.searchBar.placeholder = "Search for fellow Spartans"
-        searchController.searchBar.searchBarStyle = .Prominent
-        searchController.searchBar.autocorrectionType = .No
-        searchController.searchBar.autocapitalizationType = .None
+        searchController.searchBar.searchBarStyle = .prominent
+        searchController.searchBar.autocorrectionType = .no
+        searchController.searchBar.autocapitalizationType = .none
         searchController.searchBar.delegate = self
         searchController.searchBar.sizeToFit()
 
         setupSearchBarAppearance()
     }
 
-    private func setupSearchBarAppearance() {
-        UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).backgroundColor = UIColor(haloColor: .Cinder).lighter()
-         UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self]).textColor = UIColor(haloColor: .WhiteSmoke)
+    fileprivate func setupSearchBarAppearance() {
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor(haloColor: .Cinder).lighter()
+         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor(haloColor: .WhiteSmoke)
         searchController.searchBar.tintColor = UIColor(haloColor: .WhiteSmoke)
     }
 
-    @objc private func searchButtonTapped() {
+    @objc fileprivate func searchButtonTapped() {
         navigationItem.leftBarButtonItem = nil
         navigationItem.titleView = searchController.searchBar
         searchController.searchBar.becomeFirstResponder()
@@ -95,18 +95,18 @@ class PlayerComparisonViewController: UIViewController {
 
 extension PlayerComparisonViewController: UISearchResultsUpdating, UISearchBarDelegate {
 
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         spartansViewController.viewModel.searchButtonClicked(searchBar, validator: gamertagValidator, viewController: self)
     }
 
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
+    func updateSearchResults(for searchController: UISearchController) {
         spartansViewController.viewModel.updateSearch(forSeachController: searchController)
     }
 }
 
 extension PlayerComparisonViewController: UISearchControllerDelegate {
 
-    func willDismissSearchController(searchController: UISearchController) {
+    func willDismissSearchController(_ searchController: UISearchController) {
         setupNavBar()
         spartansViewController.viewModel.isSearching.value = false
         spartansViewController.viewModel.fetchSpartans()
@@ -115,7 +115,7 @@ extension PlayerComparisonViewController: UISearchControllerDelegate {
 
 extension PlayerComparisonViewController: GamertagWatcher {
 
-    func defaultGamertagChanged(notification: NSNotification) {
-        navigationController?.popToRootViewControllerAnimated(false)
+    func defaultGamertagChanged(_ notification: Notification) {
+        _ = navigationController?.popToRootViewController(animated: false)
     }
 }

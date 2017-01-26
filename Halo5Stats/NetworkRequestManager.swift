@@ -18,14 +18,14 @@ class NetworkRequestManager {
         case Warzone = "warzoneServiceRecordRequestDate"
         case Custom = "customServiceRecordRequestDate"
 
-        func date() -> NSDate? {
+        func date() -> Date? {
             switch self {
             case .Metadata:
-                return NSDate().daysFromNow(3)
+                return Date().daysFromNow(3)
             case .Matches:
-                return NSDate().daysFromNow(1)
+                return Date().daysFromNow(1)
             case .Arena, .Warzone, .Custom:
-                return NSDate().daysFromNow(1)
+                return Date().daysFromNow(1)
             }
         }
 
@@ -41,7 +41,7 @@ class NetworkRequestManager {
         }
     }
 
-    func shouldSendRequest(requestType: RequestType, force: Bool = false) -> Bool {
+    func shouldSendRequest(_ requestType: RequestType, force: Bool = false) -> Bool {
         guard let nextDate = nextDate(forRequestType: requestType) else {
             setNextRequestDate(requestType)
             return true
@@ -51,7 +51,7 @@ class NetworkRequestManager {
             return true
         }
 
-        let shouldSend = nextDate.timeIntervalSince1970 <= NSDate().timeIntervalSince1970
+        let shouldSend = nextDate.timeIntervalSince1970 <= Date().timeIntervalSince1970
         if shouldSend {
             setNextRequestDate(requestType)
         }
@@ -59,13 +59,13 @@ class NetworkRequestManager {
         return shouldSend
     }
 
-    private func setNextRequestDate(requestType: RequestType) {
+    fileprivate func setNextRequestDate(_ requestType: RequestType) {
         let nextDate = requestType.date()
-        NSUserDefaults.standardUserDefaults().setValue(nextDate, forKey: requestType.rawValue)
-        NSUserDefaults.standardUserDefaults().synchronize()
+        UserDefaults.standard.setValue(nextDate, forKey: requestType.rawValue)
+        UserDefaults.standard.synchronize()
     }
 
-    private func nextDate(forRequestType rt: RequestType) -> NSDate? {
-        return NSUserDefaults.standardUserDefaults().valueForKey(rt.rawValue) as? NSDate
+    fileprivate func nextDate(forRequestType rt: RequestType) -> Date? {
+        return UserDefaults.standard.value(forKey: rt.rawValue) as? Date
     }
 }

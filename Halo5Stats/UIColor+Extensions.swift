@@ -10,9 +10,9 @@ import UIKit
 extension UIColor {
 
     convenience init(hex: String) {
-        let hex = hex.stringByTrimmingCharactersInSet(NSCharacterSet.alphanumericCharacterSet().invertedSet)
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt32()
-        NSScanner(string: hex).scanHexInt(&int)
+        Scanner(string: hex).scanHexInt32(&int)
         let a, r, g, b: UInt32
 
         switch hex.characters.count {
@@ -55,15 +55,15 @@ extension UIColor {
         case unknown = "2f2e39"
     }
 
-    func lighter(amount: CGFloat = 0.25) -> UIColor {
+    func lighter(_ amount: CGFloat = 0.25) -> UIColor {
         return hue(withBrightnessAmount: 1 + amount)
     }
 
-    func darker(amount: CGFloat = 0.25) -> UIColor {
+    func darker(_ amount: CGFloat = 0.25) -> UIColor {
         return hue(withBrightnessAmount: 1 - amount)
     }
 
-    private func hue(withBrightnessAmount amount: CGFloat) -> UIColor {
+    fileprivate func hue(withBrightnessAmount amount: CGFloat) -> UIColor {
         var hue: CGFloat = 0
         var saturation: CGFloat = 0
         var brightness: CGFloat = 0

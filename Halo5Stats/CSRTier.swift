@@ -19,7 +19,7 @@ extension CSRTier: ManagedObjectTypeProtocol {
         return "CSRTier"
     }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
         // Creating the tiers is done in the CSRDesignation parse method
     }
 }

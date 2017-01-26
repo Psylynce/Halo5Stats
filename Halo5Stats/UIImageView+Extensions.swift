@@ -10,19 +10,19 @@ import UIKit
 
 extension UIImageView {
 
-    func image(forUrl url: NSURL) {
+    func image(forUrl url: URL) {
         tintedImage(forUrl: url, color: nil)
     }
 
-    func tintedImage(forUrl url: NSURL, color: UIColor?) {
+    func tintedImage(forUrl url: URL, color: UIColor?) {
         ImageCache.sharedInstance.image(forUrl: url) { [weak self] (response) in
             switch response {
-            case .Error:
+            case .error:
                 return
-            case .Success(var image):
-                dispatch_async(dispatch_get_main_queue()) {
+            case .success(var image):
+                DispatchQueue.main.async {
                     if let color = color {
-                        image = image.imageWithRenderingMode(.AlwaysTemplate)
+                        image = image.withRenderingMode(.alwaysTemplate)
                         self?.tintColor = color
                     }
                     self?.image = image
@@ -31,13 +31,13 @@ extension UIImageView {
         }
     }
 
-    func croppedImage(forUrl url: NSURL, cropRect: CGRect) {
+    func croppedImage(forUrl url: URL, cropRect: CGRect) {
         ImageCache.sharedInstance.croppedImage(forUrl: url, cropRect: cropRect) { [weak self] (response) in
             switch response {
-            case .Error:
+            case .error:
                 return
-            case .Success(let image):
-                dispatch_async(dispatch_get_main_queue()) {
+            case .success(let image):
+                DispatchQueue.main.async {
                     self?.image = image
                 }
             }

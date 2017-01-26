@@ -13,7 +13,7 @@ class TeamColor: NSManagedObject {
 
     static func teamColor(forIdentifier id: Int) -> TeamColor? {
         let context = UIApplication.appController().managedObjectContext()
-        let predicate = NSPredicate.predicate(withNumberIdentifier: id)
+        let predicate = NSPredicate.predicate(withNumberIdentifier: NSNumber(integerLiteral: id))
         
         return TeamColor.findOrFetch(inContext: context, matchingPredicate: predicate)
     }
@@ -26,7 +26,7 @@ extension TeamColor: ManagedObjectTypeProtocol {
         return "TeamColor"
     }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
         guard let teamColors = data[JSONKeys.TeamColor.teamColors] as? [AnyObject] else { return }
 
         for color in teamColors {

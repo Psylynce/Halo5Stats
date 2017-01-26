@@ -8,20 +8,20 @@
 import UIKit
 
 enum SpartanSection {
-    case Default
-    case Favorites
-    case Spartans
-    case Filtered
+    case `default`
+    case favorites
+    case spartans
+    case filtered
 
     var title: String? {
         switch  self {
-        case .Default:
+        case .default:
             return "You"
-        case .Favorites:
+        case .favorites:
             return "Favorites"
-        case .Spartans:
+        case .spartans:
             return "Fellow Spartans"
-        case .Filtered:
+        case .filtered:
             return nil
         }
     }
@@ -83,19 +83,19 @@ class SpartansViewModel {
     }
 
     func updateSearch(forSeachController sc: UISearchController) {
-        guard let searchText = sc.searchBar.text where !searchText.isEmpty else {
+        guard let searchText = sc.searchBar.text, !searchText.isEmpty else {
             fetchSpartans()
             return
         }
 
         let filteredSpartans = self.filteredSpartans.value.filter { spartan in
-            return spartan.gamertag.lowercaseString.containsString(searchText.lowercaseString)
+            return spartan.gamertag.lowercased().contains(searchText.lowercased())
         }
 
         self.filteredSpartans.value = filteredSpartans
     }
 
-    func searchButtonClicked(searchBar: UISearchBar, validator: GamertagValidator, viewController: PlayerComparisonViewController) {
+    func searchButtonClicked(_ searchBar: UISearchBar, validator: GamertagValidator, viewController: PlayerComparisonViewController) {
         searchBar.resignFirstResponder()
         if let gamertag = searchBar.text {
             guard !SpartanManager.sharedManager.spartanIsSaved(gamertag) else {
@@ -113,28 +113,28 @@ class SpartansViewModel {
 
                     viewController.navigationController?.pushViewController(serviceRecordParentVC, animated: true)
                     viewController.hideBackButtonTitle()
-                    viewController.searchController.active = false
+                    viewController.searchController.isActive = false
                 }
             }
         }
     }
 
-    func isComparing(spartan: SpartanModel) -> Bool {
-        return selectedSpartans.value.contains({ $0.gamertag == spartan.gamertag })
+    func isComparing(_ spartan: SpartanModel) -> Bool {
+        return selectedSpartans.value.contains(where: { $0.gamertag == spartan.gamertag })
     }
 
-    func spartan(forIndexPath indexPath: NSIndexPath) -> SpartanModel {
+    func spartan(forIndexPath indexPath: IndexPath) -> SpartanModel {
         let section = sections.value[indexPath.section]
         var spartan: SpartanModel
 
         switch section {
-        case .Default:
+        case .default:
             spartan = defaultSpartan.value[indexPath.row]
-        case .Favorites:
+        case .favorites:
             spartan = favorites.value[indexPath.row]
-        case .Spartans:
+        case .spartans:
             spartan = spartans.value[indexPath.row]
-        case .Filtered:
+        case .filtered:
             spartan = filteredSpartans.value[indexPath.row]
         }
 
@@ -143,45 +143,45 @@ class SpartansViewModel {
 
     // MARK: - Private
 
-    private func updateSections() {
+    fileprivate func updateSections() {
         var newSections: [SpartanSection] = []
 
         if isSearching.value {
-            sections.value = [.Filtered]
+            sections.value = [.filtered]
             return
         }
 
         if defaultSpartan.value.count == 1 {
-            newSections.append(.Default)
+            newSections.append(.default)
         }
 
         if favorites.value.count > 0 {
-            newSections.append(.Favorites)
+            newSections.append(.favorites)
         }
 
         if spartans.value.count > 0 {
-            newSections.append(.Spartans)
+            newSections.append(.spartans)
         }
 
         sections.value = newSections
     }
 
-    private func sortSpartans(spartans: [SpartanModel]) -> [SpartanModel] {
-        return spartans.sort { $0.displayGamertag.lowercaseString < $1.displayGamertag.lowercaseString }
+    fileprivate func sortSpartans(_ spartans: [SpartanModel]) -> [SpartanModel] {
+        return spartans.sorted { $0.displayGamertag.lowercased() < $1.displayGamertag.lowercased() }
     }
 }
 
 extension SpartansViewModel: SpartanCellDelegate {
 
-    func compareButtonTapped(spartan: SpartanModel) {
-        if let index = selectedSpartans.value.indexOf({ $0.gamertag == spartan.gamertag }) {
-            selectedSpartans.value.removeAtIndex(index)
+    func compareButtonTapped(_ spartan: SpartanModel) {
+        if let index = selectedSpartans.value.index(where: { $0.gamertag == spartan.gamertag }) {
+            selectedSpartans.value.remove(at: index)
         } else {
             selectedSpartans.value.append(spartan)
         }
     }
 
-    func favoriteButtonTapped(cell: SpartanCell) {
+    func favoriteButtonTapped(_ cell: SpartanCell) {
         fetchSpartans()
     }
 }

@@ -9,16 +9,16 @@ import CoreData
 
 extension ManagedObjectTypeProtocol where Self: NSManagedObject {
 
-    public static func fetch(inContext context: NSManagedObjectContext, @noescape configurationBlock: NSFetchRequest -> () = { _ in }) -> [Self] {
-        let request = NSFetchRequest(entityName: Self.entityName)
+    public static func fetch(inContext context: NSManagedObjectContext, configurationBlock: (NSFetchRequest<NSFetchRequestResult>) -> () = { _ in }) -> [Self] {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: Self.entityName)
         configurationBlock(request)
-        guard let result = try! context.executeFetchRequest(request) as? [Self] else { fatalError("Fetched objects have wrong type.") }
+        guard let result = try! context.fetch(request) as? [Self] else { fatalError("Fetched objects have wrong type.") }
         return result
     }
 
     public static func materializeObject(inContext context: NSManagedObjectContext, matchingPredicate predicate: NSPredicate) -> Self? {
-        for object in context.registeredObjects where !object.fault {
-            guard let result = object as? Self where predicate.evaluateWithObject(result) else { continue }
+        for object in context.registeredObjects where !object.isFault {
+            guard let result = object as? Self, predicate.evaluate(with: result) else { continue }
             return result
         }
 
@@ -37,7 +37,7 @@ extension ManagedObjectTypeProtocol where Self: NSManagedObject {
         return object
     }
 
-    public static func findOrCreate(inContext context: NSManagedObjectContext, matchingPredicate predicate: NSPredicate, shouldUpdate: Bool = true, configure: Self -> ()) -> Self {
+    @discardableResult public static func findOrCreate(inContext context: NSManagedObjectContext, matchingPredicate predicate: NSPredicate, shouldUpdate: Bool = true, configure: (Self) -> ()) -> Self {
         guard let object = findOrFetch(inContext: context, matchingPredicate: predicate) else {
             let newObject: Self = context.insertObject()
             configure(newObject)

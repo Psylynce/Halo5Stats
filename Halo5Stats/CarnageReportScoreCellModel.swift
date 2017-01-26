@@ -26,9 +26,9 @@ class CarnageReportScoreCellModel: ScoreCollectionViewDataSource {
 
     var type: ScoreCollectionViewCellType {
         if showTeam() {
-            return ScoreCollectionViewCellType.TeamScore
+            return ScoreCollectionViewCellType.teamScore
         }
-        return ScoreCollectionViewCellType.PlayerScore
+        return ScoreCollectionViewCellType.playerScore
     }
 
     var items: [DisplayItem] {

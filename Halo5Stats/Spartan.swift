@@ -12,7 +12,7 @@ import CoreData
 class Spartan: NSManagedObject {
 
     func match(forIdentifier identifier: String) -> Match? {
-        guard let m = matches?.allObjects as? [Match] where m.count != 0 else { return nil }
+        guard let m = matches?.allObjects as? [Match], m.count != 0 else { return nil }
 
         for match in m {
             if match.identifier == identifier {
@@ -24,7 +24,7 @@ class Spartan: NSManagedObject {
     }
 
     func serviceRecord(forType type: String) -> ServiceRecord? {
-        guard let records = serviceRecords?.allObjects as? [ServiceRecord] where records.count != 0 else { return nil}
+        guard let records = serviceRecords?.allObjects as? [ServiceRecord], records.count != 0 else { return nil}
 
         for record in records {
             if record.type == type {
@@ -37,26 +37,26 @@ class Spartan: NSManagedObject {
 
     func setDisplayGamertag(fromMatch match: AnyObject) {
         guard displayGamertag == nil else { return }
-        guard let players = match[JSONKeys.Matches.players] as? [AnyObject], player = players[0][JSONKeys.Matches.player] as? [String : AnyObject], gamertag = player[JSONKeys.Gamertag] as? String else { return }
+        guard let players = match[JSONKeys.Matches.players] as? [AnyObject], let player = players[0][JSONKeys.Matches.player] as? [String : AnyObject], let gamertag = player[JSONKeys.Gamertag] as? String else { return }
         self.displayGamertag = gamertag
     }
 
-    static func deleteSpartan(gamertag: String, context: NSManagedObjectContext = UIApplication.appController().managedObjectContext(), completion: (success: Bool) -> Void) {
+    static func deleteSpartan(_ gamertag: String, context: NSManagedObjectContext = UIApplication.appController().managedObjectContext(), completion: (_ success: Bool) -> Void) {
         guard let spartan = Spartan.spartan(gamertag) else {
-            completion(success: false)
+            completion(false)
             return
         }
 
-        context.deleteObject(spartan)
+        context.delete(spartan)
         SpartanManager.sharedManager.deleteSpartan(gamertag)
         FavoritesManager.sharedManager.deleteSpartan(gamertag)
-        completion(success: true)
+        completion(true)
         UIApplication.appController().persistenceController.save()
     }
 
-    static func spartan(gamertag: String) -> Spartan? {
+    static func spartan(_ gamertag: String) -> Spartan? {
         let context = UIApplication.appController().managedObjectContext()
-        let predicate = NSPredicate.predicate(withGamertag: gamertag.lowercaseString)
+        let predicate = NSPredicate.predicate(withGamertag: gamertag.lowercased())
         guard let spartan = Spartan.findOrFetch(inContext: context, matchingPredicate: predicate) else {
             print("Ooops could not find spartan")
             return nil
@@ -73,7 +73,7 @@ extension Spartan: ManagedObjectTypeProtocol {
         return "Spartan"
     }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
         guard let gamertag = data[JSONKeys.Gamertag] as? String else {
             print("Gamertag was empty")
             return

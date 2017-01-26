@@ -35,17 +35,17 @@ class PlayerStatCell: UICollectionViewCell {
         valueLabel.adjustsFontSizeToFitWidth = true
         valueLabel.minimumScaleFactor = 0.6
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        borders.forEach { $0.hidden = false }
+        borders.forEach { $0.isHidden = false }
     }
 
-    func configure(item: DisplayItem) {
+    func configure(_ item: DisplayItem) {
         if let title = item.title {
             titleLabel.text = title
         }
@@ -56,13 +56,13 @@ class PlayerStatCell: UICollectionViewCell {
     func hideBorder(forIndex index: Int) {
         let mod3 = index % 3
         if mod3 == 0 {
-            leftBorder.hidden = true
+            leftBorder.isHidden = true
         } else if mod3 == 2 {
-            rightBorder.hidden = true
+            rightBorder.isHidden = true
         }
     }
 
     func completelyHideBorder() {
-        borders.forEach { $0.hidden = true }
+        borders.forEach { $0.isHidden = true }
     }
 }

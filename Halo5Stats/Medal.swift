@@ -27,7 +27,7 @@ extension Medal: ManagedObjectTypeProtocol {
         return "Medal"
     }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
         guard let medals = data[JSONKeys.Medal.medals] as? [AnyObject] else { return }
 
         for medal in medals {
@@ -38,16 +38,16 @@ extension Medal: ManagedObjectTypeProtocol {
                 $0.name = medal[JSONKeys.name] as? String
                 $0.overview = medal[JSONKeys.overview] as? String
                 $0.classification = medal[JSONKeys.Medal.classification] as? String
-                $0.difficulty = medal[JSONKeys.Medal.difficulty] as? Int
+                $0.difficulty = medal[JSONKeys.Medal.difficulty] as? Int as NSNumber?
                 if let sld = medal[JSONKeys.Medal.spriteLocation] as? [String : AnyObject] {
                     let locationX = sld[JSONKeys.Medal.left] as! Int
-                    $0.spriteLocationX = NSNumber(integer: locationX)
+                    $0.spriteLocationX = NSNumber(value: locationX as Int)
                     let locationY = sld[JSONKeys.Medal.top] as! Int
-                    $0.spriteLocationY = NSNumber(integer: locationY)
+                    $0.spriteLocationY = NSNumber(value: locationY as Int)
                     let spriteHeight = sld[JSONKeys.Medal.height] as! Int
-                    $0.spriteHeight = NSNumber(integer: spriteHeight)
+                    $0.spriteHeight = NSNumber(value: spriteHeight as Int)
                     let spriteWidth = sld[JSONKeys.Medal.width] as! Int
-                    $0.spriteWidth = NSNumber(integer: spriteWidth)
+                    $0.spriteWidth = NSNumber(value: spriteWidth as Int)
                     $0.spriteImageUrl = sld[JSONKeys.Medal.spriteSheetUrl] as? String
                 }
                 $0.identifier = identifier

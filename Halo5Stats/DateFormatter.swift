@@ -13,12 +13,12 @@ enum DateFormat: String {
 
 class DateFormatter {
 
-    static let formatter = NSDateFormatter()
+    static let formatter = Foundation.DateFormatter()
 
-    static func string(fromDate date: NSDate, format: DateFormat) -> String {
+    static func string(fromDate date: Date, format: DateFormat) -> String {
         formatter.dateFormat = format.rawValue
-        formatter.timeZone = NSTimeZone.localTimeZone()
-        let dateString = formatter.stringFromDate(date)
+        formatter.timeZone = TimeZone.autoupdatingCurrent
+        let dateString = formatter.string(from: date)
         return dateString
     }
 }

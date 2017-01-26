@@ -16,7 +16,7 @@ class PlayerStatsCellModel: ScoreCollectionViewDataSource {
     }
 
     var type: ScoreCollectionViewCellType {
-        return .PlayerStats
+        return .playerStats
     }
 
     var items: [DisplayItem] {

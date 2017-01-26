@@ -22,10 +22,10 @@ extension AttainedCSR: ManagedObjectTypeProtocol {
     }
 
     func update(withData data: AnyObject, context: NSManagedObjectContext) {
-        csr = data[JSONKeys.AttainedCSR.csr] as? Int
-        designationId = data[JSONKeys.AttainedCSR.designationId] as? Int
-        percentToNextTier = data[JSONKeys.AttainedCSR.percentToNextTier] as? Int
-        rank = data[JSONKeys.AttainedCSR.rank] as? Int
-        tier = data[JSONKeys.AttainedCSR.tier] as? Int
+        csr = data[JSONKeys.AttainedCSR.csr] as? Int as NSNumber?
+        designationId = data[JSONKeys.AttainedCSR.designationId] as? Int as NSNumber?
+        percentToNextTier = data[JSONKeys.AttainedCSR.percentToNextTier] as? Int as NSNumber?
+        rank = data[JSONKeys.AttainedCSR.rank] as? Int as NSNumber?
+        tier = data[JSONKeys.AttainedCSR.tier] as? Int as NSNumber?
     }
 }

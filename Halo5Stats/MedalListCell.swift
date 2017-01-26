@@ -13,7 +13,7 @@ class MedalListCell: UICollectionViewCell {
     @IBOutlet var medalCountLabel: UILabel!
 
     var medal: MedalModel!
-    let placeholder = UIImage(named: "Medal")?.imageWithRenderingMode(.AlwaysTemplate)
+    let placeholder = UIImage(named: "Medal")?.withRenderingMode(.alwaysTemplate)
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,7 +31,7 @@ class MedalListCell: UICollectionViewCell {
         medalImageView.image = placeholder
     }
 
-    func configure(cachedImage: UIImage?) {
+    func configure(_ cachedImage: UIImage?) {
         medalImageView.image = cachedImage
         medalCountLabel.text = "x\(medal.count)"
     }
@@ -39,11 +39,11 @@ class MedalListCell: UICollectionViewCell {
 
 extension MedalListCell: MedalImagePresenter {
 
-    func initiateMedalImageRequest(coordinator: MedalImageRequestFetchCoordinator) {
+    func initiateMedalImageRequest(_ coordinator: MedalImageRequestFetchCoordinator) {
         coordinator.fetchMedalImage(self, medal: medal)
     }
 
-    func displayMedalImage(medal: MedalModel, image: UIImage) {
+    func displayMedalImage(_ medal: MedalModel, image: UIImage) {
         if medal.cacheIdentifier == self.medal.cacheIdentifier {
             medalImageView.image = image
         }

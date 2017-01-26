@@ -16,7 +16,7 @@ class MedalCellModel: ScoreCollectionViewDataSource {
     }
 
     var type: ScoreCollectionViewCellType {
-        return .Medals
+        return .medals
     }
 
     var items: [DisplayItem] {

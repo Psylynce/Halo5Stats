@@ -15,7 +15,7 @@ class SelectionCell: UITableViewCell {
         textLabel?.font = UIFont.kelson(.Regular, size: 16)
         textLabel?.textColor = UIColor(haloColor: .WhiteSmoke)
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
     }
 }

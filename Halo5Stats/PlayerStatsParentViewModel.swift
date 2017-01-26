@@ -23,12 +23,12 @@ class PlayerStatsParentViewModel {
     }
 
     func spartan() -> Spartan? {
-        guard let gamertag = gamertag, spartan = Spartan.spartan(gamertag) else { return nil }
+        guard let gamertag = gamertag, let spartan = Spartan.spartan(gamertag) else { return nil }
         return spartan
     }
 
     func isDefaultUser() -> Bool {
-        guard let defaultGamertag = GamertagManager.sharedManager.gamertagForUser(), gamertag = gamertag else { return false }
+        guard let defaultGamertag = GamertagManager.sharedManager.gamertagForUser(), let gamertag = gamertag else { return false }
 
         return defaultGamertag == gamertag
     }

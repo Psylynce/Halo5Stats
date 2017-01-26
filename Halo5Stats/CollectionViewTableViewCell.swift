@@ -29,20 +29,20 @@ class CollectionViewTableViewCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.scrollsToTop = false
-        collectionView.backgroundColor = UIColor.clearColor()
+        collectionView.backgroundColor = UIColor.clear
 
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
 
-        collectionView.registerNib(UINib(nibName: K.BasicScoreCell, bundle: nil), forCellWithReuseIdentifier: K.BasicScoreCell)
-        collectionView.registerNib(UINib(nibName: K.TitleScoreCell, bundle: nil), forCellWithReuseIdentifier: K.TitleScoreCell)
-        collectionView.registerNib(UINib(nibName: K.PlayerStatCell, bundle: nil), forCellWithReuseIdentifier: K.PlayerStatCell)
-        collectionView.registerNib(UINib(nibName: K.SimpleWeaponCell, bundle: nil), forCellWithReuseIdentifier: K.SimpleWeaponCell)
+        collectionView.register(UINib(nibName: K.BasicScoreCell, bundle: nil), forCellWithReuseIdentifier: K.BasicScoreCell)
+        collectionView.register(UINib(nibName: K.TitleScoreCell, bundle: nil), forCellWithReuseIdentifier: K.TitleScoreCell)
+        collectionView.register(UINib(nibName: K.PlayerStatCell, bundle: nil), forCellWithReuseIdentifier: K.PlayerStatCell)
+        collectionView.register(UINib(nibName: K.SimpleWeaponCell, bundle: nil), forCellWithReuseIdentifier: K.SimpleWeaponCell)
 
-        selectionStyle = .None
+        selectionStyle = .none
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
     }
 
     override func prepareForReuse() {
@@ -51,7 +51,7 @@ class CollectionViewTableViewCell: UITableViewCell {
         collectionView.reloadData()
     }
 
-    private func lastTwoItems(indexPath: NSIndexPath) -> Bool {
+    fileprivate func lastTwoItems(_ indexPath: IndexPath) -> Bool {
         let lastItem = indexPath.item == dataSource.items.count - 1
         let secondToLastItem = indexPath.item == dataSource.items.count - 2
         let lastTwoItems = lastItem || secondToLastItem
@@ -60,9 +60,9 @@ class CollectionViewTableViewCell: UITableViewCell {
     }
 
     func updateVisibleCells() {
-        guard let dataSource = dataSource where dataSource.type == .Medals || dataSource.type == .WeaponStats else { return }
+        guard let dataSource = dataSource, dataSource.type == .medals || dataSource.type == .weaponStats else { return }
 
-        for cell in collectionView.visibleCells() {
+        for cell in collectionView.visibleCells {
             if let cell = cell as? MedalImagePresenter {
                 cell.initiateMedalImageRequest(self)
             }
@@ -76,34 +76,34 @@ class CollectionViewTableViewCell: UITableViewCell {
 
 extension CollectionViewTableViewCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataSource.items.count
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = dataSource.items[indexPath.item]
 
         switch dataSource.type {
-        case .EnemyAIKills, .TeamScore, .VehicleKills:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(K.BasicScoreCell, forIndexPath: indexPath) as! BasicScoreCell
+        case .enemyAIKills, .teamScore, .vehicleKills:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.BasicScoreCell, for: indexPath) as! BasicScoreCell
             cell.configure(item)
 
             return cell
-        case .PlayerScore:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(K.TitleScoreCell, forIndexPath: indexPath) as! TitleScoreCell
+        case .playerScore:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.TitleScoreCell, for: indexPath) as! TitleScoreCell
             cell.configure(item)
 
             return cell
-        case .Medals:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(K.TitleScoreCell, forIndexPath: indexPath) as! TitleScoreCell
+        case .medals:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.TitleScoreCell, for: indexPath) as! TitleScoreCell
             if let medal = item as? MedalModel {
                 cell.medal = medal
                 cell.configure(item, cachedImage: medalImageManager.cachedMedalImage(medal))
             }
 
             return cell
-        case .PlayerStats:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(K.PlayerStatCell, forIndexPath: indexPath) as! PlayerStatCell
+        case .playerStats:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.PlayerStatCell, for: indexPath) as! PlayerStatCell
             cell.configure(item)
             cell.hideBorder(forIndex: indexPath.item)
             if indexPath.item == dataSource.items.count - 1 || indexPath.item == dataSource.items.count - 2 {
@@ -111,8 +111,8 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource, UICollectionV
             }
 
             return cell
-        case .WeaponStats:
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(K.SimpleWeaponCell, forIndexPath: indexPath) as! SimpleWeaponCell
+        case .weaponStats:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: K.SimpleWeaponCell, for: indexPath) as! SimpleWeaponCell
             if let weapon = item as? WeaponModel {
                 cell.weapon = weapon
                 let weaponImage = imageManager.cachedImage(weapon)
@@ -123,22 +123,22 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource, UICollectionV
         }
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let items = dataSource.items
         let itemCount = CGFloat(items.count)
 
-        if dataSource.type == .Medals {
+        if dataSource.type == .medals {
             if items.count == 5 {
                 return CGSize(width: collectionView.frame.width / itemCount, height: collectionView.frame.height)
             }
-        } else if dataSource.type == .WeaponStats {
+        } else if dataSource.type == .weaponStats {
             return CGSize(width: collectionView.frame.width / 2.25, height: collectionView.frame.height)
         }
 
         if items.count <= 4 && items.count != 0 {
             return CGSize(width: collectionView.frame.width / itemCount, height: collectionView.frame.height)
         } else {
-            let isPlayerStats = dataSource.type == .PlayerStats
+            let isPlayerStats = dataSource.type == .playerStats
             if isPlayerStats {
                 let height: CGFloat = 100.0
                 let divisor: CGFloat = lastTwoItems(indexPath) ? 2.0 : 3.0
@@ -149,21 +149,21 @@ extension CollectionViewTableViewCell: UICollectionViewDataSource, UICollectionV
         }
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return CGFloat.min
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
     }
 
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
-        return CGFloat.min
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude
     }
 }
 
 extension CollectionViewTableViewCell: ImageRequestFetchCoordinator {
 
-    func fetchImage(presenter: ImagePresenter, model: CacheableImageModel) {
+    func fetchImage(_ presenter: ImagePresenter, model: CacheableImageModel) {
         imageManager.fetchImage(model) { (model, image) in
             if let image = image {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     presenter.displayImage(model, image: image)
                 })
             }
@@ -172,10 +172,10 @@ extension CollectionViewTableViewCell: ImageRequestFetchCoordinator {
 }
 extension CollectionViewTableViewCell: MedalImageRequestFetchCoordinator {
 
-    func fetchMedalImage(presenter: MedalImagePresenter, medal: MedalModel) {
+    func fetchMedalImage(_ presenter: MedalImagePresenter, medal: MedalModel) {
         medalImageManager.fetchMedalImage(medal) { (medal, image) in
             if let image = image {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     presenter.displayMedalImage(medal, image: image)
                 })
             }
@@ -185,11 +185,11 @@ extension CollectionViewTableViewCell: MedalImageRequestFetchCoordinator {
 
 extension CollectionViewTableViewCell: UIScrollViewDelegate {
 
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         isScrolling = true
     }
 
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             isScrolling = false
         }
@@ -199,7 +199,7 @@ extension CollectionViewTableViewCell: UIScrollViewDelegate {
         }
     }
 
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         isScrolling = false
 
         if !isScrolling && scrollView == collectionView {

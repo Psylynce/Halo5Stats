@@ -24,7 +24,7 @@ extension GameBaseVariant: ManagedObjectTypeProtocol {
         return "GameBaseVariant"
     }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
         guard let variants = data[JSONKeys.GameBaseVariant.gameBaseVariants] as? [AnyObject] else { return }
 
         for variant in variants {
@@ -41,7 +41,7 @@ extension GameBaseVariant: ManagedObjectTypeProtocol {
                 $0.identifier = identifier
 
                 if let supportedGameModes = variant[JSONKeys.GameBaseVariant.supportedGameModes] as? [String] {
-                    $0.supportedGameModes = supportedGameModes.joinWithSeparator(",")
+                    $0.supportedGameModes = supportedGameModes.joined(separator: ",")
                 }
             }
         }

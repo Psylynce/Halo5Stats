@@ -35,7 +35,7 @@ class WeaponStatsCell: UITableViewCell {
         contentView.horizontalGradient(weapon.type.color, endColor: UIColor(haloColor: .blueCharcoal))
     }
 
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         weaponNameLabel.textColor = UIColor(haloColor: .WhiteSmoke)
         weaponNameLabel.font = UIFont.kelson(.Bold, size: 32)
 
@@ -50,10 +50,10 @@ class WeaponStatsCell: UITableViewCell {
         accuracyLabel.textColor = UIColor(haloColor: .WhiteSmoke)
         accuracyLabel.font = UIFont.kelson(.Regular, size: 14)
 
-        backgroundColor = UIColor.clearColor()
+        backgroundColor = UIColor.clear
     }
 
-    func configure(cachedImage: UIImage?, isEven: Bool) {
+    func configure(_ cachedImage: UIImage?, isEven: Bool) {
         weaponNameLabel.text = weapon.name
         killsLabel.text = "\(weapon.kills)"
         accuracyLabel.text = "\(weapon.accuracy)%"
@@ -66,13 +66,13 @@ class WeaponStatsCell: UITableViewCell {
 }
 
 extension WeaponStatsCell: ImagePresenter {
-    func displayImage(model: CacheableImageModel, image: UIImage) {
+    func displayImage(_ model: CacheableImageModel, image: UIImage) {
         if model.cacheIdentifier == weapon.cacheIdentifier {
             weaponImageView.image = image
         }
     }
 
-    func initiateImageRequest(coordinator: ImageRequestFetchCoordinator) {
+    func initiateImageRequest(_ coordinator: ImageRequestFetchCoordinator) {
         coordinator.fetchImage(self, model: weapon)
     }
 }
