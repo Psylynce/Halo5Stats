@@ -13,34 +13,33 @@ import Foundation
     If any dependency was cancelled, the target operation will be cancelled as
     well.
 */
-struct NoCancelledDependencies: OperationCondition {
-    static let name = "NoCancelledDependencies"
+public struct NoCancelledDependencies: OperationCondition {
+    public static let name = "NoCancelledDependencies"
     static let cancelledDependenciesKey = "CancelledDependencies"
-    static let isMutuallyExclusive = false
-    
-    init() {
+    public static let isMutuallyExclusive = false
+
+    public init() {
         // No op.
     }
-    
-    func dependencyForOperation(operation: Operation) -> NSOperation? {
+
+    public func dependencyForOperation(_ operation: Operation) -> Foundation.Operation? {
         return nil
     }
-    
-    func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void) {
+
+    public func evaluateForOperation(_ operation: Operation, completion: @escaping (OperationConditionResult) -> Void) {
         // Verify that all of the dependencies executed.
-        let cancelled = operation.dependencies.filter { $0.cancelled }
+        let cancelled = operation.dependencies.filter { $0.isCancelled }
 
         if !cancelled.isEmpty {
             // At least one dependency was cancelled; the condition was not satisfied.
-            let error = NSError(code: .ConditionFailed, userInfo: [
-                OperationConditionKey: self.dynamicType.name,
-                self.dynamicType.cancelledDependenciesKey: cancelled
+            let error = NSError(code: .conditionFailed, userInfo: [
+                OperationConditionKey: type(of: self).name,
+                type(of: self).cancelledDependenciesKey: cancelled
             ])
-            
-            completion(.Failed(error))
-        }
-        else {
-            completion(.Satisfied)
+
+            completion(.failed(error))
+        } else {
+            completion(.satisfied)
         }
     }
 }

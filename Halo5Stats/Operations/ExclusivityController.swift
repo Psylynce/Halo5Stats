@@ -14,66 +14,66 @@ import Foundation
     We use a singleton because mutual exclusivity must be enforced across the entire
     app, regardless of the `OperationQueue` on which an `Operation` was executed.
 */
-class ExclusivityController {
+open class ExclusivityController {
     static let sharedExclusivityController = ExclusivityController()
-    
-    private let serialQueue = dispatch_queue_create("Operations.ExclusivityController", DISPATCH_QUEUE_SERIAL)
-    private var operations: [String: [Operation]] = [:]
-    
-    private init() {
+
+    fileprivate let serialQueue = DispatchQueue(label: "Operations.ExclusivityController", attributes: [])
+    fileprivate var operations: [String: [Operation]] = [:]
+
+    fileprivate init() {
         /*
             A private initializer effectively prevents any other part of the app
             from accidentally creating an instance.
         */
     }
-    
+
     /// Registers an operation as being mutually exclusive
-    func addOperation(operation: Operation, categories: [String]) {
+    open func addOperation(_ operation: Operation, categories: [String]) {
         /*
             This needs to be a synchronous operation.
             If this were async, then we might not get around to adding dependencies
             until after the operation had already begun, which would be incorrect.
         */
-        dispatch_sync(serialQueue) {
+        serialQueue.sync {
             for category in categories {
                 self.noqueue_addOperation(operation, category: category)
             }
         }
     }
-    
+
     /// Unregisters an operation from being mutually exclusive.
-    func removeOperation(operation: Operation, categories: [String]) {
-        dispatch_async(serialQueue) {
+    open func removeOperation(_ operation: Operation, categories: [String]) {
+        serialQueue.async {
             for category in categories {
                 self.noqueue_removeOperation(operation, category: category)
             }
         }
     }
-    
-    
+
+
     // MARK: Operation Management
-    
-    private func noqueue_addOperation(operation: Operation, category: String) {
+
+    fileprivate func noqueue_addOperation(_ operation: Operation, category: String) {
         var operationsWithThisCategory = operations[category] ?? []
-        
+
         if let last = operationsWithThisCategory.last {
             operation.addDependency(last)
         }
-        
+
         operationsWithThisCategory.append(operation)
 
         operations[category] = operationsWithThisCategory
     }
-    
-    private func noqueue_removeOperation(operation: Operation, category: String) {
+
+    fileprivate func noqueue_removeOperation(_ operation: Operation, category: String) {
         let matchingOperations = operations[category]
 
-        if var operationsWithThisCategory = matchingOperations,
-           let index = operationsWithThisCategory.indexOf(operation) {
+        guard var operationsWithThisCategory = matchingOperations else { return }
 
-            operationsWithThisCategory.removeAtIndex(index)
+        if let index = operationsWithThisCategory.index(of: operation) {
+            operationsWithThisCategory.remove(at: index)
             operations[category] = operationsWithThisCategory
         }
     }
-    
+
 }

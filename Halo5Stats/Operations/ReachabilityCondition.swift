@@ -14,78 +14,75 @@ import SystemConfiguration
     It does *not* perform a long-running reachability check, nor does it respond to changes in reachability.
     Reachability is evaluated once when the operation to which this is attached is asked about its readiness.
 */
-struct ReachabilityCondition: OperationCondition {
-    static let hostKey = "Host"
-    static let name = "Reachability"
-    static let isMutuallyExclusive = false
-    
-    let host: NSURL
-    
-    
-    init(host: NSURL) {
+public struct ReachabilityCondition: OperationCondition {
+    public static let hostKey = "Host"
+    public static let name = "Reachability"
+    public static let isMutuallyExclusive = false
+
+    let host: URL
+
+
+    public init(host: URL) {
         self.host = host
     }
-    
-    func dependencyForOperation(operation: Operation) -> NSOperation? {
+
+    public func dependencyForOperation(_ operation: Operation) -> Foundation.Operation? {
         return nil
     }
-    
-    func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void) {
+
+    public func evaluateForOperation(_ operation: Operation, completion: @escaping (OperationConditionResult) -> Void) {
         ReachabilityController.requestReachability(host) { reachable in
             if reachable {
-                completion(.Satisfied)
-            }
-            else {
-                let error = NSError(code: .ConditionFailed, userInfo: [
-                    OperationConditionKey: self.dynamicType.name,
-                    self.dynamicType.hostKey: self.host
+                completion(.satisfied)
+            } else {
+                let error = NSError(code: .conditionFailed, userInfo: [
+                    OperationConditionKey: type(of: self).name,
+                    type(of: self).hostKey: self.host
                 ])
-                
-                completion(.Failed(error))
+
+                completion(.failed(error))
             }
         }
     }
-    
+
 }
 
 /// A private singleton that maintains a basic cache of `SCNetworkReachability` objects.
 private class ReachabilityController {
     static var reachabilityRefs = [String: SCNetworkReachability]()
 
-    static let reachabilityQueue = dispatch_queue_create("Operations.Reachability", DISPATCH_QUEUE_SERIAL)
-    
-    static func requestReachability(url: NSURL, completionHandler: (Bool) -> Void) {
+    static let reachabilityQueue = DispatchQueue(label: "Operations.Reachability", attributes: [])
+
+    static func requestReachability(_ url: URL, completionHandler: @escaping (Bool) -> Void) {
         if let host = url.host {
-            dispatch_async(reachabilityQueue) {
+            reachabilityQueue.async {
                 var ref = self.reachabilityRefs[host]
 
                 if ref == nil {
                     let hostString = host as NSString
-                    ref = SCNetworkReachabilityCreateWithName(nil, hostString.UTF8String)
+                    ref = SCNetworkReachabilityCreateWithName(nil, hostString.utf8String!)
                 }
-                
+
                 if let ref = ref {
                     self.reachabilityRefs[host] = ref
-                    
+
                     var reachable = false
                     var flags: SCNetworkReachabilityFlags = []
-                    if SCNetworkReachabilityGetFlags(ref, &flags) != false {
+                    if SCNetworkReachabilityGetFlags(ref, &flags) {
                         /*
                             Note that this is a very basic "is reachable" check.
                             Your app may choose to allow for other considerations,
                             such as whether or not the connection would require
                             VPN, a cellular connection, etc.
                         */
-                        reachable = flags.contains(.Reachable)
+                        reachable = flags.contains(.reachable)
                     }
                     completionHandler(reachable)
-                }
-                else {
+                } else {
                     completionHandler(false)
                 }
             }
-        }
-        else {
+        } else {
             completionHandler(false)
         }
     }
