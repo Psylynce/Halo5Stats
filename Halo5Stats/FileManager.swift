@@ -41,9 +41,9 @@ class FileManager {
         }
     }
 
-    func ensureJSONDict(_ json: AnyObject, key: String) -> [String : AnyObject] {
+    func ensureJSONDict(_ json: Any, key: String) -> [String : AnyObject] {
         guard let jsonDict = json as? [String : AnyObject] else {
-            return [key : json]
+            return [key : json as AnyObject]
         }
 
         return jsonDict

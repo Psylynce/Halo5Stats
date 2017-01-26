@@ -125,11 +125,11 @@ class MedalDetailViewController: UIViewController {
     }
 
     fileprivate func setupDismissal() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(dismiss))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissView))
         view.addGestureRecognizer(tap)
     }
 
-    @objc fileprivate func dismiss() {
+    @objc fileprivate func dismissView() {
         animateViews(open: false) { [weak self] in
             self?.dismiss(animated: false, completion: nil)
         }

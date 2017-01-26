@@ -57,7 +57,7 @@ class MedalImageManager {
             let task = URLSession.halo5ConfiguredSession().dataTask(with: imageUrl, completionHandler: { (data, response, error) -> Void in
                 if let _ = error {
                     if let completion = completion {
-                        completion(medal: medal, image: self?.placeholderImage)
+                        completion(medal, self?.placeholderImage)
                     }
                 }
 
@@ -67,11 +67,11 @@ class MedalImageManager {
                         self?.cacheImage(medal, image: croppedImage)
 
                         if let completion = completion {
-                            completion(medal: medal, image: croppedImage)
+                            completion(medal, croppedImage)
                         }
                     } else {
                         if let completion = completion {
-                            completion(medal: medal, image: self?.placeholderImage)
+                            completion(medal, self?.placeholderImage)
                         }
                     }
                 }

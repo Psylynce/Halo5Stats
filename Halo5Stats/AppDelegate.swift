@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AppControllerProtocol {
     
     // MARK: - AppControllerProtocol
 
-    var applicationViewController: ApplicationViewController! {
+    var applicationViewController: ApplicationViewController {
         if _applicationViewController == nil {
             _applicationViewController = StoryboardScene.Main.initialViewController() as! ApplicationViewController
         }
@@ -51,7 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, AppControllerProtocol {
         return _applicationViewController
     }
     
-    var operationQueue: OperationQueue! {
+    var operationQueue: OperationQueue {
         if _operationQueue == nil {
             _operationQueue = OperationQueue()
         }

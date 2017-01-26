@@ -113,7 +113,7 @@ extension Match: ManagedObjectTypeProtocol {
         if let links = data[JSONKeys.Matches.links] as? [String : AnyObject], let details = links[JSONKeys.Matches.matchDetails] as? [String : AnyObject], let path = details[JSONKeys.Matches.matchPath] as? String {
             matchPath = Match.fixedPath(path)
         } else {
-            if let identifier = identifier, let gameModeInt = gameMode as? Int, let gameMode = GameMode.gameMode(forInt: gameModeInt) {
+            if let identifier = identifier, let gameModeInt = self.gameMode as? Int, let gameMode = GameMode.gameMode(forInt: gameModeInt) {
                 matchPath = "\(gameMode.rawValue)/matches/\(identifier)"
             }
         }

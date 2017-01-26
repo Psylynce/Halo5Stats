@@ -75,7 +75,6 @@
 		5C1B80AC1E3A4A47005AC32B /* NoCancelledDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B80921E3A4A47005AC32B /* NoCancelledDependencies.swift */; };
 		5C1B80AD1E3A4A47005AC32B /* NSLock+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B80931E3A4A47005AC32B /* NSLock+Operations.swift */; };
 		5C1B80AE1E3A4A47005AC32B /* NSOperation+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B80941E3A4A47005AC32B /* NSOperation+Operations.swift */; };
-		5C1B80AF1E3A4A47005AC32B /* NSURL+CacheFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B80951E3A4A47005AC32B /* NSURL+CacheFiles.swift */; };
 		5C1B80B01E3A4A47005AC32B /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B80961E3A4A47005AC32B /* Operation.swift */; };
 		5C1B80B11E3A4A47005AC32B /* OperationCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B80971E3A4A47005AC32B /* OperationCondition.swift */; };
 		5C1B80B21E3A4A47005AC32B /* OperationErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B80981E3A4A47005AC32B /* OperationErrors.swift */; };
@@ -336,7 +335,6 @@
 		5C1B80921E3A4A47005AC32B /* NoCancelledDependencies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoCancelledDependencies.swift; path = Operations/NoCancelledDependencies.swift; sourceTree = "<group>"; };
 		5C1B80931E3A4A47005AC32B /* NSLock+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSLock+Operations.swift"; path = "Operations/NSLock+Operations.swift"; sourceTree = "<group>"; };
 		5C1B80941E3A4A47005AC32B /* NSOperation+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSOperation+Operations.swift"; path = "Operations/NSOperation+Operations.swift"; sourceTree = "<group>"; };
-		5C1B80951E3A4A47005AC32B /* NSURL+CacheFiles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSURL+CacheFiles.swift"; path = "Operations/NSURL+CacheFiles.swift"; sourceTree = "<group>"; };
 		5C1B80961E3A4A47005AC32B /* Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Operation.swift; path = Operations/Operation.swift; sourceTree = "<group>"; };
 		5C1B80971E3A4A47005AC32B /* OperationCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationCondition.swift; path = Operations/OperationCondition.swift; sourceTree = "<group>"; };
 		5C1B80981E3A4A47005AC32B /* OperationErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OperationErrors.swift; path = Operations/OperationErrors.swift; sourceTree = "<group>"; };
@@ -647,7 +645,6 @@
 				5C1B80921E3A4A47005AC32B /* NoCancelledDependencies.swift */,
 				5C1B80931E3A4A47005AC32B /* NSLock+Operations.swift */,
 				5C1B80941E3A4A47005AC32B /* NSOperation+Operations.swift */,
-				5C1B80951E3A4A47005AC32B /* NSURL+CacheFiles.swift */,
 				5C1B80961E3A4A47005AC32B /* Operation.swift */,
 				5C1B80971E3A4A47005AC32B /* OperationCondition.swift */,
 				5C1B80981E3A4A47005AC32B /* OperationErrors.swift */,
@@ -1424,7 +1421,6 @@
 				5C960E9F1C65A0E100178AB1 /* DownloadRequestOperation.swift in Sources */,
 				5C0476571DAFF95F008B6706 /* WeaponStatsDetailViewModel.swift in Sources */,
 				5C1B80A51E3A4A47005AC32B /* DelayOperation.swift in Sources */,
-				5C1B80AF1E3A4A47005AC32B /* NSURL+CacheFiles.swift in Sources */,
 				5C7224A21D048AEF0093E556 /* VideoViewController.swift in Sources */,
 				5CEC3B1A1CDC00C700BE386C /* CompareViewModel.swift in Sources */,
 				5CFC946D1CC2AF8E00BDD58E /* EnemyKill+CoreDataProperties.swift in Sources */,

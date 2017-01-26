@@ -43,7 +43,7 @@ extension String: Collection {
             var string = regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: " $0")
 
             for i in string.characters.indices {
-                if i == string.startIndex || string[String.CharacterView.index(i, offsetBy: -1)] == " " {
+                if i == string.startIndex || string[string.index(i, offsetBy: -1)] == " " {
                     string.replaceSubrange(i ... i, with: String(string[i]).uppercased())
                 }
             }
@@ -59,7 +59,7 @@ extension String: Collection {
 extension NSRange {
     func rangeForString(_ string: String) -> Range<String.Index> {
         let startIndex = string.characters.index(string.startIndex, offsetBy: location)
-        let endIndex = String.CharacterView.index(startIndex, offsetBy: length)
+        let endIndex = string.index(startIndex, offsetBy: length)
 
         let range = startIndex ..< endIndex
         return range

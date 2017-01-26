@@ -69,7 +69,7 @@ struct MatchModel {
         let score = match.score()
         let date = completionDate
         let matchId = match.identifier ?? ""
-        let isTeamGame = Bool(teamGameNum.intValue)
+        let isTeamGame = Bool(teamGameNum.intValue as NSNumber)
         let teams = TeamModel.teams(match)
         let durationTime = match.matchDuration ?? ""
         let duration = DurationFormatter.readableDuration(durationTime)

@@ -54,7 +54,7 @@ struct MetadataManager {
         return true
     }
 
-    static func fetchMetadata(_ completion: (Void) -> Void) {
+    static func fetchMetadata(_ completion: @escaping () -> Void) {
         let metadataOperation = DownloadAndParseMetadataOperation(completion: completion)
         UIApplication.appController().operationQueue.addOperation(metadataOperation)
     }

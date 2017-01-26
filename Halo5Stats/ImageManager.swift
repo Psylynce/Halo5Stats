@@ -68,7 +68,7 @@ class ImageManager {
             let task = URLSession.halo5ConfiguredSession().dataTask(with: imageUrl, completionHandler: { (data, response, error) -> Void in
                 if let _ = error {
                     if let completion = completion {
-                        completion(model: model, image: model.placeholderImage)
+                        completion(model, model.placeholderImage)
                     }
                 }
 
@@ -76,11 +76,11 @@ class ImageManager {
                     self?.cacheImage(model, image: image)
 
                     if let completion = completion {
-                        completion(model: model, image: image)
+                        completion(model, image)
                     }
                 } else {
                     if let completion = completion {
-                        completion(model: model, image: model.placeholderImage)
+                        completion(model, model.placeholderImage)
                     }
                 }
             })

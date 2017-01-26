@@ -40,20 +40,20 @@ class ImageCache {
             guard let data = data, error == nil else { return }
 
             if let response = response as? HTTPURLResponse, response.statusCode == 404 {
-                completion(imageResponse: .error)
+                completion(.error)
             }
 
             if let image = UIImage(data: data) {
                 if let rect = cropRect {
                     if let croppedImage = image.cropped(rect) {
                         self?.insert(key, image: croppedImage)
-                        completion(imageResponse: .success(image: croppedImage))
+                        completion(.success(image: croppedImage))
                     } else {
-                        completion(imageResponse: .error)
+                        completion(.error)
                     }
                 } else {
                     self?.insert(key, image: image)
-                    completion(imageResponse: .success(image: image))
+                    completion(.success(image: image))
                 }
             }
         }) 

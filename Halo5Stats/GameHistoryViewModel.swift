@@ -121,7 +121,7 @@ class GameHistoryViewModel {
 
     // MARK: - Private
 
-    fileprivate func updateMapMetadata(_ completion: (Void) -> Void) {
+    fileprivate func updateMapMetadata(_ completion: @escaping (Void) -> Void) {
         let mapsRequest = MetadataRequest(metadataType: .Maps)
         let operation = APIRequestOperation(request: mapsRequest, completion: completion)
 

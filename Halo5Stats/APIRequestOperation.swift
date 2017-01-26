@@ -14,16 +14,16 @@ class APIRequestOperation: GroupOperation {
     
     // MARK: Initialization
     
-    init(request: RequestProtocol, shouldParse: Bool = true, completion: (Void) -> Void) {
+    init(request: RequestProtocol, shouldParse: Bool = true, completion: @escaping () -> Void) {
         let cacheFile = request.cacheFile
         
         downloadOperation = DownloadRequestOperation(request: request, cacheFile: cacheFile)
         parseOperation = ParseRequestOperation(request: request, cacheFile: cacheFile)
-        
-        let finishOperation = NSBlockOperation(block: completion)
+
+        let finishOperation = Foundation.BlockOperation(block: completion)
         finishOperation.addDependency(downloadOperation)
 
-        var operations: [NSOperation] = [downloadOperation]
+        var operations: [Foundation.Operation] = [downloadOperation]
 
         if shouldParse {
             operations.append(parseOperation)

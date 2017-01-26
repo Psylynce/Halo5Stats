@@ -19,7 +19,7 @@ class DownloadAndParseMetadataOperation: GroupOperation {
     let teamColorOperation: APIRequestOperation
     let gameBaseVariantOperation: APIRequestOperation
 
-    init(completion: (Void) -> Void) {
+    init(completion: @escaping () -> Void) {
         let csrRequest = MetadataRequest(metadataType: .CSRDesignations)
         csrOperation = APIRequestOperation(request: csrRequest) {
             print("CSR Designations downloaded and parsed")
@@ -77,7 +77,7 @@ class DownloadAndParseMetadataOperation: GroupOperation {
         gameBaseVariantOperation.addDependency(teamColorOperation)
         finishOperation.addDependency(gameBaseVariantOperation)
 
-        let operations = [csrOperation, weaponOperation, vehicleOperation, playlistOperation, seasonOperation, enemyOperation, medalOperation, teamColorOperation, gameBaseVariantOperation, finishOperation]
+        let operations: [Foundation.Operation] = [csrOperation, weaponOperation, vehicleOperation, playlistOperation, seasonOperation, enemyOperation, medalOperation, teamColorOperation, gameBaseVariantOperation, finishOperation]
 
         super.init(operations: operations)
 
