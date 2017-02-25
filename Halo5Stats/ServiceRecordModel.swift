@@ -22,17 +22,17 @@ struct ServiceRecordModel {
     var highestAttainedCSR: CSRModel?
 
     static func convert(serviceRecord record: ServiceRecord) -> ServiceRecordModel? {
-        guard let baseStats = record.baseStats, stats = StatsModel.convert(baseStats) else { return nil }
+        guard let baseStats = record.baseStats, let stats = StatsModel.convert(baseStats) else { return nil }
         let mostUsedWeapon = ServiceRecordModel.mostUsedWeapon(record)
         let weapons = ServiceRecordModel.weapons(record)
         let medals = ServiceRecordModel.medals(record)
         let topMedals = ServiceRecordModel.updateTopMedals(medals)
 
-        let gamesCompleted = record.totalGamesCompleted?.integerValue ?? 0
-        let gamesWon = record.totalGamesWon?.integerValue ?? 0
-        let gamesLost = record.totalGamesLost?.integerValue ?? 0
-        let gamesTied = record.totalGamesTied?.integerValue ?? 0
-        let spartanRank = record.spartanRank?.integerValue
+        let gamesCompleted = record.totalGamesCompleted?.intValue ?? 0
+        let gamesWon = record.totalGamesWon?.intValue ?? 0
+        let gamesLost = record.totalGamesLost?.intValue ?? 0
+        let gamesTied = record.totalGamesTied?.intValue ?? 0
+        let spartanRank = record.spartanRank?.intValue
         let highestAttainedCSR = ServiceRecordModel.updateHighestCSR(record)
 
         let model = ServiceRecordModel(totalGamesCompleted: gamesCompleted, totalGamesWon: gamesWon, totalGamesLost: gamesLost, totalGamesTied: gamesTied, spartanRank: spartanRank, stats: stats, mostUsedWeapon: mostUsedWeapon, weapons: weapons, medals: medals, topMedals: topMedals, highestAttainedCSR: highestAttainedCSR)
@@ -40,20 +40,20 @@ struct ServiceRecordModel {
         return model
     }
 
-    func percentageDetails(gameMode: GameMode) -> [PercentageDetail] {
+    func percentageDetails(_ gameMode: GameMode) -> [PercentageDetail] {
         return [(value: totalGamesWon, color: gameMode.color), (value: totalGamesLost, color: UIColor(haloColor: .Bismark)), (value: totalGamesTied, color: UIColor(haloColor: .SpringGreen))]
     }
 
     // MARK: - Private Methods
 
-    private static func mostUsedWeapon(record: ServiceRecord) -> WeaponModel? {
+    fileprivate static func mostUsedWeapon(_ record: ServiceRecord) -> WeaponModel? {
         guard let weapon = record.mostUsedWeapon else { return nil }
         guard let model = WeaponModel.convert(weapon) else { return nil }
 
         return model
     }
 
-    private static func weapons(record: ServiceRecord) -> [WeaponModel] {
+    fileprivate static func weapons(_ record: ServiceRecord) -> [WeaponModel] {
         guard let weapons = record.weaponStats?.allObjects as? [WeaponStats] else { return [] }
         var newWeapons = [WeaponModel]()
 
@@ -66,7 +66,7 @@ struct ServiceRecordModel {
         return newWeapons
     }
 
-    private static func medals(record: ServiceRecord) -> [MedalModel] {
+    fileprivate static func medals(_ record: ServiceRecord) -> [MedalModel] {
         guard let medals = record.medalAwards?.allObjects as? [MedalAward] else { return [] }
         var newMedals = [MedalModel]()
 
@@ -79,9 +79,9 @@ struct ServiceRecordModel {
         return newMedals
     }
 
-    private static func updateTopMedals(medals: [MedalModel]) -> [MedalModel] {
-        let sortedDifficulty = medals.sort { $0.difficulty > $1.difficulty }
-        let sortedCount = sortedDifficulty.sort { $0.count > $1.count }
+    fileprivate static func updateTopMedals(_ medals: [MedalModel]) -> [MedalModel] {
+        let sortedDifficulty = medals.sorted { $0.difficulty > $1.difficulty }
+        let sortedCount = sortedDifficulty.sorted { $0.count > $1.count }
 
         var n = 0
 
@@ -98,7 +98,7 @@ struct ServiceRecordModel {
         return finalArray
     }
 
-    private static func updateHighestCSR(record: ServiceRecord) -> CSRModel? {
+    fileprivate static func updateHighestCSR(_ record: ServiceRecord) -> CSRModel? {
         guard let csr = record.highestCSRAttained else { return nil }
         guard let model = CSRModel.convert(csr) else { return nil }
 

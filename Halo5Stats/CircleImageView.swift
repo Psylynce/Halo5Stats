@@ -25,18 +25,18 @@ class CircleImageView: UIImageView {
         layer.cornerRadius = 0.5 * bounds.width
     }
 
-    private func setupAppearance() {
-        contentMode = .ScaleAspectFit
+    fileprivate func setupAppearance() {
+        contentMode = .scaleAspectFit
         clipsToBounds = true
         layer.borderWidth = borderWidth
-        layer.borderColor = borderColor.CGColor
+        layer.borderColor = borderColor.cgColor
         layer.transform = CATransform3DMakeScale(1, 1, 0)
         backgroundColor = bgColor
     }
 
     func updateBorderColor(with color: UIColor) {
-        UIView.animateWithDuration(0.2) { [weak self] in
-            self?.layer.borderColor = color.CGColor
-        }
+        UIView.animate(withDuration: 0.2, animations: { [weak self] in
+            self?.layer.borderColor = color.cgColor
+        }) 
     }
 }

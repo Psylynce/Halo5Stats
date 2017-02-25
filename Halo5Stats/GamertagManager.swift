@@ -25,16 +25,16 @@ class GamertagManager {
     // MARK: Class Methods
 
     func defaultGamertagChanged() {
-        NSNotificationCenter.defaultCenter().postNotificationName(K.notificationName, object: nil)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: K.notificationName), object: nil)
     }
 
-    func saveUserGamertag(gamertag: String) {
-        NSUserDefaults.standardUserDefaults().setObject(gamertag, forKey: K.userGamertagIdentifier)
-        NSUserDefaults.standardUserDefaults().synchronize()
+    func saveUserGamertag(_ gamertag: String) {
+        UserDefaults.standard.set(gamertag, forKey: K.userGamertagIdentifier)
+        UserDefaults.standard.synchronize()
     }
     
     func gamertagForUser() -> String? {
-        guard let gamertag = NSUserDefaults.standardUserDefaults().stringForKey(K.userGamertagIdentifier) else {
+        guard let gamertag = UserDefaults.standard.string(forKey: K.userGamertagIdentifier) else {
             print("There was no gamertag found in user defaults")
             
             return nil
@@ -56,7 +56,7 @@ class GamertagManager {
         return (title, message)
     }
 
-    func alert(context: UIViewController?) -> AlertOperation {
+    func alert(_ context: UIViewController?) -> AlertOperation {
         let error = errorMessage()
         let alert = AlertOperation(presentationContext: context)
         alert.title = error.title
@@ -65,32 +65,32 @@ class GamertagManager {
         return alert
     }
 
-    func containsGamertagCharacters(gamertag: String) -> Bool {
-        let invertedGamertagCharacterSet = NSCharacterSet.gamertagCharacterSet().invertedSet
-        let isValidCharacterSet = gamertag.rangeOfCharacterFromSet(invertedGamertagCharacterSet) == nil
+    func containsGamertagCharacters(_ gamertag: String) -> Bool {
+        let invertedGamertagCharacterSet = CharacterSet.gamertagCharacterSet().inverted
+        let isValidCharacterSet = gamertag.rangeOfCharacter(from: invertedGamertagCharacterSet) == nil
         
         return isValidCharacterSet
     }
     
-    func isGamertagValid(gamertag: String) -> Bool {
+    func isGamertagValid(_ gamertag: String) -> Bool {
         let isMinMaxValid = gamertag.isMinAndMaxLength(K.minGamertagLength, max: K.maxGamertagLength)
         
         let isValidCharacterSet = containsGamertagCharacters(gamertag)
         
         let beginningAndEndAreValid = areBeginningAndEndValid(gamertag)
         
-        let spacesAreValid = gamertag.rangeOfString("  +", options: NSStringCompareOptions.RegularExpressionSearch) == nil
+        let spacesAreValid = gamertag.range(of: "  +", options: NSString.CompareOptions.regularExpression) == nil
         
         return isMinMaxValid && isValidCharacterSet && beginningAndEndAreValid && spacesAreValid
     }
     
     // MARK: Private
     
-    private func areBeginningAndEndValid(gamertag: String) -> Bool {
-        guard let first = gamertag.first(), last = gamertag.last() else { return false }
+    fileprivate func areBeginningAndEndValid(_ gamertag: String) -> Bool {
+        guard let first = gamertag.first(), let last = gamertag.last() else { return false }
         
-        let numericCharacterSet = NSCharacterSet.numericCharacterSet()
-        let beginsWithNonNumber = first.rangeOfCharacterFromSet(numericCharacterSet) == nil
+        let numericCharacterSet = CharacterSet.numericCharacterSet()
+        let beginsWithNonNumber = first.rangeOfCharacter(from: numericCharacterSet) == nil
         
         let doesNotBeginWithSpace = first != " "
         let doesNotEndWithSpace = last != " "

@@ -7,26 +7,26 @@
 
 import Foundation
 
-extension NSDate {
+extension Date {
 
-    public class func dateFromISOString(string: String) -> NSDate {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+    public static func dateFromISOString(_ string: String) -> Date {
+        let dateFormatter = Foundation.DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
 
-        return dateFormatter.dateFromString(string)!
+        return dateFormatter.date(from: string)!
     }
 
-    func daysFromNow(days: Double) -> NSDate {
-        let daysFromNow: NSTimeInterval = 60 * 60 * 24 * days
+    func daysFromNow(_ days: Double) -> Date {
+        let daysFromNow: TimeInterval = 60 * 60 * 24 * days
 
-        return NSDate().dateByAddingTimeInterval(daysFromNow)
+        return Date().addingTimeInterval(daysFromNow)
     }
 
-    func daysFromDate(days: Double) -> NSDate {
-        let daysFromDate: NSTimeInterval = 60 * 60 * 24 * days
+    func daysFromDate(_ days: Double) -> Date {
+        let daysFromDate: TimeInterval = 60 * 60 * 24 * days
 
-        return self.dateByAddingTimeInterval(daysFromDate)
+        return self.addingTimeInterval(daysFromDate)
     }
 }

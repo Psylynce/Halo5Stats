@@ -9,50 +9,50 @@
 import UIKit
 
 enum PlayerCarnageReportSection {
-    case KDandKDA
-    case MedalsTitle
-    case Medals
-    case MostUsedWeaponTitle
-    case MostUsedWeapon
-    case WeaponsTitle
-    case Weapons
-    case StatsTitle
-    case Stats
-    case KilledTitle
-    case KilledOpponents
-    case KilledByTitle
-    case KilledByOpponents
+    case kDandKDA
+    case medalsTitle
+    case medals
+    case mostUsedWeaponTitle
+    case mostUsedWeapon
+    case weaponsTitle
+    case weapons
+    case statsTitle
+    case stats
+    case killedTitle
+    case killedOpponents
+    case killedByTitle
+    case killedByOpponents
 
     func title() -> String {
         switch self {
-        case .MedalsTitle:
+        case .medalsTitle:
             return "Medals Earned"
-        case .MostUsedWeaponTitle:
+        case .mostUsedWeaponTitle:
             return "Tool of Destruction"
-        case .WeaponsTitle:
+        case .weaponsTitle:
             return "Weapons Used"
-        case .StatsTitle:
+        case .statsTitle:
             return "Match Stats"
-        case .KilledTitle:
+        case .killedTitle:
             return "Killed"
-        case .KilledByTitle:
+        case .killedByTitle:
             return "Killed By"
         default:
             return ""
         }
     }
 
-    func dataSource(player: MatchPlayerModel) -> ScoreCollectionViewDataSource? {
+    func dataSource(_ player: MatchPlayerModel) -> ScoreCollectionViewDataSource? {
         switch self {
-        case .Medals:
+        case .medals:
             return MedalCellModel(medals: player.medals)
-        case .Weapons:
+        case .weapons:
             return WeaponCellModel(weapons: player.weapons)
-        case .Stats:
+        case .stats:
             return PlayerStatsCellModel(stats: player.stats)
-        case .KilledOpponents:
+        case .killedOpponents:
             return OpponentDetailCellModel(opponents: player.killedOpponents)
-        case .KilledByOpponents:
+        case .killedByOpponents:
             return OpponentDetailCellModel(opponents: player.killedByOpponents)
         default:
             return nil
@@ -75,39 +75,39 @@ class PlayerCarnageReportViewModel {
     func setupSections() {
         var sections: [PlayerCarnageReportSection] = []
 
-        sections += [.KDandKDA]
+        sections += [.kDandKDA]
 
         if player.medals.count != 0 {
-            sections += [.MedalsTitle, .Medals]
+            sections += [.medalsTitle, .medals]
         }
 
         if player.mostUsedWeapon != nil {
-            sections += [.MostUsedWeaponTitle, .MostUsedWeapon]
+            sections += [.mostUsedWeaponTitle, .mostUsedWeapon]
         }
 
         if player.weapons.count != 0 {
-            sections += [.WeaponsTitle, .Weapons]
+            sections += [.weaponsTitle, .weapons]
         }
 
         if player.killedOpponents.count != 0 {
-            sections += [.KilledTitle, .KilledOpponents]
+            sections += [.killedTitle, .killedOpponents]
         }
 
         if player.killedByOpponents.count != 0 {
-            sections += [.KilledByTitle, .KilledByOpponents]
+            sections += [.killedByTitle, .killedByOpponents]
         }
 
-        sections += [.StatsTitle, .Stats]
+        sections += [.statsTitle, .stats]
 
         self.sections = sections
     }
 
-    func saveSpartan(player: MatchPlayerModel, completion: Void -> Void) {
+    func saveSpartan(_ player: MatchPlayerModel, completion: @escaping (Void) -> Void) {
         guard !SpartanManager.sharedManager.spartanIsSaved(player.gamertag) else { return }
         
-        let operation = DownloadSpartanDataOperation(gamertag: player.gamertag.lowercaseString) {
+        let operation = DownloadSpartanDataOperation(gamertag: player.gamertag.lowercased()) {
             SpartanManager.sharedManager.saveSpartan(player.gamertag)
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 completion()
             }
         }

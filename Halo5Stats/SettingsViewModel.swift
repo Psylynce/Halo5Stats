@@ -32,8 +32,8 @@ class SettingsViewModel {
 
     var legalText: String {
         let myName = "Justin Powell"
-        let today = NSDate()
-        let currentYear = NSCalendar.currentCalendar().component(.Year, fromDate: today)
+        let today = Date()
+        let currentYear = (Calendar.current as NSCalendar).component(.year, from: today)
 
         let legalText = "This application is offered by \(myName), which is solely responsible for its content. It is not sponsored or endorsed by Microsoft. This application uses the Halo® Game Data API. Halo © \(currentYear) Microsoft Corporation. All rights reserved. Microsoft, Halo, and the Halo Logo are trademarks of the Microsoft group of companies.\n\n"
 
@@ -43,13 +43,13 @@ class SettingsViewModel {
         return finalText
     }
 
-    var appReviewUrl: NSURL? {
+    var appReviewUrl: URL? {
         guard let urlString = appStoreUrlString else { return nil }
-        return NSURL(string: urlString)
+        return URL(string: urlString)
     }
 
     var version: String? {
-        if let info = NSBundle.mainBundle().infoDictionary, version = info["CFBundleShortVersionString"] {
+        if let info = Bundle.main.infoDictionary, let version = info["CFBundleShortVersionString"] {
             return "v \(version)"
         } else {
             return nil
@@ -60,36 +60,36 @@ class SettingsViewModel {
         updateAppStoreUrl()
     }
 
-    private var appStoreUrlString: String? {
+    fileprivate var appStoreUrlString: String? {
         get {
-            return NSUserDefaults.standardUserDefaults().stringForKey(K.appStoreUrlKey) ?? "https://itunes.apple.com/app/id\(K.appId)"
+            return UserDefaults.standard.string(forKey: K.appStoreUrlKey) ?? "https://itunes.apple.com/app/id\(K.appId)"
         }
         set {
             if newValue != appStoreUrlString {
-                NSUserDefaults.standardUserDefaults().setObject(newValue, forKey: K.appStoreUrlKey)
-                NSUserDefaults.standardUserDefaults().synchronize()
+                UserDefaults.standard.set(newValue, forKey: K.appStoreUrlKey)
+                UserDefaults.standard.synchronize()
             }
         }
     }
 
-    private func updateAppStoreUrl() {
-        guard let url = NSURL(string: "https://raw.githubusercontent.com/Psylynce/Halo5Stats/develop/config.json") else { return }
+    fileprivate func updateAppStoreUrl() {
+        guard let url = URL(string: "https://raw.githubusercontent.com/Psylynce/Halo5Stats/develop/config.json") else { return }
 
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { [weak self] (data, response, error) in
-            guard let data = data where error == nil else { return }
+        let task = URLSession.shared.dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
+            guard let data = data, error == nil else { return }
 
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments) as? [String: AnyObject]
+                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: AnyObject]
                 self?.parseConfig(json)
             } catch {
                 return
             }
-        }
+        }) 
 
         task.resume()
     }
 
-    private func parseConfig(json: [String: AnyObject]?) {
+    fileprivate func parseConfig(_ json: [String: AnyObject]?) {
         guard let json = json else { return }
 
         if let urlValue = json[K.appStoreUrlKey] as? String {

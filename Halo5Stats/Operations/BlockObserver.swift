@@ -12,30 +12,30 @@ import Foundation
     The `BlockObserver` is a way to attach arbitrary blocks to significant events
     in an `Operation`'s lifecycle.
 */
-struct BlockObserver: OperationObserver {
+public struct BlockObserver: OperationObserver {
     // MARK: Properties
-    
-    private let startHandler: (Operation -> Void)?
-    private let produceHandler: ((Operation, NSOperation) -> Void)?
-    private let finishHandler: ((Operation, [NSError]) -> Void)?
-    
-    init(startHandler: (Operation -> Void)? = nil, produceHandler: ((Operation, NSOperation) -> Void)? = nil, finishHandler: ((Operation, [NSError]) -> Void)? = nil) {
+
+    fileprivate let startHandler: ((Operation) -> Void)?
+    fileprivate let produceHandler: ((Operation, Foundation.Operation) -> Void)?
+    fileprivate let finishHandler: ((Operation, [NSError]) -> Void)?
+
+    public init(startHandler: ((Operation) -> Void)? = nil, produceHandler: ((Operation, Foundation.Operation) -> Void)? = nil, finishHandler: ((Operation, [NSError]) -> Void)? = nil) {
         self.startHandler = startHandler
         self.produceHandler = produceHandler
         self.finishHandler = finishHandler
     }
-    
+
     // MARK: OperationObserver
-    
-    func operationDidStart(operation: Operation) {
+
+    public func operationDidStart(_ operation: Operation) {
         startHandler?(operation)
     }
-    
-    func operation(operation: Operation, didProduceOperation newOperation: NSOperation) {
+
+    public func operation(_ operation: Operation, didProduceOperation newOperation: Foundation.Operation) {
         produceHandler?(operation, newOperation)
     }
-    
-    func operationDidFinish(operation: Operation, errors: [NSError]) {
+
+    public func operationDidFinish(_ operation: Operation, errors: [NSError]) {
         finishHandler?(operation, errors)
     }
 }

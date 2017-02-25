@@ -13,8 +13,8 @@ class CompareCell: UITableViewCell {
     @IBOutlet weak var playerOneValueLabel: UILabel!
     @IBOutlet weak var playerTwoValueLabel: UILabel!
 
-    private let thin = UIFont.kelson(.Thin, size: 16)
-    private let regular = UIFont.kelson(.Regular, size: 16)
+    fileprivate let thin = UIFont.kelson(.Thin, size: 16)
+    fileprivate let regular = UIFont.kelson(.Regular, size: 16)
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,9 +31,9 @@ class CompareCell: UITableViewCell {
         playerTwoValueLabel.adjustsFontSizeToFitWidth = true
         playerTwoValueLabel.minimumScaleFactor = 0.7
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
-        selectionStyle = .None
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
+        selectionStyle = .none
     }
 
     func configure(comparableItem item: StatCompareItem, gameMode: GameMode) {
@@ -45,7 +45,7 @@ class CompareCell: UITableViewCell {
         playerOneValueLabel.text = valueOne.cleanValue
         playerTwoValueLabel.text = valueTwo.cleanValue
 
-        let itemName = item.name.lowercaseString
+        let itemName = item.name.lowercased()
         let reverseColors = itemName == "deaths" || itemName == "games lost" || itemName == "games tied"
         let valueOneHigher = valueOne > valueTwo
 

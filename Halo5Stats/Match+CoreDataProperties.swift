@@ -13,7 +13,7 @@ import CoreData
 
 extension Match {
 
-    @NSManaged var completionDate: NSDate?
+    @NSManaged var completionDate: Date?
     @NSManaged var gameBaseVariantId: String?
     @NSManaged var gameMode: NSNumber?
     @NSManaged var gameVariantId: String?

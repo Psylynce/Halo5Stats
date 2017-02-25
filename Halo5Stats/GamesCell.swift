@@ -24,7 +24,7 @@ class GamesCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        percentageCircleView.backgroundColor = UIColor.clearColor()
+        percentageCircleView.backgroundColor = UIColor.clear
 
         titleLabels.forEach {
             $0.font = UIFont.kelson(.Regular, size: 14)
@@ -43,12 +43,12 @@ class GamesCell: UITableViewCell {
             $0.textColor = UIColor(haloColor: .WhiteSmoke)
         }
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
-        selectionStyle = .None
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
+        selectionStyle = .none
     }
 
-    func configure(record: ServiceRecordModel, gameMode: GameMode) {
+    func configure(_ record: ServiceRecordModel, gameMode: GameMode) {
         percentageCircleView.details = record.percentageDetails(gameMode)
 
         totalGamesLabel.text = "\(record.totalGamesCompleted)"

@@ -17,7 +17,7 @@ class CarnageReportViewModel {
         fetchCarnageReport()
     }
 
-    private func fetchCarnageReport() {
+    fileprivate func fetchCarnageReport() {
         let reports = carnageReports()
         if reports.isEmpty {
             requestCarnageReports()
@@ -26,7 +26,7 @@ class CarnageReportViewModel {
         }
     }
 
-    private func convert(reports: [CarnageReport]) {
+    fileprivate func convert(_ reports: [CarnageReport]) {
         guard !reports.isEmpty else { return }
         
         var newReports: [MatchPlayerModel] = []
@@ -37,20 +37,20 @@ class CarnageReportViewModel {
             }
         }
 
-        var sortedPlayers = newReports.sort { $0.rank < $1.rank }
+        var sortedPlayers = newReports.sorted { $0.rank < $1.rank }
         if match.isTeamGame {
-            sortedPlayers.sortInPlace { $0.teamId < $1.teamId }
+            sortedPlayers.sort { $0.teamId < $1.teamId }
         }
 
         self.players.value = sortedPlayers
     }
 
-    private func requestCarnageReports() {
+    fileprivate func requestCarnageReports() {
         guard let path = match.match.matchPath else { return }
 
         let request = CarnageReportRequest(path: path)
         let operation = APIRequestOperation(request: request) {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 let reports = self.carnageReports()
                 self.convert(reports)
             }
@@ -59,11 +59,11 @@ class CarnageReportViewModel {
         UIApplication.appController().operationQueue.addOperation(operation)
     }
 
-    private func carnageReports() -> [CarnageReport] {
+    fileprivate func carnageReports() -> [CarnageReport] {
         let identifier = self.match.matchId
         let predicate = NSPredicate.predicate(withIdentifier: identifier)
         let m = Match.findOrFetch(inContext: UIApplication.appController().managedObjectContext(), matchingPredicate: predicate)
-        guard let match = m, reports = match.carnageReports?.allObjects as? [CarnageReport] where !reports.isEmpty else { return [] }
+        guard let match = m, let reports = match.carnageReports?.allObjects as? [CarnageReport], !reports.isEmpty else { return [] }
 
         return reports
     }

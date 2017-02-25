@@ -15,12 +15,12 @@ class OutlineButton: UIButton {
         setupAppearance()
     }
 
-    private func setupAppearance() {
-        backgroundColor = UIColor.clearColor()
+    fileprivate func setupAppearance() {
+        backgroundColor = UIColor.clear
         layer.borderWidth = 1
-        layer.borderColor = UIColor(haloColor: .WhiteSmoke).CGColor
+        layer.borderColor = UIColor(haloColor: .WhiteSmoke).cgColor
         layer.cornerRadius = 2
         titleLabel?.font = UIFont.kelson(.Regular, size: 18)
-        setTitleColor(UIColor(haloColor: .WhiteSmoke), forState: .Normal)
+        setTitleColor(UIColor(haloColor: .WhiteSmoke), for: UIControlState())
     }
 }

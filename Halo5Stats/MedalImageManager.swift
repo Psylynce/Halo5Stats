@@ -8,12 +8,12 @@
 import UIKit
 
 protocol MedalImageRequestFetchCoordinator {
-    func fetchMedalImage(presenter: MedalImagePresenter, medal: MedalModel)
+    func fetchMedalImage(_ presenter: MedalImagePresenter, medal: MedalModel)
 }
 
 protocol MedalImagePresenter {
-    func initiateMedalImageRequest(coordinator: MedalImageRequestFetchCoordinator)
-    func displayMedalImage(medal: MedalModel, image: UIImage)
+    func initiateMedalImageRequest(_ coordinator: MedalImageRequestFetchCoordinator)
+    func displayMedalImage(_ medal: MedalModel, image: UIImage)
 }
 
 class MedalImageManager {
@@ -28,12 +28,12 @@ class MedalImageManager {
 
     // MARK: - Properties
 
-    let placeholderImage = UIImage(named: ImageNames.placeholder)?.imageWithRenderingMode(.AlwaysTemplate)
+    let placeholderImage = UIImage(named: ImageNames.placeholder)?.withRenderingMode(.alwaysTemplate)
     let fetchQueue = OperationQueue()
 
     // MARK: - Internal
 
-    func cachedMedalImage(medal: MedalModel) -> UIImage? {
+    func cachedMedalImage(_ medal: MedalModel) -> UIImage? {
         guard Behaviors.allowCaching else { return nil }
 
         if let image = cachedImage(medal) {
@@ -43,39 +43,39 @@ class MedalImageManager {
         return nil
     }
 
-    func fetchMedalImage(medal: MedalModel, cachedOnly: Bool = false, completion: ((medal: MedalModel, image: UIImage?) -> Void)?) {
+    func fetchMedalImage(_ medal: MedalModel, cachedOnly: Bool = false, completion: ((_ medal: MedalModel, _ image: UIImage?) -> Void)?) {
         if let cachedImage = cachedImage(medal) {
             if let completion = completion {
-                completion(medal: medal, image: cachedImage)
+                completion(medal, cachedImage)
             }
 
             return
         }
 
-        let fetchOperation = NSBlockOperation { [weak self] () -> Void in
+        let fetchOperation = Foundation.BlockOperation { [weak self] () -> Void in
             let imageUrl = medal.imageUrl
-            let task = NSURLSession.halo5ConfiguredSession().dataTaskWithURL(imageUrl) { (data, response, error) -> Void in
+            let task = URLSession.halo5ConfiguredSession().dataTask(with: imageUrl, completionHandler: { (data, response, error) -> Void in
                 if let _ = error {
                     if let completion = completion {
-                        completion(medal: medal, image: self?.placeholderImage)
+                        completion(medal, self?.placeholderImage)
                     }
                 }
 
-                if let data = data, image = UIImage(data: data) {
+                if let data = data, let image = UIImage(data: data) {
                     let croppedMedal = CGRect(x: medal.xPosition, y: medal.yPosition, width: medal.width, height: medal.height)
                     if let croppedImage = image.cropped(croppedMedal) {
                         self?.cacheImage(medal, image: croppedImage)
 
                         if let completion = completion {
-                            completion(medal: medal, image: croppedImage)
+                            completion(medal, croppedImage)
                         }
                     } else {
                         if let completion = completion {
-                            completion(medal: medal, image: self?.placeholderImage)
+                            completion(medal, self?.placeholderImage)
                         }
                     }
                 }
-            }
+            }) 
 
             task.resume()
         }
@@ -85,13 +85,13 @@ class MedalImageManager {
 
     // MARK: - Private
 
-    private func cachedImage(medal: MedalModel) -> UIImage? {
+    fileprivate func cachedImage(_ medal: MedalModel) -> UIImage? {
         let imageName = cacheFilename(medal)
 
         if let cache = cacheDirectory() {
-            let imageUrl = cache.URLByAppendingPathComponent(imageName)
+            let imageUrl = cache.appendingPathComponent(imageName)
 
-            if let data = NSData.init(contentsOfURL: imageUrl) {
+            if let data = try? Data.init(contentsOf: imageUrl) {
                 if let cachedImage = UIImage(data: data) {
                     return cachedImage
                 }
@@ -101,26 +101,26 @@ class MedalImageManager {
         return nil
     }
 
-    private func cacheImage(medal: MedalModel, image: UIImage) {
+    fileprivate func cacheImage(_ medal: MedalModel, image: UIImage) {
         let imageName = cacheFilename(medal)
 
         if let cache = cacheDirectory() {
-            let imageUrl = cache.URLByAppendingPathComponent(imageName)
+            let imageUrl = cache.appendingPathComponent(imageName)
 
-            UIImagePNGRepresentation(image)?.writeToURL(imageUrl, atomically: true)
+            try? UIImagePNGRepresentation(image)?.write(to: imageUrl, options: [.atomic])
         }
     }
 
-    private func cacheFilename(medal: MedalModel) -> String {
+    fileprivate func cacheFilename(_ medal: MedalModel) -> String {
         let imageName = "Medal_\(medal.cacheIdentifier)"
 
         return imageName
     }
 
-    private func cacheDirectory() -> NSURL? {
-        let cacheDirectory: NSSearchPathDirectory = .CachesDirectory
+    fileprivate func cacheDirectory() -> URL? {
+        let cacheDirectory: Foundation.FileManager.SearchPathDirectory = .cachesDirectory
 
-        if let searchUrl = NSFileManager.defaultManager().URLsForDirectory(cacheDirectory, inDomains: .UserDomainMask).last {
+        if let searchUrl = Foundation.FileManager.default.urls(for: cacheDirectory, in: .userDomainMask).last {
             return searchUrl
         }
 

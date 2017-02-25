@@ -9,12 +9,12 @@ import Foundation
 import UIKit
 
 enum CarnageReportSection: Int {
-    case Image = 0
-    case Scores
-    case TeamTitle
-    case Teams
+    case image = 0
+    case scores
+    case teamTitle
+    case teams
 
-    static let sections = [Image, Scores, TeamTitle, Teams]
+    static let sections = [image, scores, teamTitle, teams]
 }
 
 class CarnageReportViewController: UITableViewController {
@@ -33,47 +33,47 @@ class CarnageReportViewController: UITableViewController {
         setupAppearance()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         navigationController?.presentTransparentNavigationBar()
         hideBackButtonTitle()
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         navigationController?.hideTransparentNavigationBar()
     }
 
-    private func setupAppearance() {
-        view.backgroundColor = UIColor.blackColor()
-        tableView.separatorStyle = .None
+    fileprivate func setupAppearance() {
+        view.backgroundColor = UIColor.black
+        tableView.separatorStyle = .none
     }
 }
 
 extension CarnageReportViewController {
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return CarnageReportSection.sections.count
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let section = CarnageReportSection(rawValue: section) else { return 0 }
 
         switch  section {
-        case .Image, .Scores, .TeamTitle:
+        case .image, .scores, .teamTitle:
             return 1
-        case .Teams:
+        case .teams:
             return viewModel.players.value.count
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let section = CarnageReportSection(rawValue: indexPath.section) else { return UITableViewCell() }
         switch section {
-        case .Image:
-            let cell = tableView.dequeueReusableCellWithIdentifier("ImageCell", forIndexPath: indexPath) as! ImageCell
+        case .image:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ImageCell", for: indexPath) as! ImageCell
 
             if !viewModel.match.isTeamGame && !viewModel.players.value.isEmpty {
                 cell.configure(viewModel.match, player: viewModel.players.value[0])
@@ -82,16 +82,16 @@ extension CarnageReportViewController {
             }
 
             return cell
-        case .Scores:
-            let cell = tableView.dequeueReusableCellWithIdentifier("CollectionViewTableViewCell", forIndexPath: indexPath) as! CollectionViewTableViewCell
+        case .scores:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CollectionViewTableViewCell", for: indexPath) as! CollectionViewTableViewCell
             cell.dataSource = CarnageReportScoreCellModel(match: viewModel.match, teams: viewModel.match.teams, players: viewModel.players.value)
 
             return cell
-        case .TeamTitle:
-            let cell = tableView.dequeueReusableCellWithIdentifier("PlayerStatTitleCell", forIndexPath: indexPath) as! PlayerStatTitleCell
+        case .teamTitle:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerStatTitleCell", for: indexPath) as! PlayerStatTitleCell
             return cell
-        case .Teams:
-            let cell = tableView.dequeueReusableCellWithIdentifier("PlayerStatsCell", forIndexPath: indexPath) as! PlayerStatsCell
+        case .teams:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerStatsCell", for: indexPath) as! PlayerStatsCell
             let player = viewModel.players.value[indexPath.row]
             cell.configure(player, isTeamGame: viewModel.match.isTeamGame)
 
@@ -100,36 +100,36 @@ extension CarnageReportViewController {
 
     }
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let section = CarnageReportSection(rawValue: indexPath.section) else { return 0 }
 
         switch section {
-        case .Image:
+        case .image:
             return UITableViewAutomaticDimension
-        case .Scores:
+        case .scores:
             let showTeams = viewModel.match.isTeamGame
             return showTeams ? 100.0 : 130.0
-        case .TeamTitle, .Teams:
+        case .teamTitle, .teams:
             return 50.0
         }
     }
 
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let section = CarnageReportSection(rawValue: indexPath.section) else { return 0 }
 
         switch section {
-        case .Image:
+        case .image:
             return 200.0
         default:
             return 100.0
         }
     }
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let section = CarnageReportSection(rawValue: indexPath.section) else { return }
 
         switch  section {
-        case .Teams:
+        case .teams:
             let player = viewModel.players.value[indexPath.row]
             let playerCarnageReportViewController = StoryboardScene.GameHistory.playerCarnageReportViewController()
             playerCarnageReportViewController.viewModel = PlayerCarnageReportViewModel(match: viewModel.match, player: player)
@@ -145,8 +145,8 @@ extension CarnageReportViewController {
 
 extension CarnageReportViewController {
 
-    override func scrollViewDidScroll(scrollView: UIScrollView) {
-        if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? ImageCell {
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ImageCell {
             cell.scrollViewDidScroll(scrollView)
         }
     }

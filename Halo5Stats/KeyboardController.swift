@@ -11,15 +11,15 @@ class KeyboardController: NSObject {
 
     @IBOutlet var scrollView: UIScrollView!
 
-    private var originalContentInsets: UIEdgeInsets = UIEdgeInsetsZero
-    private var originalScrollIndicatorInsets: UIEdgeInsets = UIEdgeInsetsZero
-    private var keyboardUp: Bool = false
+    fileprivate var originalContentInsets: UIEdgeInsets = UIEdgeInsets.zero
+    fileprivate var originalScrollIndicatorInsets: UIEdgeInsets = UIEdgeInsets.zero
+    fileprivate var keyboardUp: Bool = false
 
-    private var window: UIWindow? {
-        return UIApplication.sharedApplication().keyWindow
+    fileprivate var window: UIWindow? {
+        return UIApplication.shared.keyWindow
     }
 
-    private var mainView: UIView? {
+    fileprivate var mainView: UIView? {
         guard let window = window else { return nil }
         return window.rootViewController?.view
     }
@@ -37,27 +37,27 @@ class KeyboardController: NSObject {
 
     // MARK: - Observers
 
-    private func registerKeyboardObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func registerKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
-    private func removeKeyboardObservers() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    fileprivate func removeKeyboardObservers() {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
-    @objc private func keyboardWillShow(notification: NSNotification) {
-        guard let scrollView = scrollView, frameValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue, window = window, mainView = mainView where keyboardUp == false else { return }
+    @objc fileprivate func keyboardWillShow(_ notification: Notification) {
+        guard let scrollView = scrollView, let frameValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue, let window = window, let mainView = mainView, keyboardUp == false else { return }
 
-        if originalContentInsets == UIEdgeInsetsZero || originalScrollIndicatorInsets == UIEdgeInsetsZero {
+        if originalContentInsets == UIEdgeInsets.zero || originalScrollIndicatorInsets == UIEdgeInsets.zero {
             originalContentInsets = scrollView.contentInset
             originalScrollIndicatorInsets = scrollView.scrollIndicatorInsets
         }
 
-        let frame = mainView.convertRect(frameValue.CGRectValue(), fromView: window)
-        let scrollFrame = mainView.convertRect(scrollView.bounds, fromView: scrollView)
-        let overlap = frame.intersect(scrollFrame).height
+        let frame = mainView.convert(frameValue.cgRectValue, from: window)
+        let scrollFrame = mainView.convert(scrollView.bounds, from: scrollView)
+        let overlap = frame.intersection(scrollFrame).height
 
         var contentInsets = originalContentInsets
         contentInsets.bottom += overlap
@@ -71,14 +71,14 @@ class KeyboardController: NSObject {
         keyboardUp = true
     }
 
-    @objc private func keyboardWillHide(notification: NSNotification) {
-        guard let scrollView = scrollView where keyboardUp else { return }
+    @objc fileprivate func keyboardWillHide(_ notification: Notification) {
+        guard let scrollView = scrollView, keyboardUp else { return }
 
         scrollView.contentInset = originalContentInsets
         scrollView.scrollIndicatorInsets = originalScrollIndicatorInsets
 
-        originalContentInsets = UIEdgeInsetsZero
-        originalScrollIndicatorInsets = UIEdgeInsetsZero
+        originalContentInsets = UIEdgeInsets.zero
+        originalScrollIndicatorInsets = UIEdgeInsets.zero
 
         keyboardUp = false
     }

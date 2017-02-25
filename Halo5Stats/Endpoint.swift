@@ -22,20 +22,20 @@ class Endpoint {
     
     // MARK: Private
 
-    private let scheme = APIConstants.Scheme
-    private let host = APIConstants.Domain
-    private let basePath: String
-    private let path: String
-    private let parameters: [String : String]?
+    fileprivate let scheme = APIConstants.Scheme
+    fileprivate let host = APIConstants.Domain
+    fileprivate let basePath: String
+    fileprivate let path: String
+    fileprivate let parameters: [String : String]?
     
-    private func url(withSubstitutions substitutions: [String : String], parameters: [String : String]?) -> NSURL {
+    fileprivate func url(withSubstitutions substitutions: [String : String], parameters: [String : String]?) -> URL {
         var endpointPath = path
         
         for key in substitutions.keys {
-            let identifier = "[\(key.uppercaseString)]"
+            let identifier = "[\(key.uppercased())]"
             
             if let value = substitutions[key] {
-                endpointPath = endpointPath.stringByReplacingOccurrencesOfString(identifier, withString: value.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet())!)
+                endpointPath = endpointPath.replacingOccurrences(of: identifier, with: value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)!)
             }
         }
         
@@ -44,30 +44,30 @@ class Endpoint {
         if var params = parameters {
             var paramsArray: [String] = []
             for key in params.keys {
-                if let encodedValue = params[key]?.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet()) {
+                if let encodedValue = params[key]?.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed) {
                     paramsArray.append("\(key)=\(encodedValue)")
                 }
             }
 
-            let paramsString = paramsArray.joinWithSeparator("&")
-            urlString.appendContentsOf("?\(paramsString)")
+            let paramsString = paramsArray.joined(separator: "&")
+            urlString.append("?\(paramsString)")
         }
 
-        let url = NSURL(string: urlString)
+        let url = URL(string: urlString)
         
         return url!
     }
     
     // MARK: Internal
     
-    func url() -> NSURL {
+    func url() -> URL {
         let urlString = "\(scheme)://\(host)\(basePath)"
-        let url = NSURL(string: urlString)?.URLByAppendingPathComponent(path)
+        let url = URL(string: urlString)?.appendingPathComponent(path)
         
         return url!
     }
     
-    func url(withSubstitutions substitutions: [String:String]) -> NSURL {
+    func url(withSubstitutions substitutions: [String:String]) -> URL {
         return url(withSubstitutions: substitutions, parameters: parameters)
     }
 }

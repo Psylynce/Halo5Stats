@@ -51,12 +51,12 @@ class KDCell: UITableViewCell {
             $0.textColor = UIColor(haloColor: .WhiteSmoke)
         }
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
-        selectionStyle = .None
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
+        selectionStyle = .none
     }
 
-    func configure(stats: StatsModel, gameMode: GameMode, gamesCompleted: Int) {
+    func configure(_ stats: StatsModel, gameMode: GameMode, gamesCompleted: Int) {
         titleLabels.forEach {
             $0.textColor = gameMode.color
         }

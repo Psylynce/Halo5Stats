@@ -24,12 +24,12 @@ struct MatchesRequest: RequestProtocol {
         return "\(gamertag)_MatchesRequest"
     }
 
-    var url: NSURL {
+    var url: URL {
         let substitutions = [APIConstants.GamertagKey : gamertag]
         let endpoint = Endpoint(service: APIConstants.StatsService, path: APIConstants.StatsPlayerMatches, parameters: parameters)
         let url = endpoint.url(withSubstitutions: substitutions)
 
-        return url
+        return url as URL
     }
 
     var cacheKey: String {
@@ -44,9 +44,9 @@ struct MatchesRequest: RequestProtocol {
 
     // MARK: Private
 
-    private static func parseMatches() -> ((name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void) {
-        func parse(name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void {
-            let gamertag = name.componentsSeparatedByString("_")[0]
+    fileprivate static func parseMatches() -> ((_ name: String, _ context: NSManagedObjectContext, _ data: [String : AnyObject]) -> Void) {
+        func parse(_ name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void {
+            let gamertag = name.components(separatedBy: "_")[0]
             Match.parse(forGamertag: gamertag, data: data, context: context)
         }
 

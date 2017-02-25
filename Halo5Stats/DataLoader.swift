@@ -9,6 +9,6 @@ import UIKit
 
 protocol DataLoader {
     var loadingIndicator: LoadingIndicator! { get }
-    func showIndicator(animate animate: Bool)
+    func showIndicator(animate: Bool)
     func hideIndicator()
 }

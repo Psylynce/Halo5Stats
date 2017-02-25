@@ -16,15 +16,15 @@ class TitleCell: UITableViewCell {
 
         titleLabel.textColor = UIColor(haloColor: .WhiteSmoke)
         titleLabel.font = UIFont.kelson(.Medium, size: 18.0)
-        titleLabel.textAlignment = .Center
+        titleLabel.textAlignment = .center
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
 
-        selectionStyle = .None
+        selectionStyle = .none
     }
 
-    func configure(text: String, gameMode: GameMode? = nil) {
+    func configure(_ text: String, gameMode: GameMode? = nil) {
         titleLabel.text = text
 
         if let mode = gameMode {

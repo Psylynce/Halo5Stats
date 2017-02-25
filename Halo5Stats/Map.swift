@@ -24,7 +24,7 @@ extension Map: ManagedObjectTypeProtocol {
         return "Map"
     }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
         guard let maps = data[JSONKeys.Map.maps] as? [AnyObject] else { return }
 
         for mapData in maps {
@@ -41,7 +41,7 @@ extension Map: ManagedObjectTypeProtocol {
                 $0.identifier = mapData[JSONKeys.identifier] as? String
 
                 if let supportedGameModes = mapData[JSONKeys.Map.supportArray] as? [String] {
-                    $0.supportedGameModes = supportedGameModes.joinWithSeparator(",")
+                    $0.supportedGameModes = supportedGameModes.joined(separator: ",")
                 }
             }
         }

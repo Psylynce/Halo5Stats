@@ -14,30 +14,30 @@ class PersistenceController {
     
     // MARK: Properties
     
-    private static let storePath = "Halo5Stats.sqlite"
+    fileprivate static let storePath = "Halo5Stats.sqlite"
     let managedObjectContext: NSManagedObjectContext!
     let privateManagedObjectContext: NSManagedObjectContext
     
     // MARK: Initialization
     
     init(coordinator: NSPersistentStoreCoordinator) {
-        managedObjectContext = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
-        privateManagedObjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        privateManagedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         
         privateManagedObjectContext.persistentStoreCoordinator = coordinator
-        managedObjectContext.parentContext = privateManagedObjectContext
+        managedObjectContext.parent = privateManagedObjectContext
         
         addChildSaveNotification()
     }
     
     // MARK: Static Methods
     
-    static func persistenceStoreURL() -> NSURL {
-        guard var url = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).last else {
+    static func persistenceStoreURL() -> URL {
+        guard var url = Foundation.FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last else {
             fatalError("The persistence store URL doesn't exist")
         }
         
-        url = url.URLByAppendingPathComponent(storePath)
+        url = url.appendingPathComponent(storePath)
 
         return url
     }
@@ -53,7 +53,7 @@ class PersistenceController {
             return
         }
         
-        managedObjectContext.performBlockAndWait { () -> Void in            
+        managedObjectContext.performAndWait { () -> Void in            
             do {
                 try self.managedObjectContext.save()
             } catch {
@@ -61,7 +61,7 @@ class PersistenceController {
                 NSLog("Unresolved error \(error), \(error.userInfo)")
             }
             
-            self.privateManagedObjectContext.performBlock { () -> Void in
+            self.privateManagedObjectContext.perform { () -> Void in
                 do {
                     try self.privateManagedObjectContext.save()
                 } catch {
@@ -77,13 +77,13 @@ class PersistenceController {
     // MARK: Internal
     
     func createChildContext() -> NSManagedObjectContext {
-        let childContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
-        childContext.parentContext = managedObjectContext
+        let childContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+        childContext.parent = managedObjectContext
         
         return childContext
     }
     
-    func saveChildContext(context: NSManagedObjectContext) {
+    func saveChildContext(_ context: NSManagedObjectContext) {
         if context.hasChanges {
             do {
                 try context.save()
@@ -95,17 +95,17 @@ class PersistenceController {
     
     // MARK: Private
     
-    private func addChildSaveNotification() {
-        NSNotificationCenter.defaultCenter().addObserverForName(NSManagedObjectContextDidSaveNotification, object: nil, queue: nil) { [weak self] (notification) -> Void in
+    fileprivate func addChildSaveNotification() {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.NSManagedObjectContextDidSave, object: nil, queue: nil) { [weak self] (notification) -> Void in
             guard let strongSelf = self else { return }
             guard let mainContext = strongSelf.managedObjectContext else { return }
             guard let childContext = notification.object as? NSManagedObjectContext else { return }
             
             if childContext.persistentStoreCoordinator == mainContext.persistentStoreCoordinator {
                 if childContext != mainContext {
-                    mainContext.performBlock({ [weak strongSelf] () -> Void in
+                    mainContext.perform({ [weak strongSelf] () -> Void in
                         guard let strongSelf = strongSelf else { return }
-                        mainContext.mergeChangesFromContextDidSaveNotification(notification)
+                        mainContext.mergeChanges(fromContextDidSave: notification)
                         strongSelf.save()
                     })
                 }

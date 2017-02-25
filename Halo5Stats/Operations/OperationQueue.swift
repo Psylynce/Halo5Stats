@@ -18,23 +18,23 @@ import Foundation
     For example, `GroupOperation` is the delegate of its own internal
     `OperationQueue` and uses it to manage dependencies.
 */
-@objc protocol OperationQueueDelegate: NSObjectProtocol {
-    optional func operationQueue(operationQueue: OperationQueue, willAddOperation operation: NSOperation)
-    optional func operationQueue(operationQueue: OperationQueue, operationDidFinish operation: NSOperation, withErrors errors: [NSError])
+@objc public protocol OperationQueueDelegate: NSObjectProtocol {
+    @objc optional func operationQueue(_ operationQueue: OperationQueue, willAddOperation operation: Foundation.Operation)
+    @objc optional func operationQueue(_ operationQueue: OperationQueue, operationDidFinish operation: Foundation.Operation, withErrors errors: [NSError])
 }
 
 /**
     `OperationQueue` is an `NSOperationQueue` subclass that implements a large
     number of "extra features" related to the `Operation` class:
-    
+
     - Notifying a delegate of all operation completion
     - Extracting generated dependencies from operation conditions
     - Setting up dependencies to enforce mutual exclusivity
 */
-class OperationQueue: NSOperationQueue {
+@objc open class OperationQueue: Foundation.OperationQueue {
     weak var delegate: OperationQueueDelegate?
-    
-    override func addOperation(operation: NSOperation) {
+
+    override open func addOperation(_ operation: Foundation.Operation) {
         if let op = operation as? Operation {
             // Set up a `BlockObserver` to invoke the `OperationQueueDelegate` method.
             let delegate = BlockObserver(
@@ -49,26 +49,26 @@ class OperationQueue: NSOperationQueue {
                 }
             )
             op.addObserver(delegate)
-            
+
             // Extract any dependencies needed by this operation.
             let dependencies = op.conditions.flatMap {
                 $0.dependencyForOperation(op)
             }
-                
+
             for dependency in dependencies {
                 op.addDependency(dependency)
 
                 self.addOperation(dependency)
             }
-            
+
             /*
                 With condition dependencies added, we can now see if this needs
                 dependencies to enforce mutual exclusivity.
             */
             let concurrencyCategories: [String] = op.conditions.flatMap { condition in
-                if !condition.dynamicType.isMutuallyExclusive { return nil }
-                
-                return "\(condition.dynamicType)"
+                if !type(of: condition).isMutuallyExclusive { return nil }
+
+                return "\(type(of: condition))"
             }
 
             if !concurrencyCategories.isEmpty {
@@ -76,37 +76,39 @@ class OperationQueue: NSOperationQueue {
                 let exclusivityController = ExclusivityController.sharedExclusivityController
 
                 exclusivityController.addOperation(op, categories: concurrencyCategories)
-                
+
                 op.addObserver(BlockObserver { operation, _ in
                     exclusivityController.removeOperation(operation, categories: concurrencyCategories)
                 })
             }
-            
+
             /*
                 Indicate to the operation that we've finished our extra work on it
                 and it's now it a state where it can proceed with evaluating conditions,
                 if appropriate.
             */
             op.willEnqueue()
-        }
-        else {
+        } else {
             /*
                 For regular `NSOperation`s, we'll manually call out to the queue's
                 delegate we don't want to just capture "operation" because that
                 would lead to the operation strongly referencing itself and that's
                 the pure definition of a memory leak.
             */
-            operation.addCompletionBlock { [weak self, weak operation] in
-                guard let queue = self, let operation = operation else { return }
+
+            operation.completionBlock = { [weak self, weak operation] in
+                guard let queue = self else { return }
+                guard let operation = operation else { return }
+
                 queue.delegate?.operationQueue?(queue, operationDidFinish: operation, withErrors: [])
             }
         }
-        
+
         delegate?.operationQueue?(self, willAddOperation: operation)
         super.addOperation(operation)
     }
-    
-    override func addOperations(operations: [NSOperation], waitUntilFinished wait: Bool) {
+
+    override open func addOperations(_ operations: [Foundation.Operation], waitUntilFinished wait: Bool) {
         /*
             The base implementation of this method does not call `addOperation()`,
             so we'll call it ourselves.
@@ -114,7 +116,7 @@ class OperationQueue: NSOperationQueue {
         for operation in operations {
             addOperation(operation)
         }
-        
+
         if wait {
             for operation in operations {
               operation.waitUntilFinished()

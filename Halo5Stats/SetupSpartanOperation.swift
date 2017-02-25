@@ -29,14 +29,14 @@ class SetupSpartanOperation: Operation {
             APIConstants.spartan : spartanImageUrl.absoluteString
         ]
 
-        parseSpartan(data)
+        parseSpartan(data as [String : AnyObject])
     }
 
-    private func parseSpartan(data: [String : AnyObject]) {
-        let controller = UIApplication.appController().persistenceController
-        let context = controller.createChildContext()
+    fileprivate func parseSpartan(_ data: [String : AnyObject]) {
+        guard let controller = UIApplication.appController().persistenceController else { return }
+        let context = controller.createChildContext() 
 
-        context.performBlock {
+        context.perform {
             Spartan.parse(data, context: context)
 
             controller.saveChildContext(context)

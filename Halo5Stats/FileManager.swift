@@ -11,9 +11,9 @@ class FileManager {
 
     static let sharedManager = FileManager()
 
-    func cacheFile(withKey key: String) -> NSURL {
-        let cachesFolder = try! NSFileManager.defaultManager().URLForDirectory(.CachesDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
-        let cacheFile = cachesFolder.URLByAppendingPathComponent("\(key).json")
+    func cacheFile(withKey key: String) -> URL {
+        let cachesFolder = try! Foundation.FileManager.default.url(for: .cachesDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let cacheFile = cachesFolder.appendingPathComponent("\(key).json")
 
         return cacheFile
     }
@@ -21,7 +21,7 @@ class FileManager {
     func data(forCacheKey cacheKey: String, key: String) -> [String : AnyObject]? {
         let cacheFile = self.cacheFile(withKey: cacheKey)
 
-        guard let stream = NSInputStream(URL: cacheFile) else {
+        guard let stream = InputStream(url: cacheFile) else {
             return nil
         }
 
@@ -32,8 +32,8 @@ class FileManager {
         }
 
         do {
-            let json = try NSJSONSerialization.JSONObjectWithStream(stream, options: [])
-            let jsonDict = ensureJSONDict(json, key: key)
+            let json = try JSONSerialization.jsonObject(with: stream, options: [])
+            let jsonDict = ensureJSONDict(json as AnyObject, key: key)
             return jsonDict
         }
         catch {
@@ -41,9 +41,9 @@ class FileManager {
         }
     }
 
-    func ensureJSONDict(json: AnyObject, key: String) -> [String : AnyObject] {
+    func ensureJSONDict(_ json: Any, key: String) -> [String : AnyObject] {
         guard let jsonDict = json as? [String : AnyObject] else {
-            return [key : json]
+            return [key : json as AnyObject]
         }
 
         return jsonDict

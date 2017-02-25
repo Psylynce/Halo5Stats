@@ -35,8 +35,8 @@ extension Team: ManagedObjectTypeProtocol {
     }
 
     func update(withData data: AnyObject, context: NSManagedObjectContext) {
-        identifier = data[JSONKeys.Identifier] as? Int
-        rank = data[JSONKeys.Matches.rank] as? Int
-        score = data[JSONKeys.Matches.score] as? Int
+        identifier = data[JSONKeys.Identifier] as? Int as NSNumber?
+        rank = data[JSONKeys.Matches.rank] as? Int as NSNumber?
+        score = data[JSONKeys.Matches.score] as? Int as NSNumber?
     }
 }

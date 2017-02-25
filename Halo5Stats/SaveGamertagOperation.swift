@@ -12,7 +12,7 @@ class SaveGamertagOperation: Operation {
     // MARK: Properties
     
     let gamertag: String
-    private let manager = GamertagManager()
+    fileprivate let manager = GamertagManager()
     
     // MARK: Initialization
     
@@ -27,7 +27,9 @@ class SaveGamertagOperation: Operation {
     override func execute() {
         manager.saveUserGamertag(gamertag)
         SpartanManager.sharedManager.saveSpartan(gamertag)
-        print(manager.gamertagForUser())
+        if let gamertag = manager.gamertagForUser() {
+            print(gamertag)
+        }
     }
 }
 

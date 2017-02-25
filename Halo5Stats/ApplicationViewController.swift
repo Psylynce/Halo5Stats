@@ -24,14 +24,14 @@ class ApplicationViewController: UIViewController {
         containerView.backgroundColor = UIColor(haloColor: .Black)
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         viewModel.updateMetadata()
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return .lightContent
     }
     
     // MARK: - ApplicationViewController
@@ -48,7 +48,7 @@ class ApplicationViewController: UIViewController {
 
     // MARK: - Private
     
-    private func showAppropriateView() {
+    fileprivate func showAppropriateView() {
         if GamertagManager.sharedManager.gamertagExists() {
             embed(viewController: haloTabBarController, inView: containerView)
         } else {
@@ -56,7 +56,7 @@ class ApplicationViewController: UIViewController {
         }
     }
     
-    private func launchWasSuccessful() {
+    fileprivate func launchWasSuccessful() {
         launchViewController.isChangingGamertag = false
         swap(fromViewController: launchViewController, toViewController: haloTabBarController, toView: containerView)
         haloTabBarController.selectedIndex = 0
@@ -65,11 +65,11 @@ class ApplicationViewController: UIViewController {
 
 extension ApplicationViewController: LaunchViewControllerDelegate {
 
-    func launchViewControllerButtonTapped(sender: UIButton) {
+    func launchViewControllerButtonTapped(_ sender: UIButton) {
         launchWasSuccessful()
     }
 
-    func cancelButtonTapped(sender: UIButton) {
+    func cancelButtonTapped(_ sender: UIButton) {
         launchViewController.isChangingGamertag = false
         swap(fromViewController: launchViewController, toViewController: haloTabBarController, toView: containerView)
     }

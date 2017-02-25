@@ -11,12 +11,12 @@ import CoreData
 public protocol ManagedObjectTypeProtocol: class {
     static var entityName: String { get }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext)
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext)
     func update(withData data: AnyObject, context: NSManagedObjectContext)
 }
 
 extension ManagedObjectTypeProtocol {
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
         // Make this function optional
     }
 

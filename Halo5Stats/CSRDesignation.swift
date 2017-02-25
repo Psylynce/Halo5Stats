@@ -11,21 +11,21 @@ import CoreData
 
 class CSRDesignation: NSManagedObject {
 
-    static func csrDesignation(identifier: Int) -> CSRDesignation? {
-        let predicate = NSPredicate.predicate(withNumberIdentifier: identifier)
+    static func csrDesignation(_ identifier: Int) -> CSRDesignation? {
+        let predicate = NSPredicate.predicate(withNumberIdentifier: NSNumber(integerLiteral: identifier))
         let designation = CSRDesignation.findOrFetch(inContext: UIApplication.appController().managedObjectContext(), matchingPredicate: predicate)
 
         return designation
     }
 
-    func tier(identifier: Int) -> CSRTier? {
+    func tier(_ identifier: Int) -> CSRTier? {
         guard let name = name else { return nil }
         guard let tiers = self.tiers?.allObjects as? [CSRTier] else { return nil }
 
         let tierId = "\(name)-\(identifier)"
 
         for tier in tiers {
-            if let tierIdentifier = tier.identifier where tierIdentifier == tierId {
+            if let tierIdentifier = tier.identifier, tierIdentifier == tierId {
                 return tier
             }
         }
@@ -41,7 +41,7 @@ extension CSRDesignation: ManagedObjectTypeProtocol {
         return "CSRDesignation"
     }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
         guard let csrDesignations = data[JSONKeys.CSR.csrDesignation] as? [AnyObject] else { return }
 
         for csr in csrDesignations {
@@ -61,7 +61,7 @@ extension CSRDesignation: ManagedObjectTypeProtocol {
                     var tiers: [CSRTier] = []
 
                     for tier in tierArray {
-                        guard let identifier = tier[JSONKeys.identifier] as? String, designation = $0.name else {
+                        guard let identifier = tier[JSONKeys.identifier] as? String, let designation = $0.name else {
                             print("No CSR Tier")
                             continue
                         }

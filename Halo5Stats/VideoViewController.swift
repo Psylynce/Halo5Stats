@@ -15,64 +15,64 @@ class VideoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.blackColor()
+        view.backgroundColor = UIColor.black
         registerNotifications()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         loadVideo()
     }
 
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
 
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     // MARK: - Private
 
-    private var currentTime: CMTime?
+    fileprivate var currentTime: CMTime?
 
-    @objc private func replayVideo(notification: NSNotification) {
+    @objc fileprivate func replayVideo(_ notification: Notification) {
         if let player = player {
-            player.seekToTime(kCMTimeZero)
+            player.seek(to: kCMTimeZero)
             player.play()
         }
     }
 
-    @objc private func appEnteredForeground() {
+    @objc fileprivate func appEnteredForeground() {
         if let currentTime = currentTime {
             play(fromTime: currentTime)
             self.currentTime = nil
         }
     }
 
-    @objc private func appEnteredBackground() {
+    @objc fileprivate func appEnteredBackground() {
         player?.pause()
         currentTime = player?.currentTime()
     }
 
-    private func play(fromTime time: CMTime) {
+    fileprivate func play(fromTime time: CMTime) {
         guard let player = player else { return }
-        if player.status == .ReadyToPlay && player.currentItem?.status == .ReadyToPlay {
-            player.seekToTime(time, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero) { (_) in
+        if player.status == .readyToPlay && player.currentItem?.status == .readyToPlay {
+            player.seek(to: time, toleranceBefore: kCMTimeZero, toleranceAfter: kCMTimeZero, completionHandler: { (_) in
                 player.play()
-            }
+            }) 
         } else {
             let delay = Int64(Double(NSEC_PER_SEC) * 0.2)
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue()) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(delay) / Double(NSEC_PER_SEC)) { [weak self] in
                 self?.play(fromTime: time)
             }
         }
     }
 
-    private var playerLayer: AVPlayerLayer? {
-        guard let path = NSBundle.mainBundle().pathForResource("HaloIntro", ofType: "mp4") else { return nil }
+    fileprivate var playerLayer: AVPlayerLayer? {
+        guard let path = Bundle.main.path(forResource: "HaloIntro", ofType: "mp4") else { return nil }
 
-        let url = NSURL.fileURLWithPath(path)
-        let playerItem = AVPlayerItem(URL: url)
+        let url = URL(fileURLWithPath: path)
+        let playerItem = AVPlayerItem(url: url)
         player = AVPlayer(playerItem: playerItem)
         let playerLayer = AVPlayerLayer(player: player)
 
@@ -82,13 +82,13 @@ class VideoViewController: UIViewController {
         return playerLayer
     }
 
-    private func registerNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(replayVideo(_:)), name: AVPlayerItemDidPlayToEndTimeNotification, object: player?.currentItem)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(appEnteredBackground), name: UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(appEnteredForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
+    fileprivate func registerNotifications() {
+        NotificationCenter.default.addObserver(self, selector: #selector(replayVideo(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(appEnteredBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appEnteredForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
 
-    private func loadVideo() {
+    fileprivate func loadVideo() {
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
         } catch {}
@@ -98,7 +98,7 @@ class VideoViewController: UIViewController {
         }
 
         if let player = player {
-            player.muted = true
+            player.isMuted = true
             player.play()
         }
     }

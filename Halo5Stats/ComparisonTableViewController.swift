@@ -32,14 +32,14 @@ class ComparisonTableViewController: UIViewController {
         setupAppearance()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         updateAppearance()
         navigationController?.presentTransparentNavigationBar()
     }
 
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         navigationController?.hideTransparentNavigationBar()
@@ -47,15 +47,15 @@ class ComparisonTableViewController: UIViewController {
 
     // MARK: Private
 
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
 
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor(haloColor: .Cinder)
     }
 
-    private func setupBindAndFires() {
+    fileprivate func setupBindAndFires() {
         viewModel.spartans.bindAndFire { [weak self] (_) in
             self?.viewModel.setupComparableStats()
         }
@@ -73,7 +73,7 @@ class ComparisonTableViewController: UIViewController {
         }
     }
 
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         headerImageView.image = UIImage(named: "OceanBackground")
 
         versusLabel.font = UIFont.kelson(.ExtraBold, size: 24)
@@ -84,27 +84,27 @@ class ComparisonTableViewController: UIViewController {
         playerOneGamertagLabel.adjustsFontSizeToFitWidth = true
         playerOneGamertagLabel.minimumScaleFactor = 0.7
 
-        playerOneSpartanImageView.transform = CGAffineTransformMakeScale(-1, 1)
-        playerOneSpartanImageView.contentMode = .ScaleAspectFill
+        playerOneSpartanImageView.transform = CGAffineTransform(scaleX: -1, y: 1)
+        playerOneSpartanImageView.contentMode = .scaleAspectFill
 
         playerOneContainerView.layer.cornerRadius = 5
-        playerOneContainerView.backgroundColor = UIColor(haloColor: .Black).colorWithAlphaComponent(0.6)
+        playerOneContainerView.backgroundColor = UIColor(haloColor: .Black).withAlphaComponent(0.6)
 
         playerTwoGamertagLabel.font = UIFont.kelson(.Light, size: 16)
         playerTwoGamertagLabel.textColor = UIColor(haloColor: .WhiteSmoke)
         playerTwoGamertagLabel.adjustsFontSizeToFitWidth = true
         playerTwoGamertagLabel.minimumScaleFactor = 0.7
 
-        playerTwoSpartanImageView.contentMode = .ScaleAspectFill
+        playerTwoSpartanImageView.contentMode = .scaleAspectFill
 
         playerTwoContainerView.layer.cornerRadius = 5
-        playerTwoContainerView.backgroundColor = UIColor(haloColor: .Black).colorWithAlphaComponent(0.6)
+        playerTwoContainerView.backgroundColor = UIColor(haloColor: .Black).withAlphaComponent(0.6)
 
         hideBackButtonTitle()
     }
 
-    private func updateAppearance() {
-        guard let playerOne = viewModel.spartans.value.first, playerTwo = viewModel.spartans.value.last else { return }
+    fileprivate func updateAppearance() {
+        guard let playerOne = viewModel.spartans.value.first, let playerTwo = viewModel.spartans.value.last else { return }
         playerOneGamertagLabel.text = playerOne.displayGamertag
         playerOneEmblemImageView.image(forUrl: playerOne.emblemUrl)
         playerOneSpartanImageView.image(forUrl: playerOne.spartanImageUrl)
@@ -117,26 +117,26 @@ class ComparisonTableViewController: UIViewController {
 
 extension ComparisonTableViewController: UITableViewDataSource, UITableViewDelegate {
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.sections.count
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let s = viewModel.sections[section]
         return viewModel.numberOfRows(forSection: s)
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = viewModel.sections[indexPath.section]
         let compareItem = viewModel.compareItem(indexPath)
-        let cell = tableView.dequeueReusableCellWithIdentifier("CompareCell", forIndexPath: indexPath) as! CompareCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CompareCell", for: indexPath) as! CompareCell
 
         cell.configure(comparableItem: compareItem, gameMode: section.gameMode)
 
         return cell
     }
 
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let section = viewModel.sections[section]
         let view = SectionHeaderView.loadFromNib()
         view.titleLabel.text = section.title
@@ -146,11 +146,11 @@ extension ComparisonTableViewController: UITableViewDataSource, UITableViewDeleg
         return view
     }
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
 
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
 }

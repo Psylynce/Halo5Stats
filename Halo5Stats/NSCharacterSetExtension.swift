@@ -7,20 +7,20 @@
 
 import Foundation
 
-extension NSCharacterSet {
+extension CharacterSet {
     
     /**
      Pure digit character set
      */
-    static func numericCharacterSet() -> NSCharacterSet {
-        return NSCharacterSet(charactersInString: "0123456789")
+    static func numericCharacterSet() -> CharacterSet {
+        return CharacterSet(charactersIn: "0123456789")
     }
 
     /**
         A character set that represents the characters allowed in a gamertag
     */
-    static func gamertagCharacterSet() -> NSCharacterSet {
-        return NSCharacterSet(charactersInString: "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789 ")
+    static func gamertagCharacterSet() -> CharacterSet {
+        return CharacterSet(charactersIn: "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789 ")
     }
 }
 

@@ -28,8 +28,8 @@ class TitleScoreCell: UICollectionViewCell {
         scoreLabel.textColor = UIColor(haloColor: .WhiteSmoke)
         scoreLabel.font = UIFont.kelson(.Regular, size: 12.0)
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
     }
 
     override func prepareForReuse() {
@@ -40,14 +40,14 @@ class TitleScoreCell: UICollectionViewCell {
         scoreLabel.text = ""
     }
 
-    func configure(item: DisplayItem, cachedImage: UIImage? = nil) {
+    func configure(_ item: DisplayItem, cachedImage: UIImage? = nil) {
         if let title = item.title {
             titleLabel.text = title
         }
         scoreLabel.text = item.number
 
         if item is MedalModel {
-            imageView.contentMode = .ScaleAspectFit
+            imageView.contentMode = .scaleAspectFit
             imageViewHeightConstraint.constant = 35
             imageViewWidthConstraint.constant = 35
             imageView.image = cachedImage
@@ -61,12 +61,12 @@ class TitleScoreCell: UICollectionViewCell {
 
 extension TitleScoreCell: MedalImagePresenter {
 
-    func initiateMedalImageRequest(coordinator: MedalImageRequestFetchCoordinator) {
+    func initiateMedalImageRequest(_ coordinator: MedalImageRequestFetchCoordinator) {
         guard let medal = medal else { return }
         coordinator.fetchMedalImage(self, medal: medal)
     }
 
-    func displayMedalImage(medal: MedalModel, image: UIImage) {
+    func displayMedalImage(_ medal: MedalModel, image: UIImage) {
         guard let cellMedal = self.medal else { return }
 
         if medal.cacheIdentifier == cellMedal.cacheIdentifier {

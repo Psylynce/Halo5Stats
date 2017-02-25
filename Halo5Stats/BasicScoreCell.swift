@@ -17,8 +17,8 @@ class BasicScoreCell: UICollectionViewCell {
         label.textColor = UIColor(haloColor: .WhiteSmoke)
         label.font = UIFont.kelson(.Regular, size: 14.0)
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
     }
 
     override func prepareForReuse() {
@@ -28,7 +28,7 @@ class BasicScoreCell: UICollectionViewCell {
         imageView.image = nil
     }
 
-    func configure(item: DisplayItem) {
+    func configure(_ item: DisplayItem) {
         if let url = item.url {
             imageView.image(forUrl: url)
         }

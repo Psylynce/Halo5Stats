@@ -9,63 +9,63 @@ import Foundation
 import UIKit
 
 enum ImageResponse {
-    case Success(image: UIImage)
-    case Error
+    case success(image: UIImage)
+    case error
 }
 
 class ImageCache {
 
     static let sharedInstance = ImageCache()
-    let cache = NSCache()
+    let cache = NSCache<AnyObject, AnyObject>()
 
-    private func insert(key: String, image: UIImage) {
-        cache.setObject(image, forKey: key)
+    fileprivate func insert(_ key: String, image: UIImage) {
+        cache.setObject(image, forKey: key as AnyObject)
     }
 
-    private func cachedImage(forKey key: String) -> UIImage? {
-        if let image = cache.objectForKey(key) as? UIImage {
+    fileprivate func cachedImage(forKey key: String) -> UIImage? {
+        if let image = cache.object(forKey: key as AnyObject) as? UIImage {
             return image
         }
 
         return nil
     }
 
-    private func image(forUrl url: NSURL, key: String, cropRect: CGRect? = nil, completion: (imageResponse: ImageResponse) -> ()) {
+    fileprivate func image(forUrl url: URL, key: String, cropRect: CGRect? = nil, completion: @escaping (_ imageResponse: ImageResponse) -> ()) {
         if let image = cachedImage(forKey: key) {
-            completion(imageResponse: .Success(image: image))
+            completion(.success(image: image))
             return
         }
 
-        let task = NSURLSession.halo5ConfiguredSession().dataTaskWithURL(url) { [weak self] (data, response, error) in
-            guard let data = data where error == nil else { return }
+        let task = URLSession.halo5ConfiguredSession().dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
+            guard let data = data, error == nil else { return }
 
-            if let response = response as? NSHTTPURLResponse where response.statusCode == 404 {
-                completion(imageResponse: .Error)
+            if let response = response as? HTTPURLResponse, response.statusCode == 404 {
+                completion(.error)
             }
 
             if let image = UIImage(data: data) {
                 if let rect = cropRect {
                     if let croppedImage = image.cropped(rect) {
                         self?.insert(key, image: croppedImage)
-                        completion(imageResponse: .Success(image: croppedImage))
+                        completion(.success(image: croppedImage))
                     } else {
-                        completion(imageResponse: .Error)
+                        completion(.error)
                     }
                 } else {
                     self?.insert(key, image: image)
-                    completion(imageResponse: .Success(image: image))
+                    completion(.success(image: image))
                 }
             }
-        }
+        }) 
         
         task.resume()
     }
 
-    func image(forUrl url: NSURL, completion: (imageResponse: ImageResponse) -> ()) {
+    func image(forUrl url: URL, completion: @escaping (_ imageResponse: ImageResponse) -> ()) {
         image(forUrl: url, key: url.absoluteString, completion: completion)
     }
 
-    func croppedImage(forUrl url: NSURL, cropRect: CGRect, completion: (imageResponse: ImageResponse) -> ()) {
+    func croppedImage(forUrl url: URL, cropRect: CGRect, completion: @escaping (_ imageResponse: ImageResponse) -> ()) {
         image(forUrl: url, key: url.absoluteString, cropRect: cropRect, completion: completion)
     }
 }

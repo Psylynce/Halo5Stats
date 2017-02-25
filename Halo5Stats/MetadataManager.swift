@@ -14,33 +14,33 @@ struct MetadataManager {
         static let updatedMetadataDateKey = "updatedMetadataDateKey"
     }
 
-    static var updatedMetadataDate: NSDate? {
+    static var updatedMetadataDate: Date? {
         set {
             if let date = newValue {
-                NSUserDefaults.standardUserDefaults().setObject(date, forKey: K.updatedMetadataDateKey)
-                NSUserDefaults.standardUserDefaults().synchronize()
+                UserDefaults.standard.set(date, forKey: K.updatedMetadataDateKey)
+                UserDefaults.standard.synchronize()
             } else {
-                NSUserDefaults.standardUserDefaults().removeObjectForKey(K.updatedMetadataDateKey)
+                UserDefaults.standard.removeObject(forKey: K.updatedMetadataDateKey)
             }
         }
         get {
-            let date = NSUserDefaults.standardUserDefaults().objectForKey(K.updatedMetadataDateKey) as? NSDate
+            let date = UserDefaults.standard.object(forKey: K.updatedMetadataDateKey) as? Date
             return date
         }
     }
 
     static var initialMetadataLoaded: Bool {
         set {
-            NSUserDefaults.standardUserDefaults().setBool(newValue, forKey: K.initialMetadataLoaded)
-            NSUserDefaults.standardUserDefaults().synchronize()
+            UserDefaults.standard.set(newValue, forKey: K.initialMetadataLoaded)
+            UserDefaults.standard.synchronize()
         }
         get {
-            return NSUserDefaults.standardUserDefaults().boolForKey(K.initialMetadataLoaded)
+            return UserDefaults.standard.bool(forKey: K.initialMetadataLoaded)
         }
     }
 
     static func shouldUpdateMetadata() -> Bool {
-        let today = NSDate()
+        let today = Date()
         guard let lastUpdatedDate = updatedMetadataDate else {
             updatedMetadataDate = today
             return true
@@ -54,7 +54,7 @@ struct MetadataManager {
         return true
     }
 
-    static func fetchMetadata(completion: Void -> Void) {
+    static func fetchMetadata(_ completion: @escaping () -> Void) {
         let metadataOperation = DownloadAndParseMetadataOperation(completion: completion)
         UIApplication.appController().operationQueue.addOperation(metadataOperation)
     }

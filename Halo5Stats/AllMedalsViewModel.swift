@@ -13,6 +13,6 @@ class AllMedalsViewModel {
     let imageManager = MedalImageManager()
 
     init(medals: [MedalModel]) {
-        allMedals = medals.sort { $0.name < $1.name }
+        allMedals = medals.sorted { $0.name < $1.name }
     }
 }

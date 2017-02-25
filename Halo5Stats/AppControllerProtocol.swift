@@ -9,8 +9,8 @@ import Foundation
 import CoreData
 
 protocol AppControllerProtocol: class {
-    var applicationViewController: ApplicationViewController! { get }
-    var operationQueue: OperationQueue! { get }
+    var applicationViewController: ApplicationViewController { get }
+    var operationQueue: OperationQueue { get }
     var persistenceController: PersistenceController! { get set }
     
     func managedObjectContext() -> NSManagedObjectContext

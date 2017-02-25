@@ -12,7 +12,7 @@ import CoreData
 class ServiceRecord: NSManagedObject {
 
     func weaponStats(forIdentifier identifier: String) -> WeaponStats? {
-        guard let ws = weaponStats?.allObjects as? [WeaponStats] where ws.count != 0 else { return nil }
+        guard let ws = weaponStats?.allObjects as? [WeaponStats], ws.count != 0 else { return nil }
 
         for weapon in ws {
             if weapon.identifier == identifier {
@@ -24,7 +24,7 @@ class ServiceRecord: NSManagedObject {
     }
 
     func medal(forIdentifier identifier: String) -> MedalAward? {
-        guard let medals = medalAwards?.allObjects as? [MedalAward] where medals.count != 0 else { return nil }
+        guard let medals = medalAwards?.allObjects as? [MedalAward], medals.count != 0 else { return nil }
 
         for medal in medals {
             if medal.medalIdentifier == identifier {
@@ -35,14 +35,14 @@ class ServiceRecord: NSManagedObject {
         return nil
     }
 
-    static func parse(type: APIConstants.GameMode, data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ type: APIConstants.GameMode, data: [String : AnyObject], context: NSManagedObjectContext) {
         guard let players = data[JSONKeys.ServiceRecord.players] as? [AnyObject] else {
             print("No players found for service record")
             return
         }
 
         for player in players {
-            guard let resultCode = player[JSONKeys.ServiceRecord.resultCode] as? Int where resultCode == 0 else { continue }
+            guard let resultCode = player[JSONKeys.ServiceRecord.resultCode] as? Int, resultCode == 0 else { continue }
             guard let gamertag = player[JSONKeys.ServiceRecord.gamertag] as? String else { continue }
 
             let predicate = NSPredicate.predicate(withGamertag: gamertag)
@@ -56,7 +56,7 @@ class ServiceRecord: NSManagedObject {
                 continue
             }
 
-            let capitalizedType = type.rawValue.capitalizedString
+            let capitalizedType = type.rawValue.capitalized
             let statType = type == .Warzone ? "\(capitalizedType)Stat" : "\(capitalizedType)Stats"
             guard let stats = serviceRecord[statType] as? [String : AnyObject] else {
                 print("No stats for \(type)")
@@ -64,15 +64,15 @@ class ServiceRecord: NSManagedObject {
             }
 
             if let record = spartan.serviceRecord(forType: type.rawValue) {
-                record.update(withData: stats, context: context)
-                record.spartanRank = serviceRecord[JSONKeys.ServiceRecord.spartanRank] as? Int
+                record.update(withData: stats as AnyObject, context: context)
+                record.spartanRank = serviceRecord[JSONKeys.ServiceRecord.spartanRank] as? Int as NSNumber?
             } else {
                 let newRecord: ServiceRecord = context.insertObject()
                 newRecord.type = type.rawValue
-                newRecord.gamertag = spartan.gamertag?.lowercaseString
-                newRecord.update(withData: stats, context: context)
+                newRecord.gamertag = spartan.gamertag?.lowercased()
+                newRecord.update(withData: stats as AnyObject, context: context)
                 newRecord.spartan = spartan
-                newRecord.spartanRank = serviceRecord[JSONKeys.ServiceRecord.spartanRank] as? Int
+                newRecord.spartanRank = serviceRecord[JSONKeys.ServiceRecord.spartanRank] as? Int as NSNumber?
             }
         }
     }
@@ -96,10 +96,10 @@ extension ServiceRecord: ManagedObjectTypeProtocol {
 
         if let data = data[JSONKeys.WeaponWithMostKills] as? [String : AnyObject] {
             if let weapon = mostUsedWeapon {
-                weapon.update(withData: data, context: context)
+                weapon.update(withData: data as AnyObject, context: context)
             } else {
                 let newMuw: WeaponStats = context.insertObject()
-                newMuw.update(withData: data, context: context)
+                newMuw.update(withData: data as AnyObject, context: context)
                 mostUsedWeapon = newMuw
             }
         }
@@ -136,19 +136,19 @@ extension ServiceRecord: ManagedObjectTypeProtocol {
             }
         }
 
-        if let type = self.type where type == APIConstants.GameMode.Arena.rawValue, let highestCSR = data[JSONKeys.AttainedCSR.highestCsrAttained] as? [String : AnyObject] {
+        if let type = self.type, type == APIConstants.GameMode.Arena.rawValue, let highestCSR = data[JSONKeys.AttainedCSR.highestCsrAttained] as? [String : AnyObject] {
             if let hCSR = highestCSRAttained {
-                hCSR.update(withData: highestCSR, context: context)
+                hCSR.update(withData: highestCSR as AnyObject, context: context)
             } else {
                 let newHighCSR: AttainedCSR = context.insertObject()
-                newHighCSR.update(withData: highestCSR, context: context)
+                newHighCSR.update(withData: highestCSR as AnyObject, context: context)
                 highestCSRAttained = newHighCSR
             }
         }
 
-        totalGamesCompleted = data[JSONKeys.ServiceRecord.totalGamesCompleted] as? Int
-        totalGamesWon = data[JSONKeys.ServiceRecord.totalGamesWon] as? Int
-        totalGamesLost = data[JSONKeys.ServiceRecord.totalGamesLost] as? Int
-        totalGamesTied = data[JSONKeys.ServiceRecord.totalGamesTied] as? Int
+        totalGamesCompleted = data[JSONKeys.ServiceRecord.totalGamesCompleted] as? Int as NSNumber?
+        totalGamesWon = data[JSONKeys.ServiceRecord.totalGamesWon] as? Int as NSNumber?
+        totalGamesLost = data[JSONKeys.ServiceRecord.totalGamesLost] as? Int as NSNumber?
+        totalGamesTied = data[JSONKeys.ServiceRecord.totalGamesTied] as? Int as NSNumber?
     }
 }

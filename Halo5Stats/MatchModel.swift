@@ -11,65 +11,65 @@ struct MatchModel {
     var match: Match
     var gameMode: GameMode?
     var gameType: String
-    var gameTypeIconUrl: NSURL?
+    var gameTypeIconUrl: URL?
     var mapName: String
-    var mapImageUrl: NSURL
+    var mapImageUrl: URL
     var outcome: Outcome?
     var score: String
-    var date: NSDate
+    var date: Date
     var matchId: String
     var isTeamGame: Bool
     var teams: [TeamModel]
     var duration: String?
 
     enum Outcome: Int {
-        case DNF = 0
-        case Lost = 1
-        case Tied = 2
-        case Won = 3
+        case dnf = 0
+        case lost = 1
+        case tied = 2
+        case won = 3
 
         func text() -> String {
             switch self {
-            case .DNF:
+            case .dnf:
                 return "DNF"
-            case .Tied:
+            case .tied:
                 return "T"
-            case .Lost:
+            case .lost:
                 return "L"
-            case .Won:
+            case .won:
                 return "W"
             }
         }
 
         func color() -> UIColor {
             switch self {
-            case .DNF:
-                return UIColor.yellowColor()
-            case .Lost:
-                return UIColor.redColor()
-            case .Tied:
-                return UIColor.cyanColor()
-            case .Won:
-                return UIColor.greenColor()
+            case .dnf:
+                return UIColor.yellow
+            case .lost:
+                return UIColor.red
+            case .tied:
+                return UIColor.cyan
+            case .won:
+                return UIColor.green
             }
         }
     }
 
-    static func convert(match: Match) -> MatchModel? {
-        guard let gbvId = match.gameBaseVariantId, gameBaseVariant = GameBaseVariant.baseVariant(forIdentifier: gbvId), mapId = match.mapId, map = Map.map(forIdentifier: mapId), completionDate = match.completionDate, teamGameNum = match.isTeamGame else { return nil }
-        guard let mapImageUrlString = map.imageUrl, mapImageUrl = NSURL(string: mapImageUrlString) else { return nil }
+    static func convert(_ match: Match) -> MatchModel? {
+        guard let gbvId = match.gameBaseVariantId, let gameBaseVariant = GameBaseVariant.baseVariant(forIdentifier: gbvId), let mapId = match.mapId, let map = Map.map(forIdentifier: mapId), let completionDate = match.completionDate, let teamGameNum = match.isTeamGame else { return nil }
+        guard let mapImageUrlString = map.imageUrl, let mapImageUrl = URL(string: mapImageUrlString) else { return nil }
 
         let gameModeInt = Int(match.gameMode ?? -1)
         let gameMode = GameMode.gameMode(forInt: gameModeInt)
         let gameType = gameBaseVariant.name ?? ""
-        let gameTypeIconUrl = NSURL(string: gameBaseVariant.iconUrl ?? "")
+        let gameTypeIconUrl = URL(string: gameBaseVariant.iconUrl ?? "")
         let mapName = map.name ?? ""
         let intOutcome = Int(match.outcome ?? -1)
         let outcome = Outcome(rawValue: intOutcome)
         let score = match.score()
         let date = completionDate
         let matchId = match.identifier ?? ""
-        let isTeamGame = Bool(teamGameNum.integerValue)
+        let isTeamGame = Bool(teamGameNum.intValue as NSNumber)
         let teams = TeamModel.teams(match)
         let durationTime = match.matchDuration ?? ""
         let duration = DurationFormatter.readableDuration(durationTime)

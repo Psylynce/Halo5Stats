@@ -24,7 +24,7 @@ class SettingsViewController: UIViewController {
 
     // MARK: - Private
 
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         navigationItem.title = "Settings"
         headerLabel.textColor = UIColor(haloColor: .WhiteSmoke)
         versionLabel.textColor = UIColor(haloColor: .WhiteSmoke)
@@ -33,31 +33,31 @@ class SettingsViewController: UIViewController {
         if let version = viewModel.version {
             versionLabel.text = version
         } else {
-            versionLabel.hidden = true
+            versionLabel.isHidden = true
         }
     }
 
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundView = nil
         tableView.backgroundColor = UIColor(haloColor: .Cinder)
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
     }
 }
 
 extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.rows.count
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = viewModel.rows[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! SettingsCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SettingsCell
         cell.textLabel?.text = row.name
         if row == viewModel.rows.last {
-            cell.borderView.hidden = true
+            cell.borderView.isHidden = true
         }
         cell.contentView.backgroundColor = UIColor(haloColor: .Cinder).lighter(0.45)
         let selectionView = UIView()
@@ -67,31 +67,31 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let row = viewModel.rows[indexPath.row]
 
         switch row {
         case .changeDefault:
             UIApplication.appController().applicationViewController.defaultGamertagTapped()
         case .review:
-            if let url = viewModel.appReviewUrl where UIApplication.sharedApplication().canOpenURL(url) {
-                UIApplication.sharedApplication().openURL(url)
+            if let url = viewModel.appReviewUrl, UIApplication.shared.canOpenURL(url as URL) {
+                UIApplication.shared.openURL(url as URL)
             }
             return
         }
     }
 
-    func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return viewModel.legalText
     }
 
-    func tableView(tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         let footer = view as! UITableViewHeaderFooterView
         footer.textLabel?.textColor = UIColor(haloColor: .WhiteSmoke)
     }
 
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 200
     }
 }

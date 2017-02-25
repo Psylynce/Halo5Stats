@@ -43,12 +43,12 @@ class WeaponCell: UITableViewCell {
         firedTitleLabel.text = "Shots Fired"
         landedTitleLabel.text = "Shots Landed"
 
-        weaponImageView.contentMode = .ScaleAspectFit
-        percentageView.backgroundColor = UIColor.clearColor()
+        weaponImageView.contentMode = .scaleAspectFit
+        percentageView.backgroundColor = UIColor.clear
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
-        selectionStyle = .None
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
+        selectionStyle = .none
     }
 
     override func prepareForReuse() {
@@ -58,7 +58,7 @@ class WeaponCell: UITableViewCell {
         percentageView.details = []
     }
 
-    func configure(weapon: WeaponModel, gameMode: GameMode) {
+    func configure(_ weapon: WeaponModel, gameMode: GameMode) {
         killsLabel.text = "\(weapon.kills)"
         headshotsLabel.text = "\(weapon.headshots)"
         shotsFiredLabel.text = "\(weapon.shotsFired)"

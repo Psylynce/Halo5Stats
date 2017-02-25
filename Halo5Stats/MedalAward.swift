@@ -13,7 +13,7 @@ class MedalAward: NSManagedObject {
 
     static func medal(forIdentifier id: Int) -> MedalAward? {
         let context = UIApplication.appController().managedObjectContext()
-        let predicate = NSPredicate.predicate(withNumberIdentifier: id)
+        let predicate = NSPredicate.predicate(withNumberIdentifier: NSNumber(integerLiteral: id))
         guard let medal = MedalAward.findOrFetch(inContext: context, matchingPredicate: predicate) else { return nil }
 
         return medal
@@ -31,6 +31,6 @@ extension MedalAward: ManagedObjectTypeProtocol {
         if let medalId = medalId {
             medalIdentifier = "\(medalId)"
         }
-        count = data[JSONKeys.MedalAward.count] as? Int
+        count = data[JSONKeys.MedalAward.count] as? Int as NSNumber?
     }
 }

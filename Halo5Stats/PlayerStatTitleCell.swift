@@ -19,24 +19,24 @@ class PlayerStatTitleCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
 
         labels.forEach {
             $0.textColor = UIColor(haloColor: .WhiteSmoke)
             $0.font = UIFont.kelson(.Regular, size: 10.0)
             $0.adjustsFontSizeToFitWidth = true
             $0.minimumScaleFactor = 0.6
-            $0.textAlignment = .Center
+            $0.textAlignment = .center
         }
 
         spartanLabel.text = "Spartan"
-        spartanLabel.textAlignment = .Left
+        spartanLabel.textAlignment = .left
         killsLabel.text = "Kills"
         assistsLabel.text = "Assists"
         deathsLabel.text = "Deaths"
         headshotsLabel.text = "Headshots"
 
-        selectionStyle = .None
+        selectionStyle = .none
     }
 }

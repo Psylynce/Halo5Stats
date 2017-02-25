@@ -21,61 +21,60 @@ import Foundation
     subsequent operations (still within the outer `GroupOperation`) that will all
     be executed before the rest of the operations in the initial chain of operations.
 */
-class GroupOperation: Operation {
-    private let internalQueue = OperationQueue()
-    private let startingOperation = NSBlockOperation(block: {})
-    private let finishingOperation = NSBlockOperation(block: {})
+open class GroupOperation: Operation {
+    fileprivate let internalQueue = OperationQueue()
+    fileprivate let finishingOperation = Foundation.BlockOperation(block: {})
 
-    private var aggregatedErrors = [NSError]()
-    
-    convenience init(operations: NSOperation...) {
+    fileprivate var aggregatedErrors = [NSError]()
+
+    public convenience init(operations: Foundation.Operation...) {
         self.init(operations: operations)
     }
-    
-    init(operations: [NSOperation]) {
+
+    public init(operations: [Foundation.Operation]) {
         super.init()
-        
-        internalQueue.suspended = true
+
+        internalQueue.isSuspended = true
+
         internalQueue.delegate = self
-        internalQueue.addOperation(startingOperation)
 
         for operation in operations {
             internalQueue.addOperation(operation)
         }
     }
-    
-    override func cancel() {
+
+    override open func cancel() {
         internalQueue.cancelAllOperations()
         super.cancel()
     }
-    
-    override func execute() {
-        internalQueue.suspended = false
+
+    override open func execute() {
+        internalQueue.isSuspended = false
         internalQueue.addOperation(finishingOperation)
     }
-    
-    func addOperation(operation: NSOperation) {
+
+    open func addOperation(_ operation: Foundation.Operation) {
         internalQueue.addOperation(operation)
     }
-    
+
     /**
         Note that some part of execution has produced an error.
         Errors aggregated through this method will be included in the final array
         of errors reported to observers and to the `finished(_:)` method.
     */
-    final func aggregateError(error: NSError) {
+    final public func aggregateError(_ error: NSError) {
         aggregatedErrors.append(error)
     }
-    
-    func operationDidFinish(operation: NSOperation, withErrors errors: [NSError]) {
+
+    open func operationDidFinish(_ operation: Foundation.Operation, withErrors errors: [NSError]) {
         // For use by subclassers.
     }
 }
 
 extension GroupOperation: OperationQueueDelegate {
-    final func operationQueue(operationQueue: OperationQueue, willAddOperation operation: NSOperation) {
-        assert(!finishingOperation.finished && !finishingOperation.executing, "cannot add new operations to a group after the group has completed")
-        
+    final public func operationQueue(_ operationQueue: OperationQueue, willAddOperation operation: Foundation.Operation) {
+        assert(!finishingOperation.isFinished && !finishingOperation.isExecuting, "cannot add new operations to a group after the group has completed")
+
         /*
             Some operation in this group has produced a new operation to execute.
             We want to allow that operation to execute before the group completes,
@@ -84,27 +83,15 @@ extension GroupOperation: OperationQueueDelegate {
         if operation !== finishingOperation {
             finishingOperation.addDependency(operation)
         }
-        
-        /*
-            All operations should be dependent on the "startingOperation".
-            This way, we can guarantee that the conditions for other operations
-            will not evaluate until just before the operation is about to run.
-            Otherwise, the conditions could be evaluated at any time, even
-            before the internal operation queue is unsuspended.
-        */
-        if operation !== startingOperation {
-            operation.addDependency(startingOperation)
-        }
     }
-    
-    final func operationQueue(operationQueue: OperationQueue, operationDidFinish operation: NSOperation, withErrors errors: [NSError]) {
-        aggregatedErrors.appendContentsOf(errors)
-        
+
+    final public func operationQueue(_ operationQueue: OperationQueue, operationDidFinish operation: Foundation.Operation, withErrors errors: [NSError]) {
+        aggregatedErrors.append(contentsOf: errors)
+
         if operation === finishingOperation {
-            internalQueue.suspended = true
+            internalQueue.isSuspended = true
             finish(aggregatedErrors)
-        }
-        else if operation !== startingOperation {
+        } else {
             operationDidFinish(operation, withErrors: errors)
         }
     }

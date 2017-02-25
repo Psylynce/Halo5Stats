@@ -19,7 +19,7 @@ struct ServiceRecordRequest: RequestProtocol {
     init(gamertags: [String], gameMode: APIConstants.GameMode) {
         self.gamertags = gamertags
         self.gameMode = gameMode
-        self.gamertagsString = gamertags.joinWithSeparator(",")
+        self.gamertagsString = gamertags.joined(separator: ",")
     }
     
     // MARK: RequestProtocol
@@ -28,13 +28,13 @@ struct ServiceRecordRequest: RequestProtocol {
         return "\(gameMode.rawValue)_\(gamertagsString)_ServiceRecord"
     }
     
-    var url: NSURL {
+    var url: URL {
         let substitutions = [APIConstants.GameModeKey : gameMode.rawValue]
         let params = [APIConstants.PlayersKey : gamertagsString]
         let endpoint = Endpoint(service: APIConstants.StatsService, path: APIConstants.StatsServiceRecords, parameters: params)
         let url = endpoint.url(withSubstitutions: substitutions)
         
-        return url
+        return url as URL
     }
     
     var cacheKey: String {
@@ -49,9 +49,9 @@ struct ServiceRecordRequest: RequestProtocol {
     
     // MARK: Private
     
-    private static func parseServiceRecord() -> ((name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void) {
-        func parse(name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void {
-            let nameComponents = name.componentsSeparatedByString("_")
+    fileprivate static func parseServiceRecord() -> ((_ name: String, _ context: NSManagedObjectContext, _ data: [String : AnyObject]) -> Void) {
+        func parse(_ name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void {
+            let nameComponents = name.components(separatedBy: "_")
             guard let gameMode = APIConstants.GameMode(rawValue: nameComponents[0]) else {
                 print("Something went wrong!")
                 return

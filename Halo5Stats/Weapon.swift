@@ -27,7 +27,7 @@ extension Weapon: ManagedObjectTypeProtocol {
         return "Weapon"
     }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
         guard let weapons = data[JSONKeys.Weapon.weapons] as? [AnyObject] else { return }
 
         for weapon in weapons {
@@ -40,7 +40,7 @@ extension Weapon: ManagedObjectTypeProtocol {
                 $0.largeIconUrl = weapon[JSONKeys.Weapon.largeIconUrl] as? String
                 $0.smallIconUrl = weapon[JSONKeys.Weapon.smallIconUrl] as? String
                 $0.type = weapon[JSONKeys.Weapon.type] as? String
-                $0.isUsableByPlayer = weapon[JSONKeys.Weapon.isUsable] as? Bool
+                $0.isUsableByPlayer = weapon[JSONKeys.Weapon.isUsable] as? Bool as NSNumber?
                 $0.identifier = identifier
             }
         }

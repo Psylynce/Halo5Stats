@@ -10,18 +10,18 @@ import UIKit
 class RadialBackgroundView: UIView {
 
     var cloudColor: UIColor?
-    let alphaColor = UIColor(white: 0, alpha: 0.25).CGColor
-    let black = UIColor.blackColor().CGColor
+    let alphaColor = UIColor(white: 0, alpha: 0.25).cgColor
+    let black = UIColor.black.cgColor
 
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
 
         let context = UIGraphicsGetCurrentContext()
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let cloud = cloudColor?.CGColor ?? alphaColor
+        let cloud = cloudColor?.cgColor ?? alphaColor
         let colors = [cloud, black]
-        let gradient = CGGradientCreateWithColors(colorSpace, colors, [0, 1])
+        let gradient = CGGradient(colorsSpace: colorSpace, colors: colors as CFArray, locations: [0, 1])
         let center = CGPoint(x: rect.width / 2, y: rect.height / 3)
-        CGContextDrawRadialGradient(context, gradient, center, 0, center, 225, .DrawsAfterEndLocation)
+        context?.drawRadialGradient(gradient!, startCenter: center, startRadius: 0, endCenter: center, endRadius: 225, options: .drawsAfterEndLocation)
     }
 }

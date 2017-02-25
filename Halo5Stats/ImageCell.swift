@@ -38,17 +38,17 @@ class ImageCell: UITableViewCell {
         mapNameLabel.adjustsFontSizeToFitWidth = true
         mapNameLabel.minimumScaleFactor = 0.7
 
-        gameTypeImageView.contentMode = .ScaleAspectFit
+        gameTypeImageView.contentMode = .scaleAspectFit
 
         clipsToBounds = false
 
-        containerView.backgroundColor = UIColor.clearColor()
-        containerView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
-        selectionStyle = .None
+        containerView.backgroundColor = UIColor.clear
+        containerView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
+        selectionStyle = .none
     }
 
-    func configure(match: MatchModel, player: MatchPlayerModel? = nil) {
+    func configure(_ match: MatchModel, player: MatchPlayerModel? = nil) {
         mapImageView.image(forUrl: match.mapImageUrl)
         mapNameLabel.text = match.mapName
 
@@ -56,7 +56,7 @@ class ImageCell: UITableViewCell {
             gameTypeImageView.tintedImage(forUrl: gameTypeIconUrl, color: UIColor(white: 1, alpha: 0.5))
         }
 
-        if let iconUrl = match.teams[0].url where match.isTeamGame {
+        if let iconUrl = match.teams[0].url, match.isTeamGame {
             teamIconImageView.image(forUrl: iconUrl)
         } else if let player = player {
             teamIconImageView.image(forUrl: player.emblemUrl)
@@ -69,7 +69,7 @@ class ImageCell: UITableViewCell {
         winnerLabel.text = match.score
     }
 
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y >= 0 {
             containerView.clipsToBounds = true
             bottomSpaceConstraint.constant = -scrollView.contentOffset.y / 2

@@ -20,7 +20,7 @@ class GameHistoryViewModel {
     var currentStartIndex: Int = 0
     var isFetching: Bool = false
     var shouldInsert: Bool = false
-    var indexPathsToInsert: [NSIndexPath] = []
+    var indexPathsToInsert: [IndexPath] = []
 
     init(gamertag: String?) {
         self.gamertag = gamertag
@@ -34,8 +34,8 @@ class GameHistoryViewModel {
         self.init(gamertag: gamertag)
     }
 
-    func fetchMatches(isRefresh: Bool = false, completion: Void -> Void) {
-        guard let gamertag = gamertag, spartan = Spartan.spartan(gamertag) where isFetching == false else {
+    func fetchMatches(_ isRefresh: Bool = false, completion: @escaping (Void) -> Void) {
+        guard let gamertag = gamertag, let spartan = Spartan.spartan(gamertag), isFetching == false else {
             completion()
             return
         }
@@ -47,7 +47,7 @@ class GameHistoryViewModel {
         isFetching = true
 
         requestMatches(gamertag) {
-            dispatch_async(dispatch_get_main_queue()) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 self?.updateMatches(forSpartan: spartan, isRefresh: isRefresh)
                 self?.isFetching = false
                 completion()
@@ -65,7 +65,7 @@ class GameHistoryViewModel {
         for i in 0 ..< newMatchIds.count {
             let matchId = newMatchIds[i]
             let match = fetchedMatches.filter { $0.identifier == matchId }
-            if let match = match.first, model = MatchModel.convert(match) {
+            if let match = match.first, let model = MatchModel.convert(match) {
                 newMatches.append(model)
             }
         }
@@ -83,18 +83,18 @@ class GameHistoryViewModel {
         shouldInsert = false
     }
 
-    func updateIndexPaths(newMatches: Int) {
+    func updateIndexPaths(_ newMatches: Int) {
         indexPathsToInsert = []
         for i in currentStartIndex - newMatches ..< currentStartIndex {
-            let indexPath = NSIndexPath(forRow: i, inSection: 0)
+            let indexPath = IndexPath(row: i, section: 0)
             indexPathsToInsert.append(indexPath)
         }
     }
 
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard !isEndOfMatches else { return }
 
-        let maxOffset = scrollView.contentSize.height - CGRectGetHeight(scrollView.frame)
+        let maxOffset = scrollView.contentSize.height - scrollView.frame.height
         let currentOffset = scrollView.contentOffset.y
         let percentage = Int(currentOffset * 100 / maxOffset)
 
@@ -111,7 +111,7 @@ class GameHistoryViewModel {
         }
     }
 
-    func match(forIndexPath indexPath: NSIndexPath) -> MatchModel {
+    func match(forIndexPath indexPath: IndexPath) -> MatchModel {
         if isFiltering.value {
             return filteredMatches.value[indexPath.row]
         } else {
@@ -121,14 +121,14 @@ class GameHistoryViewModel {
 
     // MARK: - Private
 
-    private func updateMapMetadata(completion: Void -> Void) {
+    fileprivate func updateMapMetadata(_ completion: @escaping (Void) -> Void) {
         let mapsRequest = MetadataRequest(metadataType: .Maps)
         let operation = APIRequestOperation(request: mapsRequest, completion: completion)
 
         UIApplication.appController().operationQueue.addOperation(operation)
     }
 
-    private func requestMatches(gamertag: String, completion: Void -> Void) {
+    fileprivate func requestMatches(_ gamertag: String, completion: @escaping (Void) -> Void) {
         let params = [APIConstants.MatchesStart : "\(currentStartIndex)",
                       APIConstants.MatchesModes : GameMode.multiplayerModes()]
         let matchesRequest = MatchesRequest(gamertag: gamertag, parameters: params)
@@ -142,7 +142,7 @@ class GameHistoryViewModel {
         UIApplication.appController().operationQueue.addOperation(operation)
     }
 
-    private func updateMatchIds(with data: [String : AnyObject]) {
+    fileprivate func updateMatchIds(with data: [String : AnyObject]) {
         if currentStartIndex == 0 {
             matchIds = []
         }
@@ -151,7 +151,7 @@ class GameHistoryViewModel {
         isEndOfMatches = matches.count == 0
         for match in matches {
             guard let id = match[JSONKeys.Identifier] as? [String : AnyObject] else { continue }
-            guard let matchId = id[JSONKeys.Matches.matchId] as? String where !matchIds.contains(matchId) else { continue }
+            guard let matchId = id[JSONKeys.Matches.matchId] as? String, !matchIds.contains(matchId) else { continue }
             matchIds.append(matchId)
         }
     }
@@ -159,7 +159,7 @@ class GameHistoryViewModel {
 
 extension GameHistoryViewModel: MatchFilterDelegate {
 
-    func applyFilters(model: MatchFilterViewModel) {
+    func applyFilters(_ model: MatchFilterViewModel) {
         isFiltering.value = model.isFiltered()
         let allMatches = matches.value
         var filteredMatches: [MatchModel] = []

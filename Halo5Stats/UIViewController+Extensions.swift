@@ -17,14 +17,14 @@ extension UIViewController {
     }
 
     func swap(fromViewController oldViewController: UIViewController, toViewController newViewController: UIViewController, toView view: UIView, animated: Bool = true) {
-        oldViewController.willMoveToParentViewController(nil)
+        oldViewController.willMove(toParentViewController: nil)
         addChildViewController(newViewController)
         addSubview(newViewController.view, toView: view)
         newViewController.view.alpha = animated ? 0 : 1
         newViewController.view.layoutIfNeeded()
 
         if animated {
-            UIView.animateWithDuration(0.5, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 newViewController.view.alpha = 1
                 oldViewController.view.alpha = 0
                 }, completion: { [weak self] finished in
@@ -35,25 +35,25 @@ extension UIViewController {
         }
     }
 
-    func addSubview(subView:UIView, toView parentView:UIView) {
+    func addSubview(_ subView:UIView, toView parentView:UIView) {
         parentView.addSubview(subView)
 
         var viewBindingsDict = [String: AnyObject]()
         viewBindingsDict["subView"] = subView
-        parentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[subView]|",
+        parentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[subView]|",
             options: [], metrics: nil, views: viewBindingsDict))
-        parentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[subView]|",
+        parentView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[subView]|",
             options: [], metrics: nil, views: viewBindingsDict))
     }
 
-    private func finishSwap(oldViewController: UIViewController, newViewController: UIViewController) {
+    fileprivate func finishSwap(_ oldViewController: UIViewController, newViewController: UIViewController) {
         oldViewController.view.removeFromSuperview()
         oldViewController.removeFromParentViewController()
-        newViewController.didMoveToParentViewController(self)
+        newViewController.didMove(toParentViewController: self)
     }
 
     func hideBackButtonTitle() {
-        let backButton = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
     }
 

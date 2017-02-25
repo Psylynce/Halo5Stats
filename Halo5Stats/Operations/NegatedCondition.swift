@@ -13,43 +13,42 @@ import Foundation
     This is useful (for example) if you want to only execute an operation if the
     network is NOT reachable.
 */
-struct NegatedCondition<T: OperationCondition>: OperationCondition {
-    static var name: String {
+public struct NegatedCondition<T: OperationCondition>: OperationCondition {
+    public static var name: String {
         return "Not<\(T.name)>"
     }
-    
-    static var negatedConditionKey: String {
+
+    public static var negatedConditionKey: String {
         return "NegatedCondition"
     }
-    
-    static var isMutuallyExclusive: Bool {
+
+    public static var isMutuallyExclusive: Bool {
         return T.isMutuallyExclusive
     }
-    
+
     let condition: T
 
-    init(condition: T) {
+    public init(condition: T) {
         self.condition = condition
     }
-    
-    func dependencyForOperation(operation: Operation) -> NSOperation? {
+
+    public func dependencyForOperation(_ operation: Operation) -> Foundation.Operation? {
         return condition.dependencyForOperation(operation)
     }
-    
-    func evaluateForOperation(operation: Operation, completion: OperationConditionResult -> Void) {
+
+    public func evaluateForOperation(_ operation: Operation, completion: @escaping (OperationConditionResult) -> Void) {
         condition.evaluateForOperation(operation) { result in
-            if result == .Satisfied {
-                // If the composed condition succeeded, then this one failed.
-                let error = NSError(code: .ConditionFailed, userInfo: [
-                    OperationConditionKey: self.dynamicType.name,
-                    self.dynamicType.negatedConditionKey: self.condition.dynamicType.name
-                    ])
-                
-                completion(.Failed(error))
-            }
-            else {
+            if result.error == nil {
                 // If the composed condition failed, then this one succeeded.
-                completion(.Satisfied)
+                completion(.satisfied)
+            } else {
+                // If the composed condition succeeded, then this one failed.
+                let error = NSError(code: .conditionFailed, userInfo: [
+                    OperationConditionKey: type(of: self).name,
+                    type(of: self).negatedConditionKey: type(of: self.condition).name
+                ])
+
+                completion(.failed(error))
             }
         }
     }

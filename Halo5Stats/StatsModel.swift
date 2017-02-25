@@ -29,34 +29,34 @@ struct StatsModel {
     var powerWeaponGrabs: Int
     var powerWeaponPossessionTime: String
 
-    static func convert(stats: BaseStats) -> StatsModel? {
-        guard let kills = stats.totalKills?.integerValue else { return nil }
-        guard let deaths = stats.totalDeaths?.integerValue else { return nil }
-        guard let assists = stats.totalAssists?.integerValue else { return nil }
-        guard let headshots = stats.totalHeadshots?.integerValue else { return nil }
-        guard let shotsFired = stats.totalShotsFired?.integerValue else { return nil }
-        guard let shotsLanded = stats.totalShotsLanded?.integerValue else { return nil }
+    static func convert(_ stats: BaseStats) -> StatsModel? {
+        guard let kills = stats.totalKills?.intValue else { return nil }
+        guard let deaths = stats.totalDeaths?.intValue else { return nil }
+        guard let assists = stats.totalAssists?.intValue else { return nil }
+        guard let headshots = stats.totalHeadshots?.intValue else { return nil }
+        guard let shotsFired = stats.totalShotsFired?.intValue else { return nil }
+        guard let shotsLanded = stats.totalShotsLanded?.intValue else { return nil }
         guard let weaponDamage = stats.totalWeaponDamage?.doubleValue else { return nil }
-        guard let melees = stats.totalMeleeKills?.integerValue else { return nil }
+        guard let melees = stats.totalMeleeKills?.intValue else { return nil }
         guard let meleeDamage = stats.totalMeleeDamage?.doubleValue else { return nil }
-        guard let assassinations = stats.totalAssassinations?.integerValue else { return nil }
-        guard let groundPoundKills = stats.totalGroundPoundKills?.integerValue else { return nil }
+        guard let assassinations = stats.totalAssassinations?.intValue else { return nil }
+        guard let groundPoundKills = stats.totalGroundPoundKills?.intValue else { return nil }
         guard let groundPoundDamage = stats.totalGroundPoundDamage?.doubleValue else { return nil }
-        guard let shoulderKills = stats.totalShoulderBashKills?.integerValue else { return nil }
+        guard let shoulderKills = stats.totalShoulderBashKills?.intValue else { return nil }
         guard let shoulderDamage = stats.totalShoulderBashDamage?.doubleValue else { return nil }
-        guard let grenadeKills = stats.totalGrenadeKills?.integerValue else { return nil }
+        guard let grenadeKills = stats.totalGrenadeKills?.intValue else { return nil }
         guard let grenadeDamage = stats.totalGrenadeDamage?.doubleValue else { return nil }
-        guard let powerWeaponKills = stats.totalPowerWeaponKills?.integerValue else { return nil }
+        guard let powerWeaponKills = stats.totalPowerWeaponKills?.intValue else { return nil }
         guard let powerWeaponDamage = stats.totalPowerWeaponDamage?.doubleValue else { return nil }
-        guard let powerWeaponGrabs = stats.totalPowerWeaponGrabs?.integerValue else { return nil }
-        guard let powerWeaponPossessionTime = stats.totalPowerWeaponPossessionTime, possessionTime = DurationFormatter.readableDuration(powerWeaponPossessionTime) else { return nil }
+        guard let powerWeaponGrabs = stats.totalPowerWeaponGrabs?.intValue else { return nil }
+        guard let powerWeaponPossessionTime = stats.totalPowerWeaponPossessionTime, let possessionTime = DurationFormatter.readableDuration(powerWeaponPossessionTime) else { return nil }
 
         let model = StatsModel(kills: kills, deaths: deaths, assists: assists, headshots: headshots, shotsFired: shotsFired, shotsLanded: shotsLanded, weaponDamage: weaponDamage.roundedToTwo(), meleeKills: melees, meleeDamage: meleeDamage.roundedToTwo(), assassinations: assassinations, groundPoundKills: groundPoundKills, groundPoundDamage: groundPoundDamage.roundedToTwo(), shoulderBashKills: shoulderKills, shoulderBashDamage: shoulderDamage.roundedToTwo(), grenadeKills: grenadeKills, grenadeDamage: grenadeDamage.roundedToTwo(), powerWeaponKills: powerWeaponKills, powerWeaponDamage: powerWeaponDamage.roundedToTwo(), powerWeaponGrabs: powerWeaponGrabs, powerWeaponPossessionTime: possessionTime)
 
         return model
     }
 
-    static func comparableStats(playerOne: StatsModel, playerTwo: StatsModel) -> [StatCompareItem] {
+    static func comparableStats(_ playerOne: StatsModel, playerTwo: StatsModel) -> [StatCompareItem] {
         let kd = StatCompareItem(name: "KD", playerOneValue: playerOne.killDeathRatio(), playerTwoValue: playerTwo.killDeathRatio())
         let killsItem = StatCompareItem(name: "Kills", playerOneValue: Double(playerOne.kills), playerTwoValue: Double(playerTwo.kills))
         let deathsItem = StatCompareItem(name: "Deaths", playerOneValue: Double(playerOne.deaths), playerTwoValue: Double(playerTwo.deaths))
@@ -92,7 +92,7 @@ struct StatsModel {
         return kd.roundedToTwo()
     }
 
-    func kda(games: Int) -> Double {
+    func kda(_ games: Int) -> Double {
         let kills = Double(self.kills)
         let deaths = Double(self.deaths)
         let assists = Double(self.assists)
@@ -143,7 +143,7 @@ struct StatDisplayItem: DisplayItem {
         return statCount
     }
 
-    var url: NSURL? {
+    var url: URL? {
         return nil
     }
 }

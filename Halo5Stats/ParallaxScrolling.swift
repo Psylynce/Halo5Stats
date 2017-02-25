@@ -25,7 +25,7 @@ extension ParallaxScrollingCell {
         return 20.0
     }
 
-    func backgroundOffset(offset: CGFloat) {
+    func backgroundOffset(_ offset: CGFloat) {
         let boundOffset = max(0, min(1, offset))
         let pixelOffset = (1 - boundOffset) * 2 * parallaxFactor
 
@@ -38,9 +38,9 @@ protocol ParallaxScrollingTableView {}
 
 extension ParallaxScrollingTableView {
 
-    func cellImageOffset(tableView: UITableView, cell: ParallaxScrollingCell, indexPath: NSIndexPath) {
-        let cellFrame = tableView.rectForRowAtIndexPath(indexPath)
-        let cellFrameInTable = tableView.convertRect(cellFrame, toView: tableView.superview)
+    func cellImageOffset(_ tableView: UITableView, cell: ParallaxScrollingCell, indexPath: IndexPath) {
+        let cellFrame = tableView.rectForRow(at: indexPath)
+        let cellFrameInTable = tableView.convert(cellFrame, to: tableView.superview)
         let cellOffset = cellFrameInTable.origin.y + cellFrameInTable.size.height
         let tableHeight = tableView.bounds.size.height + cellFrameInTable.size.height
         let cellOffsetFactor = cellOffset / tableHeight

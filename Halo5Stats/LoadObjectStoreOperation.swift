@@ -36,29 +36,29 @@ class LoadObjectStoreOperation: Operation {
 
         var error: NSError? = nil
 
-        guard let modelURL = NSBundle.mainBundle().URLForResource("Halo5Stats", withExtension: "momd") else {
+        guard let modelURL = Bundle.main.url(forResource: "Halo5Stats", withExtension: "momd") else {
             fatalError("Error loading model from bundle")
         }
-        guard let model = NSManagedObjectModel(contentsOfURL: modelURL) else {
+        guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
             fatalError("Error initializing mom from \(modelURL)")
         }
 
         let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
 
-        let context = NSManagedObjectContext(concurrencyType: .MainQueueConcurrencyType)
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
         context.persistentStoreCoordinator = coordinator
 
         let storeURL = PersistenceController.persistenceStoreURL()
-        error = createStore(coordinator, url: storeURL)
+        error = createStore(coordinator, url: storeURL as URL)
 
         if coordinator.persistentStores.isEmpty {
-            destroyStore(coordinator, atURL: storeURL)
-            error = createStore(coordinator, url: storeURL)
+            destroyStore(coordinator, atURL: storeURL as URL)
+            error = createStore(coordinator, url: storeURL as URL)
         }
 
         if coordinator.persistentStores.isEmpty {
             print("Error creating SQLite store. \(error)")
-            error = createStore(coordinator, url: storeURL, type: NSInMemoryStoreType)
+            error = createStore(coordinator, url: storeURL as URL, type: NSInMemoryStoreType)
         }
 
         if !coordinator.persistentStores.isEmpty {
@@ -72,8 +72,8 @@ class LoadObjectStoreOperation: Operation {
         finishWithError(error)
     }
 
-    override func finished(errors: [NSError]) {
-        guard let firstError = errors.first where userInitiated else { return }
+    override func finished(_ errors: [NSError]) {
+        guard let firstError = errors.first, userInitiated else { return }
 
         let alert = AlertOperation()
 
@@ -81,7 +81,7 @@ class LoadObjectStoreOperation: Operation {
         
         alert.message = "An error occurred while loading the database. \(firstError.localizedDescription) Please try again later."
         
-        alert.addAction("Retry Later", style: .Cancel)
+        alert.addAction("Retry Later", style: .cancel)
         
         alert.addAction("Retry Now") { alertOperation in
             let retryOperation = InitializeObjectStoreOperation()
@@ -96,12 +96,12 @@ class LoadObjectStoreOperation: Operation {
     
     // MARK: Private
     
-    private func createStore(persistenceStoreCoordinator: NSPersistentStoreCoordinator, url: NSURL?, type: String = NSSQLiteStoreType) -> NSError? {
+    fileprivate func createStore(_ persistenceStoreCoordinator: NSPersistentStoreCoordinator, url: URL?, type: String = NSSQLiteStoreType) -> NSError? {
         var error: NSError?
         
         do {
             let options = [NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true]
-            let _ = try persistenceStoreCoordinator.addPersistentStoreWithType(type, configuration: nil, URL: url, options: options)
+            let _ = try persistenceStoreCoordinator.addPersistentStore(ofType: type, configurationName: nil, at: url, options: options)
         } catch let storeError as NSError {
             error = storeError
         }
@@ -109,9 +109,9 @@ class LoadObjectStoreOperation: Operation {
         return error
     }
     
-    private func destroyStore(persistentStoreCoordinator: NSPersistentStoreCoordinator, atURL URL: NSURL, type: String = NSSQLiteStoreType) {
+    fileprivate func destroyStore(_ persistentStoreCoordinator: NSPersistentStoreCoordinator, atURL URL: Foundation.URL, type: String = NSSQLiteStoreType) {
         do {
-            let _ = try persistentStoreCoordinator.destroyPersistentStoreAtURL(URL, withType: type, options: nil)
+            let _ = try persistentStoreCoordinator.destroyPersistentStore(at: URL, ofType: type, options: nil)
         } catch { }
     }
 }

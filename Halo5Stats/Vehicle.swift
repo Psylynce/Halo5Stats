@@ -21,7 +21,7 @@ extension Vehicle: ManagedObjectTypeProtocol {
         return "Vehicle"
     }
 
-    static func parse(data: [String : AnyObject], context: NSManagedObjectContext) {
+    static func parse(_ data: [String : AnyObject], context: NSManagedObjectContext) {
         guard let vehicles = data[JSONKeys.Vehicle.vehicles] as? [AnyObject] else { return }
 
         for vehicle in vehicles {
@@ -33,7 +33,7 @@ extension Vehicle: ManagedObjectTypeProtocol {
                 $0.overview = vehicle[JSONKeys.overview] as? String
                 $0.largeIconUrl = vehicle[JSONKeys.Vehicle.largeIconUrl] as? String
                 $0.smallIconUrl = vehicle[JSONKeys.Vehicle.smallIconUrl] as? String
-                $0.isUsableByPlayer = vehicle[JSONKeys.Vehicle.isUsable] as? Bool
+                $0.isUsableByPlayer = vehicle[JSONKeys.Vehicle.isUsable] as? Bool as NSNumber?
                 $0.identifier = identifier
             }
         }

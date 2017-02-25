@@ -19,7 +19,7 @@ class SettingsCell: UITableViewCell {
 
         borderView.backgroundColor = UIColor(haloColor: .WhiteSmoke)
 
-        contentView.backgroundColor = UIColor.clearColor()
-        backgroundColor = UIColor.clearColor()
+        contentView.backgroundColor = UIColor.clear
+        backgroundColor = UIColor.clear
     }
 }

@@ -16,16 +16,16 @@ class GamertagView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = UIColor.clearColor()
-        containerView.backgroundColor = UIColor.clearColor()
-        gamertagLabel.textColor = UIColor.whiteColor()
+        backgroundColor = UIColor.clear
+        containerView.backgroundColor = UIColor.clear
+        gamertagLabel.textColor = UIColor.white
         gamertagLabel.font = UIFont.kelson(.Regular, size: 24)
         gamertagLabel.adjustsFontSizeToFitWidth = true
         gamertagLabel.minimumScaleFactor = 0.5
     }
 
     func update(withSpartan spartan: Spartan) {
-        guard let emblemUrlString = spartan.emblemImageUrl, gamertag = spartan.displayGamertag, url = NSURL(string: emblemUrlString) else { return }
+        guard let emblemUrlString = spartan.emblemImageUrl, let gamertag = spartan.displayGamertag, let url = URL(string: emblemUrlString) else { return }
 
         imageView.image(forUrl: url)
         gamertagLabel.text = gamertag

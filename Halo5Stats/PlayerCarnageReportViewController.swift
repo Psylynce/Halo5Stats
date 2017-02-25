@@ -22,13 +22,13 @@ class PlayerCarnageReportViewController: UIViewController {
         setupAppearance()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         updateMedalCell()
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         navigationItem.title = viewModel.player.gamertag
@@ -42,51 +42,51 @@ class PlayerCarnageReportViewController: UIViewController {
 
     // MARK: - Private 
 
-    private var addSpartanButton: UIBarButtonItem {
+    fileprivate var addSpartanButton: UIBarButtonItem {
         let addSpartanImage = UIImage(named: "Add")
-        let addButton = UIBarButtonItem(image: addSpartanImage, style: .Plain, target: self, action: #selector(addSpartanButtonTapped))
+        let addButton = UIBarButtonItem(image: addSpartanImage, style: .plain, target: self, action: #selector(addSpartanButtonTapped))
         return addButton
     }
-    private var savedSpartanButton: UIBarButtonItem {
-        let savedSpartanImage = UIImage(named: "Check")?.imageWithRenderingMode(.AlwaysTemplate)
-        let savedButton = UIBarButtonItem(image: savedSpartanImage, style: .Plain, target: nil, action: nil)
+    fileprivate var savedSpartanButton: UIBarButtonItem {
+        let savedSpartanImage = UIImage(named: "Check")?.withRenderingMode(.alwaysTemplate)
+        let savedButton = UIBarButtonItem(image: savedSpartanImage, style: .plain, target: nil, action: nil)
         savedButton.tintColor = UIColor(haloColor: .SpringGreen)
         return savedButton
     }
 
-    private func setupAppearance() {
+    fileprivate func setupAppearance() {
         setupTableView()
         setupSpartanImageView()
         hideBackButtonTitle()
     }
 
-    private func setupTableView() {
+    fileprivate func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
 
-        tableView.separatorStyle = .None
+        tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor(white: 0, alpha: 0.75)
 
-        tableView.registerNib(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
-        tableView.registerNib(UINib(nibName: "WeaponCell", bundle: nil), forCellReuseIdentifier: "WeaponCell")
-        tableView.registerNib(UINib(nibName: "KDCell", bundle: nil), forCellReuseIdentifier: "KDCell")
+        tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
+        tableView.register(UINib(nibName: "WeaponCell", bundle: nil), forCellReuseIdentifier: "WeaponCell")
+        tableView.register(UINib(nibName: "KDCell", bundle: nil), forCellReuseIdentifier: "KDCell")
     }
 
-    private func setupSpartanImageView() {
+    fileprivate func setupSpartanImageView() {
         view.backgroundColor = UIColor(haloColor: .Black)
         spartanImageView.clipsToBounds = true
-        spartanImageView.contentMode = .ScaleAspectFill
+        spartanImageView.contentMode = .scaleAspectFill
         let url = ProfileService.spartanImageUrl(forGamertag: viewModel.player.gamertag, size: "512")
         spartanImageView.image(forUrl: url)
 
         backgroundImageView.clipsToBounds = true
-        backgroundImageView.contentMode = .ScaleAspectFill
+        backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.alpha = 0.5
         backgroundImageView.image = UIImage(named: "HA_BG")
     }
 
-    @objc private func addSpartanButtonTapped() {
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .White)
+    @objc fileprivate func addSpartanButtonTapped() {
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
         let barItem = UIBarButtonItem(customView: activityIndicator)
         navigationItem.rightBarButtonItem = barItem
         activityIndicator.startAnimating()
@@ -96,7 +96,7 @@ class PlayerCarnageReportViewController: UIViewController {
         }
     }
 
-    private func updateMedalCell() {
+    fileprivate func updateMedalCell() {
         for cell in tableView.visibleCells {
             if let cell = cell as? CollectionViewTableViewCell {
                 cell.updateVisibleCells()
@@ -107,54 +107,54 @@ class PlayerCarnageReportViewController: UIViewController {
 
 extension PlayerCarnageReportViewController: UITableViewDelegate, UITableViewDataSource {
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.sections.count
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = viewModel.sections[indexPath.section]
 
         switch section {
-        case .MedalsTitle, .MostUsedWeaponTitle, .WeaponsTitle, .StatsTitle, .KilledTitle, .KilledByTitle:
-            let cell = tableView.dequeueReusableCellWithIdentifier("TitleCell", forIndexPath: indexPath) as! TitleCell
-            cell.configure(section.title().uppercaseString)
+        case .medalsTitle, .mostUsedWeaponTitle, .weaponsTitle, .statsTitle, .killedTitle, .killedByTitle:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TitleCell", for: indexPath) as! TitleCell
+            cell.configure(section.title().uppercased())
 
             return cell
-        case .KDandKDA:
-            let cell = tableView.dequeueReusableCellWithIdentifier("KDCell", forIndexPath: indexPath) as! KDCell
+        case .kDandKDA:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "KDCell", for: indexPath) as! KDCell
             if let gameMode = viewModel.match.gameMode {
                 cell.configure(viewModel.player.stats, gameMode: gameMode, gamesCompleted: 1)
             }
 
             return cell
-        case .Medals, .Stats:
-            let identifier = section == .Stats ? "VerticalCollectionViewTableViewCell" : "CollectionViewTableViewCell"
-            let cell = tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath) as! CollectionViewTableViewCell
+        case .medals, .stats:
+            let identifier = section == .stats ? "VerticalCollectionViewTableViewCell" : "CollectionViewTableViewCell"
+            let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath) as! CollectionViewTableViewCell
             if let dataSource = section.dataSource(viewModel.player) {
                 cell.dataSource = dataSource
             }
 
             return cell
-        case .KilledOpponents, .KilledByOpponents:
-            let cell = tableView.dequeueReusableCellWithIdentifier("OpponentCollectionViewTableViewCell", forIndexPath: indexPath) as! CollectionViewTableViewCell
+        case .killedOpponents, .killedByOpponents:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "OpponentCollectionViewTableViewCell", for: indexPath) as! CollectionViewTableViewCell
             if let dataSource = section.dataSource(viewModel.player) {
                 cell.dataSource = dataSource
             }
 
             return cell
-        case .MostUsedWeapon:
-            let cell = tableView.dequeueReusableCellWithIdentifier("WeaponCell", forIndexPath: indexPath) as! WeaponCell
-            if let weapon = viewModel.player.mostUsedWeapon, gameMode = viewModel.match.gameMode {
+        case .mostUsedWeapon:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "WeaponCell", for: indexPath) as! WeaponCell
+            if let weapon = viewModel.player.mostUsedWeapon, let gameMode = viewModel.match.gameMode {
                 cell.configure(weapon, gameMode: gameMode)
             }
 
             return cell
-        case .Weapons:
-            let cell = tableView.dequeueReusableCellWithIdentifier("WeaponsCollectionViewCell", forIndexPath: indexPath) as! CollectionViewTableViewCell
+        case .weapons:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "WeaponsCollectionViewCell", for: indexPath) as! CollectionViewTableViewCell
             if let dataSource = section.dataSource(viewModel.player) {
                 cell.dataSource = dataSource
             }
@@ -163,22 +163,22 @@ extension PlayerCarnageReportViewController: UITableViewDelegate, UITableViewDat
         }
     }
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let section = viewModel.sections[indexPath.section]
 
         switch section {
-        case .KDandKDA:
+        case .kDandKDA:
             return 150
-        case .Medals:
+        case .medals:
             return 100
-        case .MostUsedWeapon:
+        case .mostUsedWeapon:
             return 145
-        case .Weapons:
+        case .weapons:
             return 140
-        case .Stats:
+        case .stats:
             let num = CGFloat((viewModel.player.stats.statDisplayItems().count + 1 ) / 3)
             return 100 * num
-        case .KilledOpponents, .KilledByOpponents:
+        case .killedOpponents, .killedByOpponents:
             return 130
         default:
             return 40

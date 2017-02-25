@@ -26,9 +26,9 @@ extension EnemyKill: ManagedObjectTypeProtocol {
             }
             if let a = enemy[JSONKeys.EnemyKill.attachments] as? [Int] {
                 let stringA = a.map { String($0) }
-                attachments = stringA.joinWithSeparator(",")
+                attachments = stringA.joined(separator: ",")
             }
         }
-        totalKills = data[JSONKeys.EnemyKill.totalKills] as? Int
+        totalKills = data[JSONKeys.EnemyKill.totalKills] as? Int as NSNumber?
     }
 }

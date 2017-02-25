@@ -8,14 +8,14 @@
 import Foundation
 import CoreData
 
-typealias RequestParseBlock = (name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void
+typealias RequestParseBlock = (_ name: String, _ context: NSManagedObjectContext, _ data: [String : AnyObject]) -> Void
 
 protocol RequestProtocol {
     var name: String { get }
-    var url: NSURL { get }
+    var url: URL { get }
     var cacheKey: String { get }
     var jsonKey: String { get }
-    var cacheFile: NSURL { get }
+    var cacheFile: URL { get }
     var data: [String : AnyObject]? { get }
     
     var parseBlock: RequestParseBlock { get }
@@ -23,8 +23,8 @@ protocol RequestProtocol {
 
 extension RequestProtocol {
 
-    var cacheFile: NSURL {
-        return FileManager.sharedManager.cacheFile(withKey: cacheKey)
+    var cacheFile: URL {
+        return FileManager.sharedManager.cacheFile(withKey: cacheKey) as URL
     }
 
     var data: [String : AnyObject]? {

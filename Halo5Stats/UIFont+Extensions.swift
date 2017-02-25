@@ -18,7 +18,7 @@ extension UIFont {
         case Thin = "Thin"
     }
 
-    static func kelson(weight: KelsonWeight, size: CGFloat) -> UIFont? {
+    static func kelson(_ weight: KelsonWeight, size: CGFloat) -> UIFont? {
         if weight == .Regular {
             return UIFont(name: "Kelson", size: size)
         }
