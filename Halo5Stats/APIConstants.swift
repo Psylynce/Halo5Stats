@@ -20,9 +20,11 @@ struct APIConstants {
     static let Halo5Title = "h5"
     
     // MARK: - Services
-    static let StatsService = "stats"
-    static let ProfileService = "profile"
-    static let MetadataService = "metadata"
+    enum Service: String {
+        case stats = "stats"
+        case profile = "profile"
+        case metadata = "metadata"
+    }
     
     // MARK: - Paths
     static let StatsPlayerMatches = "players/[GAMERTAG]/matches" // [?modes][&start][&count]
@@ -134,8 +136,8 @@ struct APIConstants {
     static let ProfileSpartanCrop = "crop"
     
     // MARK: - Base Path constructor
-    static func basePath(_ service: String) -> String {
-        return "\(service)/\(Halo5Title)/"
+    static func basePath(_ service: Service) -> String {
+        return "\(service.rawValue)/\(Halo5Title)/"
     }
     
     // MARK: Metadata Types

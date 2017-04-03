@@ -31,7 +31,7 @@ struct ServiceRecordRequest: RequestProtocol {
     var url: URL {
         let substitutions = [APIConstants.GameModeKey : gameMode.rawValue]
         let params = [APIConstants.PlayersKey : gamertagsString]
-        let endpoint = Endpoint(service: APIConstants.StatsService, path: APIConstants.StatsServiceRecords, parameters: params)
+        let endpoint = Endpoint(service: .stats, path: APIConstants.StatsServiceRecords, parameters: params)
         let url = endpoint.url(withSubstitutions: substitutions)
         
         return url as URL

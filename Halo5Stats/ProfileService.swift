@@ -16,7 +16,7 @@ struct ProfileService {
             APIConstants.GamertagKey : gamertag,
             APIConstants.ProfileTypeKey : APIConstants.emblem
         ]
-        let emblemEndpoint = Endpoint(service: APIConstants.ProfileService, path: APIConstants.Profile)
+        let emblemEndpoint = Endpoint(service: .profile, path: APIConstants.Profile)
         let emblemUrl = emblemEndpoint.url(withSubstitutions: emblemSubs)
 
         return emblemUrl as URL
@@ -36,7 +36,7 @@ struct ProfileService {
             APIConstants.ProfileSize : size,
             APIConstants.ProfileSpartanCrop : crop.rawValue
         ]
-        let spartanImageEndpoint = Endpoint(service: APIConstants.ProfileService, path: APIConstants.Profile, parameters: params)
+        let spartanImageEndpoint = Endpoint(service: .profile, path: APIConstants.Profile, parameters: params)
         let spartanImageUrl = spartanImageEndpoint.url(withSubstitutions: spartanImageSubs)
 
         return spartanImageUrl as URL

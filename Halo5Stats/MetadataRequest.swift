@@ -26,7 +26,7 @@ struct MetadataRequest: RequestProtocol {
     
     var url: URL {
         let substitutions = [APIConstants.MetadataKey : metadataType.rawValue]
-        let endpoint = Endpoint(service: APIConstants.MetadataService, path: APIConstants.Metadata)
+        let endpoint = Endpoint(service: .metadata, path: APIConstants.Metadata)
         let url = endpoint.url(withSubstitutions: substitutions)
         
         return url as URL
