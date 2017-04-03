@@ -41,9 +41,9 @@ class MedalDetailViewController: UIViewController {
     }
 
     fileprivate func setupLabels() {
-        nameLabel.textColor = UIColor(haloColor: .WhiteSmoke)
-        descriptionLabel.textColor = UIColor(haloColor: .WhiteSmoke)
-        countDifficultyLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        nameLabel.textColor = .whiteSmoke
+        descriptionLabel.textColor = .whiteSmoke
+        countDifficultyLabel.textColor = .whiteSmoke
 
         nameLabel.font = UIFont.kelson(.Medium, size: 20)
         descriptionLabel.font = UIFont.kelson(.Regular, size: 16)

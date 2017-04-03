@@ -52,7 +52,7 @@ class GameHistoryCell: UITableViewCell {
         imageView?.backgroundColor = UIColor.clear
         
         setupInitialPosition()
-        let white = UIColor(haloColor: .WhiteSmoke)
+        let white = UIColor.whiteSmoke
 
         containerView.backgroundColor = UIColor(white: 0, alpha: 0.5)
         outcomeLabel.font = UIFont.kelson(.Light, size: 14)

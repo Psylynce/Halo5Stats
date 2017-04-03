@@ -23,7 +23,7 @@ class WeaponsFilterViewController: UIViewController {
 
         setupTableView()
         setupBindAndFires()
-        popoverPresentationController?.backgroundColor = UIColor(haloColor: .Elephant)
+        popoverPresentationController?.backgroundColor = .elephant
     }
 
     // MARK: Private
@@ -31,7 +31,7 @@ class WeaponsFilterViewController: UIViewController {
     fileprivate func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = UIColor(haloColor: .Elephant)
+        tableView.backgroundColor = .elephant
     }
 
     fileprivate func setupBindAndFires() {
@@ -53,10 +53,10 @@ extension WeaponsFilterViewController: UITableViewDataSource, UITableViewDelegat
 
         cell.textLabel?.text = option.rawValue
         cell.textLabel?.font = UIFont.kelson(.Regular, size: 14)
-        cell.textLabel?.textColor = UIColor(haloColor: .WhiteSmoke)
+        cell.textLabel?.textColor = .whiteSmoke
         cell.accessoryType = option == viewModel.selectedOption.value ? .checkmark : .none
-        cell.tintColor = UIColor(haloColor: .WhiteSmoke)
-        cell.backgroundColor = indexPath.row % 2 == 0 ? UIColor(haloColor: .Elephant) : UIColor(haloColor: .Cinder)
+        cell.tintColor = .whiteSmoke
+        cell.backgroundColor = indexPath.row % 2 == 0 ? .elephant : .cinder
 
         return cell
     }

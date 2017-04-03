@@ -26,8 +26,8 @@ class SettingsViewController: UIViewController {
 
     fileprivate func setupAppearance() {
         navigationItem.title = "Settings"
-        headerLabel.textColor = UIColor(haloColor: .WhiteSmoke)
-        versionLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        headerLabel.textColor = .whiteSmoke
+        versionLabel.textColor = .whiteSmoke
         versionLabel.font = UIFont.kelson(.Light, size: 14)
 
         if let version = viewModel.version {
@@ -41,7 +41,7 @@ class SettingsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.backgroundView = nil
-        tableView.backgroundColor = UIColor(haloColor: .Cinder)
+        tableView.backgroundColor = .cinder
         tableView.separatorStyle = .none
     }
 }
@@ -59,9 +59,9 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         if row == viewModel.rows.last {
             cell.borderView.isHidden = true
         }
-        cell.contentView.backgroundColor = UIColor(haloColor: .Cinder).lighter(0.45)
+        cell.contentView.backgroundColor = UIColor.cinder.lighter(0.45)
         let selectionView = UIView()
-        selectionView.backgroundColor = UIColor(haloColor: .Cinder).lighter(0.85)
+        selectionView.backgroundColor = UIColor.cinder.lighter(0.85)
         cell.selectedBackgroundView = selectionView
 
         return cell
@@ -88,7 +88,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         let footer = view as! UITableViewHeaderFooterView
-        footer.textLabel?.textColor = UIColor(haloColor: .WhiteSmoke)
+        footer.textLabel?.textColor = .whiteSmoke
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {

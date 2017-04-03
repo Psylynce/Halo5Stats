@@ -61,7 +61,7 @@ class SpartansViewController: UITableViewController {
         }
 
         let selectionView = UIView()
-        selectionView.backgroundColor = UIColor(haloColor: .Cinder).lighter(0.3)
+        selectionView.backgroundColor = UIColor.cinder.lighter(0.3)
         cell.selectedBackgroundView = selectionView
 
         return cell
@@ -125,12 +125,12 @@ class SpartansViewController: UITableViewController {
     fileprivate func setupAppearance() {
         loadingLabel.alpha = 0
         loadingLabel.font = UIFont.kelson(.Thin, size: 14)
-        loadingLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        loadingLabel.textColor = .whiteSmoke
     }
 
     fileprivate func setupTableView() {
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(haloColor: .Cinder)
+        tableView.backgroundColor = .cinder
         tableView.rowHeight = 60.0
     }
 

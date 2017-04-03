@@ -52,7 +52,7 @@ class ComparisonTableViewController: UIViewController {
         tableView.delegate = self
 
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(haloColor: .Cinder)
+        tableView.backgroundColor = .cinder
     }
 
     fileprivate func setupBindAndFires() {
@@ -77,10 +77,10 @@ class ComparisonTableViewController: UIViewController {
         headerImageView.image = UIImage(named: "OceanBackground")
 
         versusLabel.font = UIFont.kelson(.ExtraBold, size: 24)
-        versusLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        versusLabel.textColor = .whiteSmoke
 
         playerOneGamertagLabel.font = UIFont.kelson(.Light, size: 16)
-        playerOneGamertagLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        playerOneGamertagLabel.textColor = .whiteSmoke
         playerOneGamertagLabel.adjustsFontSizeToFitWidth = true
         playerOneGamertagLabel.minimumScaleFactor = 0.7
 
@@ -88,17 +88,17 @@ class ComparisonTableViewController: UIViewController {
         playerOneSpartanImageView.contentMode = .scaleAspectFill
 
         playerOneContainerView.layer.cornerRadius = 5
-        playerOneContainerView.backgroundColor = UIColor(haloColor: .Black).withAlphaComponent(0.6)
+        playerOneContainerView.backgroundColor = UIColor.haloBlack.withAlphaComponent(0.6)
 
         playerTwoGamertagLabel.font = UIFont.kelson(.Light, size: 16)
-        playerTwoGamertagLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        playerTwoGamertagLabel.textColor = .whiteSmoke
         playerTwoGamertagLabel.adjustsFontSizeToFitWidth = true
         playerTwoGamertagLabel.minimumScaleFactor = 0.7
 
         playerTwoSpartanImageView.contentMode = .scaleAspectFill
 
         playerTwoContainerView.layer.cornerRadius = 5
-        playerTwoContainerView.backgroundColor = UIColor(haloColor: .Black).withAlphaComponent(0.6)
+        playerTwoContainerView.backgroundColor = UIColor.haloBlack.withAlphaComponent(0.6)
 
         hideBackButtonTitle()
     }

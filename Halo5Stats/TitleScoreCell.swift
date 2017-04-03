@@ -21,11 +21,11 @@ class TitleScoreCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        titleLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        titleLabel.textColor = .whiteSmoke
         titleLabel.font = UIFont.kelson(.Medium, size: 14.0)
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.6
-        scoreLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        scoreLabel.textColor = .whiteSmoke
         scoreLabel.font = UIFont.kelson(.Regular, size: 12.0)
 
         contentView.backgroundColor = UIColor.clear

@@ -60,12 +60,10 @@ class GameHistoryViewModel {
         let newMatchIds = Array(matchIds[currentStartIndex ..< matchIds.count])
 
         let context = UIApplication.appController().managedObjectContext()
-        let fetchedMatches = Match.matches(forIdentifiers: newMatchIds, context: context)
+        let fetchedMatches = Match.sortedMatches(withIdentifiers: newMatchIds, in: context)
 
-        for i in 0 ..< newMatchIds.count {
-            let matchId = newMatchIds[i]
-            let match = fetchedMatches.filter { $0.identifier == matchId }
-            if let match = match.first, let model = MatchModel.convert(match) {
+        for match in fetchedMatches {
+            if let model = MatchModel.convert(match) {
                 newMatches.append(model)
             }
         }
@@ -111,7 +109,7 @@ class GameHistoryViewModel {
         }
     }
 
-    func match(forIndexPath indexPath: IndexPath) -> MatchModel {
+    func match(for indexPath: IndexPath) -> MatchModel {
         if isFiltering.value {
             return filteredMatches.value[indexPath.row]
         } else {

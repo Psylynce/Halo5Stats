@@ -11,7 +11,7 @@ class LoadingIndicator: UIView {
 
     var circleLayer: CAShapeLayer = CAShapeLayer()
     var circleRadius: CGFloat = 20
-    var circleColor: UIColor = UIColor(haloColor: .WhiteSmoke)
+    var circleColor: UIColor = .whiteSmoke
 
     var animate: Bool = false {
         didSet {

@@ -50,7 +50,7 @@ class MatchFilterViewController: UIViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
 
-        gradientBackgroundView.verticalGradient(startColor: UIColor(haloColor: .CuriousBlue), endColor: UIColor.clear)
+        gradientBackgroundView.verticalGradient(startColor: .curiousBlue, endColor: UIColor.clear)
     }
 
     @IBAction func closeButtonTapped(_ sender: UIButton) {
@@ -77,17 +77,17 @@ class MatchFilterViewController: UIViewController {
 
     fileprivate func setupBindAndFires() {
         viewModel.arenaSelected.bindAndFire { [weak self] (selected) in
-            let color = selected ? UIColor.green : UIColor(haloColor: .WhiteSmoke)
+            let color = selected ? UIColor.green : .whiteSmoke
             self?.arenaButton.setTitleColor(color, for: UIControlState())
         }
 
         viewModel.warzoneSelected.bindAndFire { [weak self] (selected) in
-            let color = selected ? UIColor.green : UIColor(haloColor: .WhiteSmoke)
+            let color = selected ? UIColor.green : .whiteSmoke
             self?.warzoneButton.setTitleColor(color, for: UIControlState())
         }
 
         viewModel.customsSelected.bindAndFire { [weak self] (selected) in
-            let color = selected ? UIColor.green : UIColor(haloColor: .WhiteSmoke)
+            let color = selected ? UIColor.green : .whiteSmoke
             self?.customsButton.setTitleColor(color, for: UIControlState())
         }
     }
@@ -106,10 +106,10 @@ class MatchFilterViewController: UIViewController {
         view.backgroundColor = UIColor.clear
 
         closeButton.setTitle("Cancel", for: UIControlState())
-        closeButton.setTitleColor(UIColor(haloColor: .WhiteSmoke), for: UIControlState())
+        closeButton.setTitleColor(.whiteSmoke, for: UIControlState())
 
         applyButton.setTitle("Apply", for: UIControlState())
-        applyButton.setTitleColor(UIColor(haloColor: .WhiteSmoke), for: UIControlState())
+        applyButton.setTitleColor(.whiteSmoke, for: UIControlState())
 
         gradientBackgroundView.backgroundColor = UIColor.clear
 
@@ -118,7 +118,7 @@ class MatchFilterViewController: UIViewController {
         customsButton.setTitle("CUSTOMS", for: UIControlState())
 
         filterButtons.forEach {
-            $0.setTitleColor(UIColor(haloColor: .WhiteSmoke), for: UIControlState())
+            $0.setTitleColor(.whiteSmoke, for: UIControlState())
             $0.titleLabel?.font = UIFont.kelson(.Bold, size: 16)
         }
     }

@@ -10,8 +10,8 @@ import UIKit
 class CircleImageView: UIImageView {
 
     var borderWidth: CGFloat = 2
-    var borderColor = UIColor(haloColor: .CuriousBlue)
-    var bgColor = UIColor(haloColor: .Cinder)
+    var borderColor = UIColor.curiousBlue
+    var bgColor = UIColor.cinder
 
     override func awakeFromNib() {
         super.awakeFromNib()

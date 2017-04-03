@@ -14,7 +14,7 @@ class BasicScoreCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        label.textColor = UIColor(haloColor: .WhiteSmoke)
+        label.textColor = .whiteSmoke
         label.font = UIFont.kelson(.Regular, size: 14.0)
 
         contentView.backgroundColor = UIColor.clear

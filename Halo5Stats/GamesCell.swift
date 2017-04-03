@@ -29,18 +29,18 @@ class GamesCell: UITableViewCell {
         titleLabels.forEach {
             $0.font = UIFont.kelson(.Regular, size: 14)
         }
-        totalGamesTitleLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        totalGamesTitleLabel.textColor = .whiteSmoke
         totalGamesTitleLabel.text = "Total Games"
         gamesWonTitleLabel.text = "Games Won"
         gamesLostTitleLabel.text = "Games Lost"
         gamesTiedTitleLabel.text = "Games Tied"
 
-        gamesLostTitleLabel.textColor = UIColor(haloColor: .Bismark)
-        gamesTiedTitleLabel.textColor = UIColor(haloColor: .SpringGreen)
+        gamesLostTitleLabel.textColor = .bismark
+        gamesTiedTitleLabel.textColor = .springGreen
 
         valueLabels.forEach {
             $0.font = UIFont.kelson(.Regular, size: 18)
-            $0.textColor = UIColor(haloColor: .WhiteSmoke)
+            $0.textColor = .whiteSmoke
         }
 
         contentView.backgroundColor = UIColor.clear

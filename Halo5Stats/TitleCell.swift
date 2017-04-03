@@ -14,7 +14,7 @@ class TitleCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        titleLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        titleLabel.textColor = .whiteSmoke
         titleLabel.font = UIFont.kelson(.Medium, size: 18.0)
         titleLabel.textAlignment = .center
 

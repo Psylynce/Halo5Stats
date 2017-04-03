@@ -65,11 +65,11 @@ struct APIConstants {
         var color: UIColor {
             switch self {
             case .Arena:
-                return UIColor(haloColor: .ArenaAccent)
+                return .arenaAccent
             case .Custom:
-                return UIColor(haloColor: .CustomAccent)
+                return .customAccent
             case .Warzone:
-                return UIColor(haloColor: .WarzoneAccent)
+                return .warzoneAccent
             }
         }
 

@@ -22,15 +22,15 @@ class PlayerStatCell: UICollectionViewCell {
         super.awakeFromNib()
 
         borders.forEach {
-            $0.backgroundColor = UIColor(haloColor: .CuriousBlue).darker(0.60)
+            $0.backgroundColor = UIColor.curiousBlue.darker(0.60)
         }
 
-        titleLabel.textColor = UIColor(haloColor: .CuriousBlue).lighter()
+        titleLabel.textColor = UIColor.curiousBlue.lighter()
         titleLabel.font = UIFont.kelson(.Light, size: 12.0)
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.6
 
-        valueLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        valueLabel.textColor = .whiteSmoke
         valueLabel.font = UIFont.kelson(.Regular, size: 16.0)
         valueLabel.adjustsFontSizeToFitWidth = true
         valueLabel.minimumScaleFactor = 0.6

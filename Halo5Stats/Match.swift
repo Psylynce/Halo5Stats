@@ -48,18 +48,34 @@ class Match: NSManagedObject {
 
     static func matches(forIdentifiers identifiers: [String], context: NSManagedObjectContext) -> [Match] {
         let predicate = NSPredicate(format: "identifier IN %@", identifiers)
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: Match.entityName)
+        let request = NSFetchRequest<Match>(entityName: Match.entityName)
         request.predicate = predicate
 
         do {
             let results = try context.fetch(request)
-            guard let matches = results as? [Match] else { return [] }
-            return matches
+            return results
         }
         catch {
             print("Could not fetch matches")
             return []
         }
+    }
+
+    static func sortedMatches(withIdentifiers identifiers: [String], in context: NSManagedObjectContext) -> [Match] {
+        let matches = self.matches(forIdentifiers: identifiers, context: context)
+
+        return matches.sorted { (match1, match2) in
+            return sort(match1, and: match2, sortedIdentifiers: identifiers)
+        }
+    }
+
+    static private func sort(_ match1: Match, and match2: Match, sortedIdentifiers: [String]) -> Bool {
+        guard let match1Identifier = match1.identifier, let match2Identifier = match2.identifier, match1Identifier != match2Identifier else { return false }
+
+        let match1Index = sortedIdentifiers.index(of: match1Identifier) ?? Int.max
+        let match2Index = sortedIdentifiers.index(of: match2Identifier) ?? Int.max
+
+        return match1Index < match2Index
     }
 
     static func fixedPath(_ path: String) -> String {

@@ -40,10 +40,10 @@ extension UIView {
     }
 
     func darkGradient() {
-        verticalGradient(startColor: UIColor(haloColor: .Black), endColor: UIColor(haloColor: .Nero))
+        verticalGradient(startColor: .haloBlack, endColor: .nero)
     }
 
     func darkReverseGradient() {
-        verticalGradient(startColor: UIColor(haloColor: .Nero), endColor: UIColor(haloColor: .Black))
+        verticalGradient(startColor: .nero, endColor: .haloBlack)
     }
 }

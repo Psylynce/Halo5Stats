@@ -89,7 +89,7 @@ class PlayerStatsParentViewController: UIViewController {
     }
 
     fileprivate func setupPageViewController() {
-        pageViewController.view.backgroundColor = UIColor(haloColor: .Cinder)
+        pageViewController.view.backgroundColor = .cinder
         pageViewController.delegate = self
         pageViewController.dataSource = self
 
@@ -144,7 +144,7 @@ class PlayerStatsParentViewController: UIViewController {
             headerImageView.image = vc.viewModel.gameMode.image
         }
 
-        gamertagLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        gamertagLabel.textColor = .whiteSmoke
         gamertagLabel.font = UIFont.kelson(.Regular, size: 24)
         gamertagLabel.adjustsFontSizeToFitWidth = true
         gamertagLabel.minimumScaleFactor = 0.5
@@ -154,7 +154,7 @@ class PlayerStatsParentViewController: UIViewController {
 
     fileprivate func setupButtons() {
         buttons.forEach {
-            $0.setTitleColor(UIColor(haloColor: .WhiteSmoke), for: UIControlState())
+            $0.setTitleColor(.whiteSmoke, for: UIControlState())
             $0.titleLabel?.font = UIFont.kelson(.Regular, size: 18.0)
         }
 

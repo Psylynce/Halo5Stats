@@ -22,9 +22,9 @@ enum ServiceRecordSection {
     var color: UIColor? {
         switch self {
         case .games, .topMedalsTitle, .topMedals, .allMedals:
-            return UIColor(haloColor: .Elephant)
+            return .elephant
         case .highestCSR, .weapons:
-            return UIColor(haloColor: .Cinder)
+            return .cinder
         default:
             return nil
         }

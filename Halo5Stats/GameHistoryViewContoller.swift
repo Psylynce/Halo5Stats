@@ -28,7 +28,7 @@ class GameHistoryViewController: UITableViewController, ParallaxScrollingTableVi
 
 //        let filterButtonImage = UIImage(named: "Filter")?.imageWithRenderingMode(.AlwaysTemplate)
 //        let filterButton = UIBarButtonItem(image: filterButtonImage, style: .Plain, target: self, action: #selector(filterButtonTapped))
-//        filterButton.tintColor = UIColor(haloColor: .WhiteSmoke)
+//        filterButton.tintColor = .whiteSmoke
 //        navigationItem.rightBarButtonItem = filterButton
     }
 
@@ -71,7 +71,7 @@ class GameHistoryViewController: UITableViewController, ParallaxScrollingTableVi
 
     fileprivate func setupTableView() {
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(haloColor: .Cinder)
+        tableView.backgroundColor = .cinder
         setupRefreshView()
         refreshControl?.addTarget(self, action: #selector(refreshMatches), for: .valueChanged)
     }
@@ -105,7 +105,7 @@ class GameHistoryViewController: UITableViewController, ParallaxScrollingTableVi
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let match = viewModel.match(forIndexPath: indexPath)
+        let match = viewModel.match(for: indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameHistoryCell", for: indexPath) as! GameHistoryCell
         cell.configure(match)
 
@@ -113,7 +113,7 @@ class GameHistoryViewController: UITableViewController, ParallaxScrollingTableVi
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let match = viewModel.match(forIndexPath: indexPath)
+        let match = viewModel.match(for: indexPath)
         let vc = StoryboardScene.GameHistory.carnageReportViewController()
         vc.viewModel = CarnageReportViewModel(match: match)
 

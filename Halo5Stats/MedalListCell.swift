@@ -19,10 +19,10 @@ class MedalListCell: UICollectionViewCell {
         super.awakeFromNib()
 
         medalCountLabel.font = UIFont.kelson(.Regular, size: 14)
-        medalCountLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        medalCountLabel.textColor = .whiteSmoke
 
         medalImageView.image = placeholder
-        medalImageView.tintColor = UIColor(haloColor: .WhiteSmoke)
+        medalImageView.tintColor = .whiteSmoke
     }
 
     override func prepareForReuse() {

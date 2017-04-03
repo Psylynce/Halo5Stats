@@ -15,9 +15,9 @@ class SettingsCell: UITableViewCell {
         super.awakeFromNib()
 
         textLabel?.font = UIFont.kelson(.Regular, size: 18)
-        textLabel?.textColor = UIColor(haloColor: .WhiteSmoke)
+        textLabel?.textColor = .whiteSmoke
 
-        borderView.backgroundColor = UIColor(haloColor: .WhiteSmoke)
+        borderView.backgroundColor = .whiteSmoke
 
         contentView.backgroundColor = UIColor.clear
         backgroundColor = UIColor.clear
