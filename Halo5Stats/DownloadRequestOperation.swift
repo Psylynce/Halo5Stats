@@ -19,7 +19,7 @@ class DownloadRequestOperation: GroupOperation {
         
         let url = request.url
         let task = URLSession.halo5ConfiguredSession().downloadTask(with: url) { (url, response, error) in
-            self.downloadFinished(url, response: response, error: error as? NSError)
+            self.downloadFinished(url, response: response, error: error)
         }
         
         let taskOperation = URLSessionTaskOperation(task: task)
@@ -33,7 +33,7 @@ class DownloadRequestOperation: GroupOperation {
         addOperation(taskOperation)
     }
     
-    func downloadFinished(_ url: URL?, response: URLResponse?, error: NSError?) {
+    func downloadFinished(_ url: URL?, response: URLResponse?, error: Error?) {
         if let localURL = url {
             do {
                 try Foundation.FileManager.default.removeItem(at: cacheFile)
@@ -43,7 +43,7 @@ class DownloadRequestOperation: GroupOperation {
             do {
                 try Foundation.FileManager.default.moveItem(at: localURL, to: cacheFile)
             }
-            catch let error as NSError {
+            catch let error {
                 aggregateError(error)
             }
             

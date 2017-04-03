@@ -29,7 +29,7 @@ public struct NetworkObserver: OperationObserver {
 
     public func operation(_ operation: Operation, didProduceOperation newOperation: Foundation.Operation) { }
 
-    public func operationDidFinish(_ operation: Operation, errors: [NSError]) {
+    public func operationDidFinish(_ operation: Operation, errors: [Error]) {
         DispatchQueue.main.async {
             // Decrement the network indicator's "reference count".
             NetworkIndicatorController.sharedIndicatorController.networkActivityDidEnd()
@@ -44,6 +44,8 @@ private class NetworkIndicatorController {
 
     static let sharedIndicatorController = NetworkIndicatorController()
 
+    fileprivate let serialQueue = DispatchQueue(label: "NetworkIndicatorControllerQueue", attributes: [])
+
     fileprivate var activityCount = 0
 
     fileprivate var visibilityTimer: Timer?
@@ -53,17 +55,21 @@ private class NetworkIndicatorController {
     func networkActivityDidStart() {
         assert(Thread.isMainThread, "Altering network activity indicator state can only be done on the main thread.")
 
-        activityCount += 1
+        serialQueue.sync {
+            activityCount += 1
 
-        updateIndicatorVisibility()
+            updateIndicatorVisibility()
+        }
     }
 
     func networkActivityDidEnd() {
         assert(Thread.isMainThread, "Altering network activity indicator state can only be done on the main thread.")
 
-        activityCount -= 1
+        serialQueue.sync {
+            activityCount -= 1
 
-        updateIndicatorVisibility()
+            updateIndicatorVisibility()
+        }
     }
 
     fileprivate func updateIndicatorVisibility() {
@@ -86,7 +92,7 @@ private class NetworkIndicatorController {
         visibilityTimer = nil
 
         #if os(iOS)
-//            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
         #endif
     }
 
@@ -95,7 +101,7 @@ private class NetworkIndicatorController {
         visibilityTimer = nil
 
         #if os(iOS)
-//            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         #endif
     }
 }
@@ -112,9 +118,9 @@ fileprivate class Timer {
         let when = DispatchTime.now() + Double(Int64(interval * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
 
         DispatchQueue.main.asyncAfter(deadline: when) { [weak self] in
-            if self?.isCancelled == true {
-                handler()
-            }
+            guard self?.isCancelled == false else { return }
+
+            handler()
         }
     }
 

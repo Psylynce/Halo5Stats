@@ -17,7 +17,7 @@ private let RemoteNotificationName = "RemoteNotificationPermissionNotification"
 
 private enum RemoteRegistrationResult {
     case token(Data)
-    case error(NSError)
+    case error(Error)
 }
 
 /// A condition for verifying that the app has the ability to receive push notifications.
@@ -31,7 +31,7 @@ public struct RemoteNotificationCondition: OperationCondition {
         ])
     }
 
-    static func didFailToRegister(_ error: NSError) {
+    static func didFailToRegister(_ error: Error) {
         NotificationCenter.default.post(name: Notification.Name(rawValue: RemoteNotificationName), object: nil, userInfo: [
             "error": error
         ])
@@ -114,7 +114,7 @@ private class RemoteNotificationPermissionOperation: Operation {
 
         if let token = userInfo?["token"] as? Data {
             handler(.token(token))
-        } else if let error = userInfo?["error"] as? NSError {
+        } else if let error = userInfo?["error"] as? Error {
             handler(.error(error))
         } else {
             fatalError("Received a notification without a token and without an error.")
@@ -133,7 +133,7 @@ private class RemoteNotificationPermissionOperation: Operation {
         RemoteNotificationCondition.didReceiveNotificationToken(token)
     }
 
-    static func didFailToRegister(_ error: NSError) {
+    static func didFailToRegister(_ error: Error) {
         RemoteNotificationCondition.didFailToRegister(error)
     }
 }

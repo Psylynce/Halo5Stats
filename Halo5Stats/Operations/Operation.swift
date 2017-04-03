@@ -218,12 +218,12 @@ open class Operation: Foundation.Operation {
         finish()
     }
 
-    fileprivate var _internalErrors = [NSError]()
+    fileprivate var _internalErrors = [Error]()
     override open func cancel() {
         cancelWithError()
     }
 
-    open func cancelWithError(_ error: NSError? = nil) {
+    open func cancelWithError(_ error: Error? = nil) {
         if let error = error {
             _internalErrors.append(error)
         }
@@ -247,7 +247,7 @@ open class Operation: Foundation.Operation {
         for how an error from an `NSURLSession` is passed along via the
         `finishWithError()` method.
     */
-    final public func finishWithError(_ error: NSError?) {
+    final public func finishWithError(_ error: Error?) {
         if let error = error {
             finish([error])
         } else {
@@ -260,7 +260,7 @@ open class Operation: Foundation.Operation {
         operation has finished.
     */
     fileprivate var hasFinishedAlready = false
-    final public func finish(_ errors: [NSError] = []) {
+    final public func finish(_ errors: [Error] = []) {
         if !hasFinishedAlready {
             hasFinishedAlready = true
             state = .finishing
@@ -282,7 +282,7 @@ open class Operation: Foundation.Operation {
         this method to potentially inform the user about an error when trying to
         bring up the Core Data stack.
     */
-    open func finished(_ errors: [NSError]) {
+    open func finished(_ errors: [Error]) {
         // No op.
     }
 

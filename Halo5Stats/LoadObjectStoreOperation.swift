@@ -34,7 +34,7 @@ class LoadObjectStoreOperation: Operation {
             }
         }
 
-        var error: NSError? = nil
+        var error: Error? = nil
 
         guard let modelURL = Bundle.main.url(forResource: "Halo5Stats", withExtension: "momd") else {
             fatalError("Error loading model from bundle")
@@ -57,7 +57,7 @@ class LoadObjectStoreOperation: Operation {
         }
 
         if coordinator.persistentStores.isEmpty {
-            print("Error creating SQLite store. \(error)")
+            print("Error creating SQLite store.")
             error = createStore(coordinator, url: storeURL as URL, type: NSInMemoryStoreType)
         }
 
@@ -72,7 +72,7 @@ class LoadObjectStoreOperation: Operation {
         finishWithError(error)
     }
 
-    override func finished(_ errors: [NSError]) {
+    override func finished(_ errors: [Error]) {
         guard let firstError = errors.first, userInitiated else { return }
 
         let alert = AlertOperation()
@@ -96,13 +96,13 @@ class LoadObjectStoreOperation: Operation {
     
     // MARK: Private
     
-    fileprivate func createStore(_ persistenceStoreCoordinator: NSPersistentStoreCoordinator, url: URL?, type: String = NSSQLiteStoreType) -> NSError? {
-        var error: NSError?
+    fileprivate func createStore(_ persistenceStoreCoordinator: NSPersistentStoreCoordinator, url: URL?, type: String = NSSQLiteStoreType) -> Error? {
+        var error: Error?
         
         do {
             let options = [NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true]
             let _ = try persistenceStoreCoordinator.addPersistentStore(ofType: type, configurationName: nil, at: url, options: options)
-        } catch let storeError as NSError {
+        } catch let storeError {
             error = storeError
         }
         

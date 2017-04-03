@@ -40,7 +40,7 @@ class ParseRequestOperation: Operation {
             let jsonDict = FileManager.sharedManager.ensureJSONDict(json, key: request.jsonKey)
             parse(jsonDict)
         }
-        catch let jsonError as NSError {
+        catch let jsonError {
             finishWithError(jsonError)
         }
     }

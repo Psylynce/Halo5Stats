@@ -50,14 +50,13 @@ open class BlockOperation: Operation {
     }
 
     open override func execute() {
-        if !isCancelled {
-            block { error in
-                var errors = [NSError]()
-                if let error = error as? NSError {
-                    errors.append(error)
-                }
-                self.finish(errors)
-            }
+        guard !isCancelled else {
+            finish()
+            return
+        }
+
+        block { _ in
+            self.finish()
         }
     }
 }
