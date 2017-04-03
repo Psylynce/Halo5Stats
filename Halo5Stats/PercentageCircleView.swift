@@ -104,7 +104,7 @@ class PercentageCircleView: UIView {
         layer.position = CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0)
 //        layer.addAnimation(clockWiseAnimation, forKey: "strokeEnd")
 
-        let transform = CATransform3DRotate(layer.transform, -90.0 * CGFloat(M_PI) / 180.0, 0.0, 0.0, 1.0)
+        let transform = CATransform3DRotate(layer.transform, -90.0 * CGFloat.pi / 180.0, 0.0, 0.0, 1.0)
         layer.transform = transform
 
         self.layer.addSublayer(layer)

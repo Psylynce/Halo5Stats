@@ -29,8 +29,8 @@ class LoadingIndicator: UIView {
         super.layoutSubviews()
 
         let center = CGPoint(x: bounds.midX, y: bounds.midY)
-        let startAngle = CGFloat(-M_PI_2)
-        let endAngle = startAngle + CGFloat(M_PI * 2)
+        let startAngle: CGFloat = .pi / 2.0
+        let endAngle: CGFloat = startAngle + ( 2.0 * .pi)
         let path = UIBezierPath(arcCenter: center, radius: circleRadius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
 
         circleLayer.position = center
@@ -105,7 +105,7 @@ class LoadingIndicator: UIView {
     fileprivate let rotationAnimation: CAAnimation = {
         let animation = CABasicAnimation(keyPath: "transform.rotation")
         animation.fromValue = 0
-        animation.toValue = M_PI * 2
+        animation.toValue = Double.pi * 2
         animation.duration = 4
         animation.repeatCount = MAXFLOAT
 

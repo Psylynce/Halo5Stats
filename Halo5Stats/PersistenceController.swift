@@ -87,7 +87,7 @@ class PersistenceController {
         if context.hasChanges {
             do {
                 try context.save()
-            } catch let error as NSError {
+            } catch let error {
                 print("Error saving child context: \(error)")
             }
         }
