@@ -28,16 +28,10 @@ class CarnageReportViewModel {
 
     fileprivate func convert(_ reports: [CarnageReport]) {
         guard !reports.isEmpty else { return }
-        
-        var newReports: [MatchPlayerModel] = []
 
-        for report in reports {
-            if let model = MatchPlayerModel.convert(report) {
-                newReports.append(model)
-            }
-        }
-
+        let newReports = reports.flatMap { MatchPlayerModel.convert($0) }
         var sortedPlayers = newReports.sorted { $0.rank < $1.rank }
+        
         if match.isTeamGame {
             sortedPlayers.sort { $0.teamId < $1.teamId }
         }

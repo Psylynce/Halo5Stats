@@ -47,14 +47,7 @@ class SpartansViewModel {
     func fetchSpartans() {
         let context = UIApplication.appController().managedObjectContext()
         let spartans = Spartan.fetch(inContext: context)
-
-        var newSpartans: [SpartanModel] = []
-
-        for spartan in spartans {
-            if let model = SpartanModel.convert(spartan) {
-                newSpartans.append(model)
-            }
-        }
+        let newSpartans = spartans.flatMap { SpartanModel.convert($0) }
 
         self.filteredSpartans.value = sortSpartans(newSpartans)
 

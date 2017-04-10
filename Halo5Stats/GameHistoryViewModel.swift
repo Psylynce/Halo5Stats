@@ -56,17 +56,11 @@ class GameHistoryViewModel {
     }
 
     func updateMatches(forSpartan spartan: Spartan, isRefresh: Bool) {
-        var newMatches: [MatchModel] = []
         let newMatchIds = Array(matchIds[currentStartIndex ..< matchIds.count])
 
         let context = UIApplication.appController().managedObjectContext()
         let fetchedMatches = Match.sortedMatches(withIdentifiers: newMatchIds, in: context)
-
-        for match in fetchedMatches {
-            if let model = MatchModel.convert(match) {
-                newMatches.append(model)
-            }
-        }
+        let newMatches = fetchedMatches.flatMap { MatchModel.convert($0) }
 
         currentStartIndex = matchIds.count
         if isRefresh {

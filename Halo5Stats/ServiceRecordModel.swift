@@ -55,26 +55,14 @@ struct ServiceRecordModel {
 
     fileprivate static func weapons(_ record: ServiceRecord) -> [WeaponModel] {
         guard let weapons = record.weaponStats?.allObjects as? [WeaponStats] else { return [] }
-        var newWeapons = [WeaponModel]()
-
-        for weapon in weapons {
-            if let model = WeaponModel.convert(weapon) {
-                newWeapons.append(model)
-            }
-        }
+        let newWeapons = weapons.flatMap { WeaponModel.convert($0) }
 
         return newWeapons
     }
 
     fileprivate static func medals(_ record: ServiceRecord) -> [MedalModel] {
         guard let medals = record.medalAwards?.allObjects as? [MedalAward] else { return [] }
-        var newMedals = [MedalModel]()
-
-        for medal in medals {
-            if let model = MedalModel.convert(medal) {
-                newMedals.append(model)
-            }
-        }
+        let newMedals = medals.flatMap { MedalModel.convert($0) }
 
         return newMedals
     }
