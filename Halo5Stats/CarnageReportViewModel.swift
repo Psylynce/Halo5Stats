@@ -40,6 +40,7 @@ class CarnageReportViewModel {
     }
 
     fileprivate func requestCarnageReports() {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
         guard let path = match.match.matchPath else { return }
 
         let request = CarnageReportRequest(path: path)
@@ -50,13 +51,15 @@ class CarnageReportViewModel {
             }
         }
 
-        UIApplication.appController().operationQueue.addOperation(operation)
+        queue.addOperation(operation)
     }
 
     fileprivate func carnageReports() -> [CarnageReport] {
+        guard let controller = Container.resolve(PersistenceController.self) else { return [] }
+
         let identifier = self.match.matchId
         let predicate = NSPredicate.predicate(withIdentifier: identifier)
-        let m = Match.findOrFetch(inContext: UIApplication.appController().managedObjectContext(), matchingPredicate: predicate)
+        let m = Match.findOrFetch(inContext: controller.managedObjectContext, matchingPredicate: predicate)
         guard let match = m, let reports = match.carnageReports?.allObjects as? [CarnageReport], !reports.isEmpty else { return [] }
 
         return reports

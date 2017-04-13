@@ -12,8 +12,10 @@ import CoreData
 class GameBaseVariant: NSManagedObject {
 
     static func baseVariant(forIdentifier id: String) -> GameBaseVariant? {
+        guard let controller = Container.resolve(PersistenceController.self) else { return nil }
+
         let predicate = NSPredicate.predicate(withIdentifier: id)
-        return GameBaseVariant.findOrFetch(inContext: UIApplication.appController().managedObjectContext(), matchingPredicate: predicate)
+        return GameBaseVariant.findOrFetch(inContext: controller.managedObjectContext, matchingPredicate: predicate)
     }
 
 }

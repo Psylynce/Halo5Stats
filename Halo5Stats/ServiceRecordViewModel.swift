@@ -120,6 +120,7 @@ class ServiceRecordViewModel {
     }
 
     fileprivate func requestServiceRecord(_ force: Bool, completion: @escaping (Void) -> Void) {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
         guard let gamertag = self.gamertag, let spartan = Spartan.spartan(gamertag) else { return }
 
         let requestType = NetworkRequestManager.RequestType.requestType(forGameMode: gameMode)
@@ -137,6 +138,6 @@ class ServiceRecordViewModel {
             }
         }
 
-        UIApplication.appController().operationQueue.addOperation(operation)
+        queue.addOperation(operation)
     }
 }

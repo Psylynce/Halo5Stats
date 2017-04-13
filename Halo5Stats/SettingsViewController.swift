@@ -73,7 +73,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
 
         switch row {
         case .changeDefault:
-            UIApplication.appController().applicationViewController.defaultGamertagTapped()
+            UIApplication.appDelegate.applicationViewController.defaultGamertagTapped()
         case .review:
             if let url = viewModel.appReviewUrl, UIApplication.shared.canOpenURL(url as URL) {
                 UIApplication.shared.openURL(url as URL)

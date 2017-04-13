@@ -12,8 +12,10 @@ import CoreData
 class CSRDesignation: NSManagedObject {
 
     static func csrDesignation(_ identifier: Int) -> CSRDesignation? {
+        guard let controller = Container.resolve(PersistenceController.self) else { return nil }
+
         let predicate = NSPredicate.predicate(withNumberIdentifier: NSNumber(integerLiteral: identifier))
-        let designation = CSRDesignation.findOrFetch(inContext: UIApplication.appController().managedObjectContext(), matchingPredicate: predicate)
+        let designation = CSRDesignation.findOrFetch(inContext: controller.managedObjectContext, matchingPredicate: predicate)
 
         return designation
     }

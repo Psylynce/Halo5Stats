@@ -104,6 +104,7 @@ class PlayerCarnageReportViewModel {
 
     func saveSpartan(_ player: MatchPlayerModel, completion: @escaping (Void) -> Void) {
         guard !SpartanManager.sharedManager.spartanIsSaved(player.gamertag) else { return }
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
         
         let operation = DownloadSpartanDataOperation(gamertag: player.gamertag.lowercased()) {
             SpartanManager.sharedManager.saveSpartan(player.gamertag)
@@ -112,6 +113,6 @@ class PlayerCarnageReportViewModel {
             }
         }
 
-        UIApplication.appController().operationQueue.addOperation(operation)
+        queue.addOperation(operation)
     }
 }

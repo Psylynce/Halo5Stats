@@ -56,10 +56,10 @@ class GameHistoryViewModel {
     }
 
     func updateMatches(forSpartan spartan: Spartan, isRefresh: Bool) {
-        let newMatchIds = Array(matchIds[currentStartIndex ..< matchIds.count])
+        guard let controller = Container.resolve(PersistenceController.self) else { return }
 
-        let context = UIApplication.appController().managedObjectContext()
-        let fetchedMatches = Match.sortedMatches(withIdentifiers: newMatchIds, in: context)
+        let newMatchIds = Array(matchIds[currentStartIndex ..< matchIds.count])
+        let fetchedMatches = Match.sortedMatches(withIdentifiers: newMatchIds, in: controller.managedObjectContext)
         let newMatches = fetchedMatches.flatMap { MatchModel.convert($0) }
 
         currentStartIndex = matchIds.count
@@ -114,13 +114,17 @@ class GameHistoryViewModel {
     // MARK: - Private
 
     fileprivate func updateMapMetadata(_ completion: @escaping (Void) -> Void) {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
+
         let mapsRequest = MetadataRequest(metadataType: .Maps)
         let operation = APIRequestOperation(request: mapsRequest, completion: completion)
 
-        UIApplication.appController().operationQueue.addOperation(operation)
+        queue.addOperation(operation)
     }
 
     fileprivate func requestMatches(_ gamertag: String, completion: @escaping (Void) -> Void) {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
+
         let params = [APIConstants.MatchesStart : "\(currentStartIndex)",
                       APIConstants.MatchesModes : GameMode.multiplayerModes()]
         let matchesRequest = MatchesRequest(gamertag: gamertag, parameters: params)
@@ -131,7 +135,7 @@ class GameHistoryViewModel {
             }
         }
 
-        UIApplication.appController().operationQueue.addOperation(operation)
+        queue.addOperation(operation)
     }
 
     fileprivate func updateMatchIds(with data: [String : AnyObject]) {

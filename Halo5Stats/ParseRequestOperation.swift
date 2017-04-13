@@ -48,13 +48,13 @@ class ParseRequestOperation: Operation {
     // MARK: Private
 
     fileprivate func parse(_ data: [String : AnyObject]) {
-        guard let controller = UIApplication.appController().persistenceController else { return }
+        guard let controller = Container.resolve(PersistenceController.self) else { return }
         let context = controller.createChildContext()
         
         context.perform {
             self.request.parseBlock(self.request.name, context, data)
             
-            controller.saveChildContext(context)
+            controller.save(context: context)
             controller.save()
             
             self.finish()

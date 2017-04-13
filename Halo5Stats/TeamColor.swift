@@ -12,10 +12,10 @@ import CoreData
 class TeamColor: NSManagedObject {
 
     static func teamColor(forIdentifier id: Int) -> TeamColor? {
-        let context = UIApplication.appController().managedObjectContext()
+        guard let controller = Container.resolve(PersistenceController.self) else { return nil }
         let predicate = NSPredicate.predicate(withNumberIdentifier: NSNumber(integerLiteral: id))
         
-        return TeamColor.findOrFetch(inContext: context, matchingPredicate: predicate)
+        return TeamColor.findOrFetch(inContext: controller.managedObjectContext, matchingPredicate: predicate)
     }
 
 }

@@ -55,7 +55,10 @@ struct MetadataManager {
     }
 
     static func fetchMetadata(_ completion: @escaping () -> Void) {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
+
         let metadataOperation = DownloadAndParseMetadataOperation(completion: completion)
-        UIApplication.appController().operationQueue.addOperation(metadataOperation)
+
+        queue.addOperation(metadataOperation)
     }
 }

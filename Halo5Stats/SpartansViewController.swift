@@ -71,7 +71,7 @@ class SpartansViewController: UITableViewController {
         let spartan = viewModel.spartan(forIndexPath: indexPath)
 
         if let defaultGt = GamertagManager.sharedManager.gamertagForUser(), defaultGt == spartan.gamertag {
-            UIApplication.appController().applicationViewController.haloTabBarController.selectedIndex = 0
+            UIApplication.appDelegate.applicationViewController.haloTabBarController.selectedIndex = 0
             return
         }
 
@@ -194,11 +194,13 @@ class SpartansViewController: UITableViewController {
     }
 
     fileprivate func showDeletionError() {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
+
         let operation = AlertOperation()
         operation.title = "Error Deleting Spartan"
         operation.message = "Sorry, that Spartan was not able to be deleted at this time. Please try again."
 
-        UIApplication.appController().operationQueue.addOperation(operation)
+        queue.addOperation(operation)
     }
 }
 

@@ -22,54 +22,21 @@ class LoadObjectStoreOperation: Operation {
     }
     
     override func execute() {
-        let appController = UIApplication.appController()
+        if let controller = Container.resolve(PersistenceController.self), controller.persistentStoreExists {
+            finish()
 
-        let persistenceController = appController.persistenceController
-
-        if let persistenceController = persistenceController {
-            if persistenceController.persistenceStoreExists() {
-                finish()
-
-                return
-            }
+            return
         }
 
-        var error: Error? = nil
+        guard let persistence = PersistenceController(), persistence.persistentStoreExists else {
+            let error = NSError(domain: "com.Halo5Stats.operations", code: 0, userInfo: [NSLocalizedDescriptionKey : "Could not initialize the Core Data store."])
+            finishWithError(error as Error)
 
-        guard let modelURL = Bundle.main.url(forResource: "Halo5Stats", withExtension: "momd") else {
-            fatalError("Error loading model from bundle")
-        }
-        guard let model = NSManagedObjectModel(contentsOf: modelURL) else {
-            fatalError("Error initializing mom from \(modelURL)")
+            return
         }
 
-        let coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
-
-        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        context.persistentStoreCoordinator = coordinator
-
-        let storeURL = PersistenceController.persistenceStoreURL()
-        error = createStore(coordinator, url: storeURL as URL)
-
-        if coordinator.persistentStores.isEmpty {
-            destroyStore(coordinator, atURL: storeURL as URL)
-            error = createStore(coordinator, url: storeURL as URL)
-        }
-
-        if coordinator.persistentStores.isEmpty {
-            print("Error creating SQLite store.")
-            error = createStore(coordinator, url: storeURL as URL, type: NSInMemoryStoreType)
-        }
-
-        if !coordinator.persistentStores.isEmpty {
-            let controller = PersistenceController(coordinator: coordinator)
-            appController.persistenceController = controller
-            print("Store Created!")
-
-            error = nil
-        }
-
-        finishWithError(error)
+        Container.register(PersistenceController.self) { _ in persistence }
+        finish()
     }
 
     override func finished(_ errors: [Error]) {
@@ -92,26 +59,5 @@ class LoadObjectStoreOperation: Operation {
         }
         
         produceOperation(alert)
-    }
-    
-    // MARK: Private
-    
-    fileprivate func createStore(_ persistenceStoreCoordinator: NSPersistentStoreCoordinator, url: URL?, type: String = NSSQLiteStoreType) -> Error? {
-        var error: Error?
-        
-        do {
-            let options = [NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true]
-            let _ = try persistenceStoreCoordinator.addPersistentStore(ofType: type, configurationName: nil, at: url, options: options)
-        } catch let storeError {
-            error = storeError
-        }
-        
-        return error
-    }
-    
-    fileprivate func destroyStore(_ persistentStoreCoordinator: NSPersistentStoreCoordinator, atURL URL: Foundation.URL, type: String = NSSQLiteStoreType) {
-        do {
-            let _ = try persistentStoreCoordinator.destroyPersistentStore(at: URL, ofType: type, options: nil)
-        } catch { }
     }
 }

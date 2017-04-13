@@ -10,11 +10,12 @@ import UIKit
 class GamertagValidator {
 
     let gamertagManager = GamertagManager.sharedManager
-    let operationQueue = UIApplication.appController().operationQueue
 
     var viewController: UIViewController!
 
     func validate(_ gamertag: String, shouldSaveGamertag: Bool = false, completion: @escaping (_ success: Bool) -> ()) {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
+
         guard gamertagManager.isGamertagValid(gamertag) else {
             DispatchQueue.main.async { [weak self] in
                 self?.invalidGamertagAlert()
@@ -51,7 +52,7 @@ class GamertagValidator {
 
                     operations.append(downloadSpartanDataOperation)
 
-                    self?.operationQueue.addOperations(operations, waitUntilFinished: false)
+                    queue.addOperations(operations, waitUntilFinished: false)
                 case .notFound:
                     DispatchQueue.main.async {
                         self?.serviceErrorAlert(result.alertTitle, message: "That spartan does not exist. Please try another gamertag.")
@@ -76,19 +77,23 @@ class GamertagValidator {
             }
         }
 
-        operationQueue.addOperation(operation)
+        queue.addOperation(operation)
     }
 
     fileprivate func invalidGamertagAlert() {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
+
         let alert = gamertagManager.alert(viewController)
-        operationQueue.addOperation(alert)
+        queue.addOperation(alert)
     }
 
     fileprivate func serviceErrorAlert(_ title: String?, message: String?) {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
+
         let alert = AlertOperation()
         alert.title = title
         alert.message = message
 
-        operationQueue.addOperation(alert)
+        queue.addOperation(alert)
     }
 }
