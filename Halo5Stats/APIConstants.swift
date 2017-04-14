@@ -45,18 +45,18 @@ struct APIConstants {
     // MARK: - Game Modes
     
     enum GameMode: String {
-        case Arena = "arena"
-        case Custom = "custom"
-        case Warzone = "warzone"
+        case arena = "arena"
+        case custom = "custom"
+        case warzone = "warzone"
 
         static func gameMode(forInt i: Int) -> GameMode? {
             switch i {
             case 1:
-                return .Arena
+                return .arena
             case 3:
-                return .Custom
+                return .custom
             case 4:
-                return .Warzone
+                return .warzone
             default:
                 return nil
             }
@@ -64,40 +64,40 @@ struct APIConstants {
 
         var color: UIColor {
             switch self {
-            case .Arena:
+            case .arena:
                 return .arenaAccent
-            case .Custom:
+            case .custom:
                 return .customAccent
-            case .Warzone:
+            case .warzone:
                 return .warzoneAccent
             }
         }
 
         var title: String {
             switch self {
-            case .Arena:
+            case .arena:
                 return "Arena"
-            case .Warzone:
+            case .warzone:
                 return "Warzone"
-            case .Custom:
+            case .custom:
                 return "Custom"
             }
         }
 
         static func multiplayerModes() -> String {
-            let arena = GameMode.Arena.rawValue
-            let custom = GameMode.Custom.rawValue
-            let warzone = GameMode.Warzone.rawValue
+            let arena = GameMode.arena.rawValue
+            let custom = GameMode.custom.rawValue
+            let warzone = GameMode.warzone.rawValue
             return "\(arena),\(custom),\(warzone)"
         }
 
         var image: UIImage {
             switch self {
-            case .Arena:
+            case .arena:
                 return UIImage(named: "fathom")!
-            case .Warzone:
+            case .warzone:
                 return UIImage(named: "skirmish")!
-            case .Custom:
+            case .custom:
                 return UIImage(named: "narrows")!
             }
         }

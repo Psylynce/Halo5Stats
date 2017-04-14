@@ -58,15 +58,15 @@ struct ServiceRecordRequest: RequestProtocol {
             }
 
             switch gameMode {
-            case .Arena:
+            case .arena:
                 print("Parse Arena")
-                ServiceRecord.parse(.Arena, data: data, context: context)
-            case .Warzone:
+                ServiceRecord.parse(.arena, data: data, context: context)
+            case .warzone:
                 print("Parse Warzone")
-                ServiceRecord.parse(.Warzone, data: data, context: context)
-            case .Custom:
+                ServiceRecord.parse(.warzone, data: data, context: context)
+            case .custom:
                 print("Parse Custom")
-                ServiceRecord.parse(.Custom, data: data, context: context)
+                ServiceRecord.parse(.custom, data: data, context: context)
             }
         }
         

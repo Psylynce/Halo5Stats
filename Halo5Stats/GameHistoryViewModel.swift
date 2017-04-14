@@ -162,19 +162,19 @@ extension GameHistoryViewModel: MatchFilterDelegate {
 
         if model.arenaSelected.value {
             filteredMatches += allMatches.filter {
-                $0.gameMode == .Arena
+                $0.gameMode == .arena
             }
         }
 
         if model.warzoneSelected.value {
             filteredMatches += allMatches.filter {
-                $0.gameMode == .Warzone
+                $0.gameMode == .warzone
             }
         }
 
         if model.customsSelected.value {
             filteredMatches += allMatches.filter {
-                $0.gameMode == .Custom
+                $0.gameMode == .custom
             }
         }
 

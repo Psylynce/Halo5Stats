@@ -41,7 +41,7 @@ class CompareCell: UITableViewCell {
         let valueTwo = item.playerTwoValue
 
         nameLabel.text = item.name
-        nameLabel.textColor = gameMode == .Custom ? gameMode.color.lighter() : gameMode.color
+        nameLabel.textColor = gameMode == .custom ? gameMode.color.lighter() : gameMode.color
         playerOneValueLabel.text = valueOne.cleanValue
         playerTwoValueLabel.text = valueTwo.cleanValue
 

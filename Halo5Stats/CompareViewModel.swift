@@ -15,11 +15,11 @@ enum CompareSection {
     var gameMode: GameMode {
         switch self {
         case .arena:
-            return .Arena
+            return .arena
         case .warzone:
-            return .Warzone
+            return .warzone
         case .custom:
-            return .Custom
+            return .custom
         }
     }
 

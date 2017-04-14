@@ -24,7 +24,7 @@ class GamertagValidator {
             return
         }
 
-        let request = ServiceRecordRequest(gamertags: [gamertag], gameMode: .Arena)
+        let request = ServiceRecordRequest(gamertags: [gamertag], gameMode: .arena)
         let operation = APIRequestOperation(request: request, shouldParse: false) { [weak self] in
             if let data = request.data {
                 guard let results = data[JSONKeys.ServiceRecord.players] as? [AnyObject], let player = results[0] as? [String : AnyObject], let resultCode = player[JSONKeys.ServiceRecord.resultCode] as? Int, let result = ResultCode(rawValue: resultCode) else {
