@@ -57,7 +57,7 @@ class ServiceRecord: NSManagedObject {
             }
 
             let capitalizedType = type.rawValue.capitalized
-            let statType = type == .Warzone ? "\(capitalizedType)Stat" : "\(capitalizedType)Stats"
+            let statType = type == .warzone ? "\(capitalizedType)Stat" : "\(capitalizedType)Stats"
             guard let stats = serviceRecord[statType] as? [String : AnyObject] else {
                 print("No stats for \(type)")
                 continue
@@ -136,7 +136,7 @@ extension ServiceRecord: ManagedObjectTypeProtocol {
             }
         }
 
-        if let type = self.type, type == APIConstants.GameMode.Arena.rawValue, let highestCSR = data[JSONKeys.AttainedCSR.highestCsrAttained] as? [String : AnyObject] {
+        if let type = self.type, type == APIConstants.GameMode.arena.rawValue, let highestCSR = data[JSONKeys.AttainedCSR.highestCsrAttained] as? [String : AnyObject] {
             if let hCSR = highestCSRAttained {
                 hCSR.update(withData: highestCSR as AnyObject, context: context)
             } else {

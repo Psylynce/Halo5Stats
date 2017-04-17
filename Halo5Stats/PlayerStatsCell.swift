@@ -26,7 +26,7 @@ class PlayerStatsCell: UITableViewCell {
         super.awakeFromNib()
 
 
-        let textColor = UIColor(haloColor: .WhiteSmoke)
+        let textColor = UIColor.whiteSmoke
         gamertagLabel.textColor = textColor
         gamertagLabel.adjustsFontSizeToFitWidth = true
         gamertagLabel.minimumScaleFactor = 0.6

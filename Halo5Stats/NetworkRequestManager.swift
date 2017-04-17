@@ -12,31 +12,31 @@ class NetworkRequestManager {
     static let sharedManager = NetworkRequestManager()
 
     enum RequestType: String {
-        case Metadata = "metadataRequestDate"
-        case Matches = "matchesRequestDate"
-        case Arena = "arenaServiceRecordRequestDate"
-        case Warzone = "warzoneServiceRecordRequestDate"
-        case Custom = "customServiceRecordRequestDate"
+        case metadata = "metadataRequestDate"
+        case matches = "matchesRequestDate"
+        case arena = "arenaServiceRecordRequestDate"
+        case warzone = "warzoneServiceRecordRequestDate"
+        case custom = "customServiceRecordRequestDate"
 
         func date() -> Date? {
             switch self {
-            case .Metadata:
+            case .metadata:
                 return Date().daysFromNow(3)
-            case .Matches:
+            case .matches:
                 return Date().daysFromNow(1)
-            case .Arena, .Warzone, .Custom:
+            case .arena, .warzone, .custom:
                 return Date().daysFromNow(1)
             }
         }
 
         static func requestType(forGameMode gameMode: GameMode) -> RequestType {
             switch gameMode {
-            case .Arena:
-                return RequestType.Arena
-            case .Warzone:
-                return RequestType.Warzone
-            case .Custom:
-                return RequestType.Custom
+            case .arena:
+                return RequestType.arena
+            case .warzone:
+                return RequestType.warzone
+            case .custom:
+                return RequestType.custom
             }
         }
     }

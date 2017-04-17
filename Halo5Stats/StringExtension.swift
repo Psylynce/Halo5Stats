@@ -49,7 +49,7 @@ extension String: Collection {
             }
 
             return string
-        } catch let error as NSError {
+        } catch let error {
             print("Invalid Regex \(error.localizedDescription)")
             return self
         }

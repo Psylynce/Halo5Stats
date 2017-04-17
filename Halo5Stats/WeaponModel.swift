@@ -21,17 +21,17 @@ struct WeaponModel {
         var color: UIColor {
             switch self {
             case .grenade:
-                return UIColor(haloColor: .grenades)
+                return .grenades
             case .turret:
-                return UIColor(haloColor: .turrets)
+                return .turrets
             case .vehicle:
-                return UIColor(haloColor: .vehicles)
+                return .vehicles
             case .standard:
-                return UIColor(haloColor: .standardWeapons)
+                return .standardWeapons
             case .power:
-                return UIColor(haloColor: .powerWeapons)
+                return .powerWeapons
             case .unknown:
-                return UIColor(haloColor: .unknown)
+                return .unknown
             }
         }
 
@@ -124,7 +124,7 @@ struct WeaponModel {
     }
 
     func percentageDetails(_ gameMode: GameMode) -> [PercentageDetail] {
-        return [(value: shotsFired, color: UIColor(haloColor: .Bismark)), (value: shotsLanded, color: gameMode.color)]
+        return [(value: shotsFired, color: .bismark), (value: shotsLanded, color: gameMode.color)]
     }
 }
 

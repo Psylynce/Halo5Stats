@@ -36,7 +36,7 @@ class KDCell: UITableViewCell {
 
         numberLabels.forEach {
             $0.font = UIFont.kelson(.Bold, size: 42)
-            $0.textColor = UIColor(haloColor: .WhiteSmoke)
+            $0.textColor = .whiteSmoke
         }
 
         secondaryTitleLabels.forEach {
@@ -48,7 +48,7 @@ class KDCell: UITableViewCell {
 
         statLabels.forEach {
             $0.font = UIFont.kelson(.Regular, size: 18)
-            $0.textColor = UIColor(haloColor: .WhiteSmoke)
+            $0.textColor = .whiteSmoke
         }
 
         contentView.backgroundColor = UIColor.clear

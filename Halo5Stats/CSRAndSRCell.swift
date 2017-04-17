@@ -44,18 +44,18 @@ class CSRAndSRCell: UITableViewCell {
 
     fileprivate func setupAppearance() {
         highestCSRLabel.font = UIFont.kelson(.Regular, size: 16)
-        highestCSRLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        highestCSRLabel.textColor = .whiteSmoke
         highestCSRLabel.text = "Highest CSR"
 
         csrRankLabel.font = UIFont.kelson(.Light, size: 16)
-        csrRankLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        csrRankLabel.textColor = .whiteSmoke
 
         srLabel.font = UIFont.kelson(.Regular, size: 16)
-        srLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        srLabel.textColor = .whiteSmoke
         srLabel.text = "SR"
 
         srValueLabel.font = UIFont.kelson(.Bold, size: 75)
-        srValueLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        srValueLabel.textColor = .whiteSmoke
 
         backgroundColor = UIColor.clear
         contentView.backgroundColor = UIColor.clear

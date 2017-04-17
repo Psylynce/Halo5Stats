@@ -12,9 +12,9 @@ import CoreData
 class Medal: NSManagedObject {
 
     static func medal(forIdentifier id: String) -> Medal? {
-        let context = UIApplication.appController().managedObjectContext()
+        guard let controller = Container.resolve(PersistenceController.self) else { return nil }
         let predicate = NSPredicate.predicate(withIdentifier: id)
-        guard let medal = Medal.findOrFetch(inContext: context, matchingPredicate: predicate) else { return nil }
+        guard let medal = Medal.findOrFetch(inContext: controller.managedObjectContext, matchingPredicate: predicate) else { return nil }
         
         return medal
     }

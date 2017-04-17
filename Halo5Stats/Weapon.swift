@@ -12,9 +12,9 @@ import CoreData
 class Weapon: NSManagedObject {
 
     static func weapon(forIdentifier id: String) -> Weapon? {
-        let context = UIApplication.appController().managedObjectContext()
+        guard let controller = Container.resolve(PersistenceController.self) else { return nil }
         let predicate = NSPredicate.predicate(withIdentifier: id)
-        guard let weapon = Weapon.findOrFetch(inContext: context, matchingPredicate: predicate) else { return nil }
+        guard let weapon = Weapon.findOrFetch(inContext: controller.managedObjectContext, matchingPredicate: predicate) else { return nil }
 
         return weapon
     }

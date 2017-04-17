@@ -55,14 +55,14 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     fileprivate func styleTabBar() {
-        UITabBar.appearance().barTintColor = UIColor(haloColor: .Black)
-        UITabBar.appearance().tintColor = UIColor(haloColor: .WhiteSmoke)
+        UITabBar.appearance().barTintColor = .haloBlack
+        UITabBar.appearance().tintColor = .whiteSmoke
         UITabBar.appearance().isTranslucent = false
     }
     
     fileprivate func styleNavBar() {
-        UINavigationBar.appearance().barTintColor = UIColor(haloColor: .Black)
-        UINavigationBar.appearance().tintColor = UIColor(haloColor: .WhiteSmoke)
+        UINavigationBar.appearance().barTintColor = .haloBlack
+        UINavigationBar.appearance().tintColor = .whiteSmoke
         let font = UIFont.kelson(.Regular, size: 18) ?? UIFont.systemFont(ofSize: 18)
         let titleAttributes: [String : AnyObject] = [NSForegroundColorAttributeName : UIColor.white,
                                NSFontAttributeName : font]

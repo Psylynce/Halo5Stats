@@ -20,14 +20,14 @@ class CompareCell: UITableViewCell {
         super.awakeFromNib()
 
         nameLabel.font = UIFont.kelson(.Thin, size: 16)
-        nameLabel.textColor = UIColor(haloColor: .CuriousBlue).lighter()
+        nameLabel.textColor = UIColor.curiousBlue.lighter()
         nameLabel.adjustsFontSizeToFitWidth = true
         nameLabel.minimumScaleFactor = 0.8
 
-        playerOneValueLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        playerOneValueLabel.textColor = .whiteSmoke
         playerOneValueLabel.adjustsFontSizeToFitWidth = true
         playerOneValueLabel.minimumScaleFactor = 0.7
-        playerTwoValueLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        playerTwoValueLabel.textColor = .whiteSmoke
         playerTwoValueLabel.adjustsFontSizeToFitWidth = true
         playerTwoValueLabel.minimumScaleFactor = 0.7
 
@@ -41,7 +41,7 @@ class CompareCell: UITableViewCell {
         let valueTwo = item.playerTwoValue
 
         nameLabel.text = item.name
-        nameLabel.textColor = gameMode == .Custom ? gameMode.color.lighter() : gameMode.color
+        nameLabel.textColor = gameMode == .custom ? gameMode.color.lighter() : gameMode.color
         playerOneValueLabel.text = valueOne.cleanValue
         playerTwoValueLabel.text = valueTwo.cleanValue
 

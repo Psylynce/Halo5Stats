@@ -23,14 +23,14 @@ class ImageCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        winnerLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        winnerLabel.textColor = .whiteSmoke
         winnerLabel.font = UIFont.kelson(.Regular, size: 32)
         winnerLabel.adjustsFontSizeToFitWidth = true
         winnerLabel.minimumScaleFactor = 0.6
 
-        mapNameLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        mapNameLabel.textColor = .whiteSmoke
         mapNameLabel.font = UIFont.kelson(.Regular, size: 14)
-        durationLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        durationLabel.textColor = .whiteSmoke
         durationLabel.font = UIFont.kelson(.Regular, size: 14)
 
         durationLabel.text = ""

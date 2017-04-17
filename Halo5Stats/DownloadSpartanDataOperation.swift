@@ -18,17 +18,17 @@ class DownloadSpartanDataOperation: GroupOperation {
     init(gamertag: String, completion: @escaping () -> Void) {
         setupSpartanOperation = SetupSpartanOperation(gamertag: gamertag)
 
-        let arenaRequest = ServiceRecordRequest(gamertags: [gamertag], gameMode: .Arena)
+        let arenaRequest = ServiceRecordRequest(gamertags: [gamertag], gameMode: .arena)
         downloadArenaOperation = APIRequestOperation(request: arenaRequest) {
             print("Arena parsed for \(gamertag)")
         }
 
-        let warzoneRequest = ServiceRecordRequest(gamertags: [gamertag], gameMode: .Warzone)
+        let warzoneRequest = ServiceRecordRequest(gamertags: [gamertag], gameMode: .warzone)
         downloadWarzoneOperation = APIRequestOperation(request: warzoneRequest) {
             print("Warzone parsed for \(gamertag)")
         }
 
-        let customsRequest = ServiceRecordRequest(gamertags: [gamertag], gameMode: .Custom)
+        let customsRequest = ServiceRecordRequest(gamertags: [gamertag], gameMode: .custom)
         downloadCustomOperation = APIRequestOperation(request: customsRequest) {
             print("Custom parsed for \(gamertag)")
         }

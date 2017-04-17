@@ -23,7 +23,7 @@ struct CarnageReportRequest: RequestProtocol {
     }
 
     var url: URL {
-        let endpoint = Endpoint(service: APIConstants.StatsService, path: path)
+        let endpoint = Endpoint(service: .stats, path: path)
         let url = endpoint.url()
 
         return url as URL

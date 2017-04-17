@@ -85,7 +85,7 @@ struct StatsModel {
 
     func killDeathRatio() -> Double {
         let kills = Double(self.kills)
-        let deaths = Double(self.deaths)
+        let deaths = self.deaths == 0 ?  1.0 : Double(self.deaths)
 
         let kd = kills / deaths
 

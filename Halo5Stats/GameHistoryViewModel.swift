@@ -56,19 +56,11 @@ class GameHistoryViewModel {
     }
 
     func updateMatches(forSpartan spartan: Spartan, isRefresh: Bool) {
-        var newMatches: [MatchModel] = []
+        guard let controller = Container.resolve(PersistenceController.self) else { return }
+
         let newMatchIds = Array(matchIds[currentStartIndex ..< matchIds.count])
-
-        let context = UIApplication.appController().managedObjectContext()
-        let fetchedMatches = Match.matches(forIdentifiers: newMatchIds, context: context)
-
-        for i in 0 ..< newMatchIds.count {
-            let matchId = newMatchIds[i]
-            let match = fetchedMatches.filter { $0.identifier == matchId }
-            if let match = match.first, let model = MatchModel.convert(match) {
-                newMatches.append(model)
-            }
-        }
+        let fetchedMatches = Match.sortedMatches(withIdentifiers: newMatchIds, in: controller.managedObjectContext)
+        let newMatches = fetchedMatches.flatMap { MatchModel.convert($0) }
 
         currentStartIndex = matchIds.count
         if isRefresh {
@@ -111,7 +103,7 @@ class GameHistoryViewModel {
         }
     }
 
-    func match(forIndexPath indexPath: IndexPath) -> MatchModel {
+    func match(for indexPath: IndexPath) -> MatchModel {
         if isFiltering.value {
             return filteredMatches.value[indexPath.row]
         } else {
@@ -122,13 +114,17 @@ class GameHistoryViewModel {
     // MARK: - Private
 
     fileprivate func updateMapMetadata(_ completion: @escaping (Void) -> Void) {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
+
         let mapsRequest = MetadataRequest(metadataType: .Maps)
         let operation = APIRequestOperation(request: mapsRequest, completion: completion)
 
-        UIApplication.appController().operationQueue.addOperation(operation)
+        queue.addOperation(operation)
     }
 
     fileprivate func requestMatches(_ gamertag: String, completion: @escaping (Void) -> Void) {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
+
         let params = [APIConstants.MatchesStart : "\(currentStartIndex)",
                       APIConstants.MatchesModes : GameMode.multiplayerModes()]
         let matchesRequest = MatchesRequest(gamertag: gamertag, parameters: params)
@@ -139,7 +135,7 @@ class GameHistoryViewModel {
             }
         }
 
-        UIApplication.appController().operationQueue.addOperation(operation)
+        queue.addOperation(operation)
     }
 
     fileprivate func updateMatchIds(with data: [String : AnyObject]) {
@@ -166,19 +162,19 @@ extension GameHistoryViewModel: MatchFilterDelegate {
 
         if model.arenaSelected.value {
             filteredMatches += allMatches.filter {
-                $0.gameMode == .Arena
+                $0.gameMode == .arena
             }
         }
 
         if model.warzoneSelected.value {
             filteredMatches += allMatches.filter {
-                $0.gameMode == .Warzone
+                $0.gameMode == .warzone
             }
         }
 
         if model.customsSelected.value {
             filteredMatches += allMatches.filter {
-                $0.gameMode == .Custom
+                $0.gameMode == .custom
             }
         }
 

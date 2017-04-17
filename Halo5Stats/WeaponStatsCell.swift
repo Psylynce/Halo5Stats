@@ -32,22 +32,22 @@ class WeaponStatsCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        contentView.horizontalGradient(weapon.type.color, endColor: UIColor(haloColor: .blueCharcoal))
+        contentView.horizontalGradient(weapon.type.color, endColor: .blueCharcoal)
     }
 
     fileprivate func setupAppearance() {
-        weaponNameLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        weaponNameLabel.textColor = .whiteSmoke
         weaponNameLabel.font = UIFont.kelson(.Bold, size: 32)
 
         headerLabels.forEach {
-            $0.textColor = UIColor(haloColor: .CuriousBlue)
+            $0.textColor = .curiousBlue
             $0.font = UIFont.kelson(.Light, size: 14)
         }
 
-        killsLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        killsLabel.textColor = .whiteSmoke
         killsLabel.font = UIFont.kelson(.Regular, size: 14)
 
-        accuracyLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        accuracyLabel.textColor = .whiteSmoke
         accuracyLabel.font = UIFont.kelson(.Regular, size: 14)
 
         backgroundColor = UIColor.clear

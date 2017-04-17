@@ -26,7 +26,7 @@ struct MatchesRequest: RequestProtocol {
 
     var url: URL {
         let substitutions = [APIConstants.GamertagKey : gamertag]
-        let endpoint = Endpoint(service: APIConstants.StatsService, path: APIConstants.StatsPlayerMatches, parameters: parameters)
+        let endpoint = Endpoint(service: .stats, path: APIConstants.StatsPlayerMatches, parameters: parameters)
         let url = endpoint.url(withSubstitutions: substitutions)
 
         return url as URL

@@ -80,9 +80,9 @@ class PlayerComparisonViewController: UIViewController {
     }
 
     fileprivate func setupSearchBarAppearance() {
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor(haloColor: .Cinder).lighter()
-         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor(haloColor: .WhiteSmoke)
-        searchController.searchBar.tintColor = UIColor(haloColor: .WhiteSmoke)
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.cinder.lighter()
+         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = .whiteSmoke
+        searchController.searchBar.tintColor = .whiteSmoke
     }
 
     @objc fileprivate func searchButtonTapped() {

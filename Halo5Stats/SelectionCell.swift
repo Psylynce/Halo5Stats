@@ -13,7 +13,7 @@ class SelectionCell: UITableViewCell {
         super.awakeFromNib()
 
         textLabel?.font = UIFont.kelson(.Regular, size: 16)
-        textLabel?.textColor = UIColor(haloColor: .WhiteSmoke)
+        textLabel?.textColor = .whiteSmoke
 
         contentView.backgroundColor = UIColor.clear
         backgroundColor = UIColor.clear

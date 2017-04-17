@@ -44,40 +44,40 @@ class WeaponStatsDetailViewController: UIViewController {
     }
 
     fileprivate func setupAppearance() {
-        view.verticalGradient(startColor: viewModel.weapon.type.color.darker(), endColor: UIColor(haloColor: .Cinder))
+        view.verticalGradient(startColor: viewModel.weapon.type.color.darker(), endColor: .cinder)
         backgroundImageView.image = viewModel.weapon.type.image
 
         weaponNameLabel.font = UIFont.kelson(.Regular, size: 24)
-        weaponNameLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        weaponNameLabel.textColor = .whiteSmoke
 
-        weaponNameUnderlineView.backgroundColor = UIColor(haloColor: .WhiteSmoke)
+        weaponNameUnderlineView.backgroundColor = .whiteSmoke
 
         weaponDescriptionLabel.font = UIFont.kelson(.Light, size: 14)
-        weaponDescriptionLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        weaponDescriptionLabel.textColor = .whiteSmoke
 
         killsLabel.font = UIFont.kelson(.Bold, size: 18)
-        killsLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        killsLabel.textColor = .whiteSmoke
 
         headshotsLabel.font = UIFont.kelson(.Regular, size: 14)
-        headshotsLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        headshotsLabel.textColor = .whiteSmoke
 
         accuracyLabel.font = UIFont.kelson(.Bold, size: 18)
-        accuracyLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        accuracyLabel.textColor = .whiteSmoke
 
         shotsFiredLabel.font = UIFont.kelson(.Regular, size: 14)
-        shotsFiredLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        shotsFiredLabel.textColor = .whiteSmoke
 
         shotsLandedLabel.font = UIFont.kelson(.Regular, size: 14)
-        shotsLandedLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        shotsLandedLabel.textColor = .whiteSmoke
 
         subHeaderLabels.forEach {
             $0.font = UIFont.kelson(.Light, size: 14)
-            $0.textColor = UIColor(haloColor: .WhiteSmoke)
+            $0.textColor = .whiteSmoke
             $0.text = $0.text?.uppercased()
         }
 
         subHeaderUnderlineViews.forEach {
-            $0.backgroundColor = UIColor(haloColor: .CuriousBlue)
+            $0.backgroundColor = .curiousBlue
         }
 
         hideBackButtonTitle()

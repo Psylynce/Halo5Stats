@@ -23,7 +23,7 @@ class PlayerStatTitleCell: UITableViewCell {
         backgroundColor = UIColor.clear
 
         labels.forEach {
-            $0.textColor = UIColor(haloColor: .WhiteSmoke)
+            $0.textColor = .whiteSmoke
             $0.font = UIFont.kelson(.Regular, size: 10.0)
             $0.adjustsFontSizeToFitWidth = true
             $0.minimumScaleFactor = 0.6

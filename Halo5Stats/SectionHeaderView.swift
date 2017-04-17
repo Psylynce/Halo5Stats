@@ -11,14 +11,14 @@ class SectionHeaderView: UIView {
 
     @IBOutlet var titleLabel: UILabel!
 
-    var startColor: UIColor = UIColor(haloColor: .Midnight)
-    var endColor: UIColor = UIColor(haloColor: .Elephant)
+    var startColor: UIColor = .midnight
+    var endColor: UIColor = .elephant
 
     override func awakeFromNib() {
         super.awakeFromNib()
 
         titleLabel.font = UIFont.kelson(.Bold, size: 16)
-        titleLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        titleLabel.textColor = .whiteSmoke
 
         backgroundColor = UIColor.clear
     }

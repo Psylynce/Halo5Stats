@@ -45,16 +45,10 @@ class SpartansViewModel {
     weak var delegate: SpartansViewModelDelegate?
 
     func fetchSpartans() {
-        let context = UIApplication.appController().managedObjectContext()
-        let spartans = Spartan.fetch(inContext: context)
+        guard let controller = Container.resolve(PersistenceController.self) else { return }
 
-        var newSpartans: [SpartanModel] = []
-
-        for spartan in spartans {
-            if let model = SpartanModel.convert(spartan) {
-                newSpartans.append(model)
-            }
-        }
+        let spartans = Spartan.fetch(inContext: controller.managedObjectContext)
+        let newSpartans = spartans.flatMap { SpartanModel.convert($0) }
 
         self.filteredSpartans.value = sortSpartans(newSpartans)
 

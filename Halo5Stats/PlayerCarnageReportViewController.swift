@@ -50,7 +50,7 @@ class PlayerCarnageReportViewController: UIViewController {
     fileprivate var savedSpartanButton: UIBarButtonItem {
         let savedSpartanImage = UIImage(named: "Check")?.withRenderingMode(.alwaysTemplate)
         let savedButton = UIBarButtonItem(image: savedSpartanImage, style: .plain, target: nil, action: nil)
-        savedButton.tintColor = UIColor(haloColor: .SpringGreen)
+        savedButton.tintColor = .springGreen
         return savedButton
     }
 
@@ -73,7 +73,7 @@ class PlayerCarnageReportViewController: UIViewController {
     }
 
     fileprivate func setupSpartanImageView() {
-        view.backgroundColor = UIColor(haloColor: .Black)
+        view.backgroundColor = .haloBlack
         spartanImageView.clipsToBounds = true
         spartanImageView.contentMode = .scaleAspectFill
         let url = ProfileService.spartanImageUrl(forGamertag: viewModel.player.gamertag, size: "512")

@@ -39,7 +39,7 @@ class ServiceRecordViewController: UITableViewController {
 
     fileprivate func setupTableView() {
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor(haloColor: .Cinder)
+        tableView.backgroundColor = .cinder
 
         tableView.register(UINib(nibName: "TitleCell", bundle: nil), forCellReuseIdentifier: "TitleCell")
         tableView.register(UINib(nibName: "WeaponCell", bundle: nil), forCellReuseIdentifier: "WeaponCell")
@@ -188,7 +188,7 @@ class ServiceRecordViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let header = view as! UITableViewHeaderFooterView
-        header.contentView.backgroundColor = UIColor(haloColor: .Cinder)
+        header.contentView.backgroundColor = .cinder
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

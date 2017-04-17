@@ -79,10 +79,10 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
         contentView.backgroundColor = UIColor.clear
 
         metadataLabel.font = UIFont.kelson(.Regular, size: 18)
-        metadataLabel.textColor = UIColor(haloColor: .WhiteSmoke)
+        metadataLabel.textColor = .whiteSmoke
         metadataLabel.alpha = 0
 
-        let attributes: [String : AnyObject]? = [NSForegroundColorAttributeName : UIColor(haloColor: .WhiteSmoke).withAlphaComponent(0.6), NSFontAttributeName : UIFont.kelson(.Regular, size: 14)! ]
+        let attributes: [String : AnyObject]? = [NSForegroundColorAttributeName : UIColor.whiteSmoke.withAlphaComponent(0.6), NSFontAttributeName : UIFont.kelson(.Regular, size: 14)! ]
         let placeholder = NSAttributedString(string: "Enter Gamertag", attributes: attributes)
         textField.attributedPlaceholder = placeholder
         textField.delegate = self
@@ -101,7 +101,7 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
         cancelButton.alpha = 0
         cancelButton.isEnabled = isChangingGamertag
 
-        cancelButton.setTitleColor(UIColor(haloColor: .WhiteSmoke), for: UIControlState())
+        cancelButton.setTitleColor(.whiteSmoke, for: UIControlState())
         cancelButton.titleLabel?.font = UIFont.kelson(.Regular, size: 17)
 
         videoContainerView.alpha = 0

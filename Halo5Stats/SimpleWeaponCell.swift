@@ -29,12 +29,12 @@ class SimpleWeaponCell: UICollectionViewCell {
 
     fileprivate func setupAppearance() {
         titleLabels.forEach {
-            $0.textColor = UIColor(haloColor: .CuriousBlue).lighter()
+            $0.textColor = UIColor.curiousBlue.lighter()
             $0.font = UIFont.kelson(.Light, size: 14)
         }
 
         statsLabels.forEach {
-            $0.textColor = UIColor(haloColor: .WhiteSmoke)
+            $0.textColor = .whiteSmoke
             $0.font = UIFont.kelson(.Regular, size: 16)
         }
 

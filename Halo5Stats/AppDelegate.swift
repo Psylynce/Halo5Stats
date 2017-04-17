@@ -6,71 +6,56 @@
 //
 
 import UIKit
-import CoreData
+
+extension UIApplication {
+
+    class var appDelegate: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
+
+    class var rootViewController: UIViewController {
+        let delegate = UIApplication.appDelegate
+        return delegate.applicationViewController
+    }
+}
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, AppControllerProtocol {
+class AppDelegate: UIResponder {
 
     var window: UIWindow?
-    
-    fileprivate var _operationQueue: OperationQueue!
-    fileprivate var _persistenceController: PersistenceController!
-    fileprivate var _applicationViewController: ApplicationViewController!
+
+    fileprivate(set) lazy var applicationViewController = StoryboardScene.Main.initialViewController() as! ApplicationViewController
+}
+
+extension AppDelegate: UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        let startupOperation = StartupOperation() {
-            print("Startup Operation Completed")
-            DispatchQueue.main.async {
-                self.window?.rootViewController = self.applicationViewController
-            }
-        }
-        operationQueue.addOperation(startupOperation)
+        let startupManager = StartupManager()
+        startupManager.delegate = self
+        startupManager.startup()
 
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
-        persistenceController.save()
+        guard let controller = Container.resolve(PersistenceController.self) else { return }
+        controller.save()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
-        persistenceController.save()
+        guard let controller = Container.resolve(PersistenceController.self) else { return }
+        controller.save()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        persistenceController.save()
-    }
-    
-    // MARK: - AppControllerProtocol
-
-    var applicationViewController: ApplicationViewController {
-        if _applicationViewController == nil {
-            _applicationViewController = StoryboardScene.Main.initialViewController() as! ApplicationViewController
-        }
-
-        return _applicationViewController
-    }
-    
-    var operationQueue: OperationQueue {
-        if _operationQueue == nil {
-            _operationQueue = OperationQueue()
-        }
-        
-        return _operationQueue
-    }
-    
-    var persistenceController: PersistenceController! {
-        get {
-            return _persistenceController
-        }
-        
-        set (newController) {
-            _persistenceController = newController
-        }
-    }
-    
-    func managedObjectContext() -> NSManagedObjectContext {
-        return _persistenceController.managedObjectContext
+        guard let controller = Container.resolve(PersistenceController.self) else { return }
+        controller.save()
     }
 }
 
+extension AppDelegate: StartupManagerDelegate {
+
+    func didFinishStartup() {
+        self.window?.rootViewController = applicationViewController
+    }
+}

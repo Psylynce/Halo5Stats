@@ -33,13 +33,13 @@ class SetupSpartanOperation: Operation {
     }
 
     fileprivate func parseSpartan(_ data: [String : AnyObject]) {
-        guard let controller = UIApplication.appController().persistenceController else { return }
+        guard let controller = Container.resolve(PersistenceController.self) else { return }
         let context = controller.createChildContext() 
 
         context.perform {
             Spartan.parse(data, context: context)
 
-            controller.saveChildContext(context)
+            controller.save(context: context)
             controller.save()
 
             self.finish()

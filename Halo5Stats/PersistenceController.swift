@@ -11,25 +11,63 @@ import CoreData
 class PersistenceController {
     
     // MARK: - Persistence Controller
-    
-    // MARK: Properties
-    
-    fileprivate static let storePath = "Halo5Stats.sqlite"
-    let managedObjectContext: NSManagedObjectContext!
-    let privateManagedObjectContext: NSManagedObjectContext
-    
-    // MARK: Initialization
-    
-    init(coordinator: NSPersistentStoreCoordinator) {
-        managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        privateManagedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        
-        privateManagedObjectContext.persistentStoreCoordinator = coordinator
-        managedObjectContext.parent = privateManagedObjectContext
-        
-        addChildSaveNotification()
+
+    struct K {
+        static let storePath = "Halo5Stats.sqlite"
     }
     
+    // MARK: Properties
+
+    let managedObjectContext: NSManagedObjectContext
+    let privateManagedObjectContext: NSManagedObjectContext
+
+    private let coordinator: NSPersistentStoreCoordinator
+
+    var persistentStoreExists: Bool {
+        return coordinator.persistentStores.isEmpty == false
+    }
+    
+    // MARK: Initialization
+
+    init?() {
+        guard let model = NSManagedObjectModel.mergedModel(from: nil) else { return nil }
+
+        coordinator = NSPersistentStoreCoordinator(managedObjectModel: model)
+
+        managedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        privateManagedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
+
+        let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+        context.persistentStoreCoordinator = coordinator
+
+        let storeUrl = type(of: self).persistenceStoreURL()
+        var error = buildStore(with: coordinator, at: storeUrl)
+
+        if coordinator.persistentStores.isEmpty {
+            destroyStore(with: coordinator, at: storeUrl)
+            error = buildStore(with: coordinator, at: storeUrl)
+        }
+
+        if coordinator.persistentStores.isEmpty {
+            if let error = error {
+                print("Error creating SQLite store: \(error)")
+            }
+            print("Falling back to InMemoryStore type.")
+
+            error = buildStore(with: coordinator, at: storeUrl, type: NSInMemoryStoreType)
+        }
+
+        guard error == nil else { return nil }
+
+        privateManagedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        privateManagedObjectContext.persistentStoreCoordinator = coordinator
+
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        managedObjectContext.parent = privateManagedObjectContext
+
+        addChildSaveNotification()
+    }
+
     // MARK: Static Methods
     
     static func persistenceStoreURL() -> URL {
@@ -37,16 +75,12 @@ class PersistenceController {
             fatalError("The persistence store URL doesn't exist")
         }
         
-        url = url.appendingPathComponent(storePath)
+        url = url.appendingPathComponent(K.storePath)
 
         return url
     }
     
     // MARK: Internal
-    
-    func persistenceStoreExists() -> Bool {
-        return managedObjectContext != nil
-    }
     
     func save() {
         if !privateManagedObjectContext.hasChanges && !managedObjectContext.hasChanges {
@@ -72,10 +106,6 @@ class PersistenceController {
         }
     }
     
-    // MARK: - Child Context
-    
-    // MARK: Internal
-    
     func createChildContext() -> NSManagedObjectContext {
         let childContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         childContext.parent = managedObjectContext
@@ -83,33 +113,53 @@ class PersistenceController {
         return childContext
     }
     
-    func saveChildContext(_ context: NSManagedObjectContext) {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch let error as NSError {
-                print("Error saving child context: \(error)")
-            }
+    func save(context: NSManagedObjectContext) {
+        guard persistentStoreExists, context.hasChanges else { return }
+
+        do {
+            try context.save()
+        } catch let error {
+            assertionFailure("Error saving context \(context): \(error)")
         }
     }
-    
+
     // MARK: Private
-    
-    fileprivate func addChildSaveNotification() {
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.NSManagedObjectContextDidSave, object: nil, queue: nil) { [weak self] (notification) -> Void in
-            guard let strongSelf = self else { return }
-            guard let mainContext = strongSelf.managedObjectContext else { return }
-            guard let childContext = notification.object as? NSManagedObjectContext else { return }
-            
-            if childContext.persistentStoreCoordinator == mainContext.persistentStoreCoordinator {
-                if childContext != mainContext {
-                    mainContext.perform({ [weak strongSelf] () -> Void in
-                        guard let strongSelf = strongSelf else { return }
-                        mainContext.mergeChanges(fromContextDidSave: notification)
-                        strongSelf.save()
-                    })
-                }
-            }
+
+    private func buildStore(with coordinator: NSPersistentStoreCoordinator, at url: URL, type: String = NSSQLiteStoreType) -> NSError? {
+        var error: NSError?
+
+        do {
+            let options = [NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true]
+            try coordinator.addPersistentStore(ofType: type, configurationName: nil, at: url, options: options)
+        } catch let storeError as NSError {
+            error = storeError
         }
+
+        return error
+    }
+
+    private func destroyStore(with coordinator: NSPersistentStoreCoordinator, at url: URL, type: String = NSSQLiteStoreType) {
+        do {
+            try coordinator.destroyPersistentStore(at: url, ofType: type, options: nil)
+        } catch {}
+    }
+    
+    private func addChildSaveNotification() {
+        let completion: (Notification) -> Void = { [weak self] notification in
+            guard let strongSelf = self else { return }
+            guard let childContext = notification.object as? NSManagedObjectContext else { return }
+
+            let mainContext = strongSelf.managedObjectContext
+
+            guard childContext.persistentStoreCoordinator == mainContext.persistentStoreCoordinator && childContext != mainContext else { return }
+
+            mainContext.perform({ [weak strongSelf] () -> Void in
+                guard let strongSelf = strongSelf else { return }
+                mainContext.mergeChanges(fromContextDidSave: notification)
+                strongSelf.save()
+            })
+        }
+
+        NotificationCenter.default.addObserver(forName: Notification.Name.NSManagedObjectContextDidSave, object: nil, queue: nil, using: completion)
     }
 }

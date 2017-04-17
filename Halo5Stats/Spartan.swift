@@ -41,23 +41,27 @@ class Spartan: NSManagedObject {
         self.displayGamertag = gamertag
     }
 
-    static func deleteSpartan(_ gamertag: String, context: NSManagedObjectContext = UIApplication.appController().managedObjectContext(), completion: (_ success: Bool) -> Void) {
+    static func deleteSpartan(_ gamertag: String, completion: (_ success: Bool) -> Void) {
+        guard let controller = Container.resolve(PersistenceController.self) else {
+            completion(false)
+            return
+        }
         guard let spartan = Spartan.spartan(gamertag) else {
             completion(false)
             return
         }
 
-        context.delete(spartan)
+        controller.managedObjectContext.delete(spartan)
         SpartanManager.sharedManager.deleteSpartan(gamertag)
         FavoritesManager.sharedManager.deleteSpartan(gamertag)
         completion(true)
-        UIApplication.appController().persistenceController.save()
+        controller.save()
     }
 
     static func spartan(_ gamertag: String) -> Spartan? {
-        let context = UIApplication.appController().managedObjectContext()
+        guard let controller = Container.resolve(PersistenceController.self) else { return nil }
         let predicate = NSPredicate.predicate(withGamertag: gamertag.lowercased())
-        guard let spartan = Spartan.findOrFetch(inContext: context, matchingPredicate: predicate) else {
+        guard let spartan = Spartan.findOrFetch(inContext: controller.managedObjectContext, matchingPredicate: predicate) else {
             print("Ooops could not find spartan")
             return nil
         }

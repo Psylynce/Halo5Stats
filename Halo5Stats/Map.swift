@@ -12,8 +12,10 @@ import CoreData
 class Map: NSManagedObject {
 
     static func map(forIdentifier id: String) -> Map? {
+        guard let controller = Container.resolve(PersistenceController.self) else { return nil }
+
         let predicate = NSPredicate.predicate(withIdentifier: id)
-        return Map.findOrFetch(inContext: UIApplication.appController().managedObjectContext(), matchingPredicate: predicate)
+        return Map.findOrFetch(inContext: controller.managedObjectContext, matchingPredicate: predicate)
     }
 
 }

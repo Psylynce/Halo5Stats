@@ -24,7 +24,7 @@ extension NSError {
     }
 }
 
-// This makes it easy to compare an `NSError.code` to an `OperationErrorCode`.
+// This makes it easy to compare an `Error.code` to an `OperationErrorCode`.
 func == (lhs: Int, rhs: OperationErrorCode) -> Bool {
     return lhs == rhs.rawValue
 }

@@ -22,9 +22,9 @@ enum ServiceRecordSection {
     var color: UIColor? {
         switch self {
         case .games, .topMedalsTitle, .topMedals, .allMedals:
-            return UIColor(haloColor: .Elephant)
+            return .elephant
         case .highestCSR, .weapons:
-            return UIColor(haloColor: .Cinder)
+            return .cinder
         default:
             return nil
         }
@@ -120,6 +120,7 @@ class ServiceRecordViewModel {
     }
 
     fileprivate func requestServiceRecord(_ force: Bool, completion: @escaping (Void) -> Void) {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
         guard let gamertag = self.gamertag, let spartan = Spartan.spartan(gamertag) else { return }
 
         let requestType = NetworkRequestManager.RequestType.requestType(forGameMode: gameMode)
@@ -137,6 +138,6 @@ class ServiceRecordViewModel {
             }
         }
 
-        UIApplication.appController().operationQueue.addOperation(operation)
+        queue.addOperation(operation)
     }
 }

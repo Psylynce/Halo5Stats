@@ -58,10 +58,12 @@ extension UIViewController {
     }
 
     func showAlreadySavedAlert() {
+        guard let queue = Container.resolve(OperationQueue.self) else { return }
+
         let alert = AlertOperation()
         alert.title = "That Spartan is already Saved"
         alert.message = "Please try another gamertag."
 
-        UIApplication.appController().operationQueue.addOperation(alert)
+        queue.addOperation(alert)
     }
 }

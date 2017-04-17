@@ -31,7 +31,7 @@ struct ServiceRecordRequest: RequestProtocol {
     var url: URL {
         let substitutions = [APIConstants.GameModeKey : gameMode.rawValue]
         let params = [APIConstants.PlayersKey : gamertagsString]
-        let endpoint = Endpoint(service: APIConstants.StatsService, path: APIConstants.StatsServiceRecords, parameters: params)
+        let endpoint = Endpoint(service: .stats, path: APIConstants.StatsServiceRecords, parameters: params)
         let url = endpoint.url(withSubstitutions: substitutions)
         
         return url as URL
@@ -58,15 +58,15 @@ struct ServiceRecordRequest: RequestProtocol {
             }
 
             switch gameMode {
-            case .Arena:
+            case .arena:
                 print("Parse Arena")
-                ServiceRecord.parse(.Arena, data: data, context: context)
-            case .Warzone:
+                ServiceRecord.parse(.arena, data: data, context: context)
+            case .warzone:
                 print("Parse Warzone")
-                ServiceRecord.parse(.Warzone, data: data, context: context)
-            case .Custom:
+                ServiceRecord.parse(.warzone, data: data, context: context)
+            case .custom:
                 print("Parse Custom")
-                ServiceRecord.parse(.Custom, data: data, context: context)
+                ServiceRecord.parse(.custom, data: data, context: context)
             }
         }
         

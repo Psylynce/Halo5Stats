@@ -21,7 +21,7 @@ class ApplicationViewController: UIViewController {
 
         launchViewController.delegate = self
         showAppropriateView()
-        containerView.backgroundColor = UIColor(haloColor: .Black)
+        containerView.backgroundColor = .haloBlack
     }
 
     override func viewWillAppear(_ animated: Bool) {

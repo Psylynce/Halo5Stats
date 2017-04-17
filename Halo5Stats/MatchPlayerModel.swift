@@ -56,27 +56,16 @@ struct MatchPlayerModel {
 
     fileprivate static func weapons(_ report: CarnageReport) -> [WeaponModel] {
         guard let reportWeapons = report.weaponStats?.allObjects as? [WeaponStats] else { return [] }
-        var weapons: [WeaponModel] = []
 
-        for weapon in reportWeapons {
-            if let model = WeaponModel.convert(weapon) {
-                weapons.append(model)
-            }
-        }
+        let weapons = reportWeapons.flatMap { WeaponModel.convert($0) }
 
         return weapons
     }
 
     fileprivate static func medals(_ report: CarnageReport) -> [MedalModel] {
         guard let medals = report.medals?.allObjects as? [MedalAward] else { return [] }
-        var newMedals: [MedalModel] = []
 
-        for medal in medals {
-            if let model = MedalModel.convert(medal) {
-                newMedals.append(model)
-            }
-        }
-
+        var newMedals = medals.flatMap { MedalModel.convert($0) }
         newMedals.sort { $0.count > $1.count }
 
         return newMedals
@@ -86,14 +75,7 @@ struct MatchPlayerModel {
         let opponents = killed ? report.killedOpponents : report.killedByOpponents
         guard let os = opponents?.allObjects as? [OpponentDetail] else { return [] }
 
-        var models: [OpponentDetailModel] = []
-
-        for opponent in os {
-            if let model = OpponentDetailModel.convert(opponent) {
-                models.append(model)
-            }
-        }
-
+        var models = os.flatMap { OpponentDetailModel.convert($0) }
         models.sort { $0.killCount > $1.killCount }
 
         return models

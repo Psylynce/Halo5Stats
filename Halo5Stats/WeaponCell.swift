@@ -29,12 +29,12 @@ class WeaponCell: UITableViewCell {
         super.awakeFromNib()
 
         titleLabels.forEach {
-            $0.textColor = UIColor(haloColor: .CuriousBlue).lighter()
+            $0.textColor = UIColor.curiousBlue.lighter()
             $0.font = UIFont.kelson(.Light, size: 12.0)
         }
 
         labels.forEach {
-            $0.textColor = UIColor(haloColor: .WhiteSmoke)
+            $0.textColor = .whiteSmoke
             $0.font = UIFont.kelson(.Regular, size: 14.0)
         }
 

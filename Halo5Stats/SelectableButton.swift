@@ -21,8 +21,8 @@ class SelectableButton: UIButton {
         layer.borderColor = isSelected ? selectedColor.cgColor : deselectedColor.cgColor
     }
 
-    fileprivate let selectedColor = UIColor(haloColor: .WhiteSmoke)
-    fileprivate let deselectedColor = UIColor(haloColor: .WhiteSmoke).withAlphaComponent(0.4)
+    fileprivate let selectedColor = UIColor.whiteSmoke
+    fileprivate let deselectedColor = UIColor.whiteSmoke.withAlphaComponent(0.4)
 
     fileprivate func setupAppearance() {
         titleLabel?.font = UIFont.kelson(.Regular, size: 12)

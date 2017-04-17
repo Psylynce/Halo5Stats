@@ -14,7 +14,7 @@ class Endpoint {
     // MARK: Initialization
     
     // The service will be either stats, metadata, or profile
-    init(service: String, path: String, parameters: [String : String]? = nil) {
+    init(service: APIConstants.Service, path: String, parameters: [String : String]? = nil) {
         self.basePath = APIConstants.basePath(service)
         self.path = path
         self.parameters = parameters

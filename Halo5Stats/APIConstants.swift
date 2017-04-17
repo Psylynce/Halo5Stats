@@ -20,9 +20,11 @@ struct APIConstants {
     static let Halo5Title = "h5"
     
     // MARK: - Services
-    static let StatsService = "stats"
-    static let ProfileService = "profile"
-    static let MetadataService = "metadata"
+    enum Service: String {
+        case stats = "stats"
+        case profile = "profile"
+        case metadata = "metadata"
+    }
     
     // MARK: - Paths
     static let StatsPlayerMatches = "players/[GAMERTAG]/matches" // [?modes][&start][&count]
@@ -43,18 +45,18 @@ struct APIConstants {
     // MARK: - Game Modes
     
     enum GameMode: String {
-        case Arena = "arena"
-        case Custom = "custom"
-        case Warzone = "warzone"
+        case arena = "arena"
+        case custom = "custom"
+        case warzone = "warzone"
 
         static func gameMode(forInt i: Int) -> GameMode? {
             switch i {
             case 1:
-                return .Arena
+                return .arena
             case 3:
-                return .Custom
+                return .custom
             case 4:
-                return .Warzone
+                return .warzone
             default:
                 return nil
             }
@@ -62,40 +64,40 @@ struct APIConstants {
 
         var color: UIColor {
             switch self {
-            case .Arena:
-                return UIColor(haloColor: .ArenaAccent)
-            case .Custom:
-                return UIColor(haloColor: .CustomAccent)
-            case .Warzone:
-                return UIColor(haloColor: .WarzoneAccent)
+            case .arena:
+                return .arenaAccent
+            case .custom:
+                return .customAccent
+            case .warzone:
+                return .warzoneAccent
             }
         }
 
         var title: String {
             switch self {
-            case .Arena:
+            case .arena:
                 return "Arena"
-            case .Warzone:
+            case .warzone:
                 return "Warzone"
-            case .Custom:
+            case .custom:
                 return "Custom"
             }
         }
 
         static func multiplayerModes() -> String {
-            let arena = GameMode.Arena.rawValue
-            let custom = GameMode.Custom.rawValue
-            let warzone = GameMode.Warzone.rawValue
+            let arena = GameMode.arena.rawValue
+            let custom = GameMode.custom.rawValue
+            let warzone = GameMode.warzone.rawValue
             return "\(arena),\(custom),\(warzone)"
         }
 
         var image: UIImage {
             switch self {
-            case .Arena:
+            case .arena:
                 return UIImage(named: "fathom")!
-            case .Warzone:
+            case .warzone:
                 return UIImage(named: "skirmish")!
-            case .Custom:
+            case .custom:
                 return UIImage(named: "narrows")!
             }
         }
@@ -134,8 +136,8 @@ struct APIConstants {
     static let ProfileSpartanCrop = "crop"
     
     // MARK: - Base Path constructor
-    static func basePath(_ service: String) -> String {
-        return "\(service)/\(Halo5Title)/"
+    static func basePath(_ service: Service) -> String {
+        return "\(service.rawValue)/\(Halo5Title)/"
     }
     
     // MARK: Metadata Types
