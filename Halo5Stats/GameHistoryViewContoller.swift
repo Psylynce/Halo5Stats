@@ -8,8 +8,9 @@
 import UIKit
 import Foundation
 
-class GameHistoryViewController: UITableViewController, ParallaxScrollingTableView {
+class GameHistoryViewController: UIViewController, ParallaxScrollingTableView {
 
+    @IBOutlet var tableView: UITableView!
     @IBOutlet var refreshCustomView: UIView!
     @IBOutlet var loadingIndicator: LoadingIndicator!
     
@@ -35,7 +36,7 @@ class GameHistoryViewController: UITableViewController, ParallaxScrollingTableVi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        navigationItem.title = "Game History"
+        navigationController?.presentTransparentNavigationBar()
 
         if gamertagChanged {
             let top = CGPoint(x: 0, y: 0 - tableView.contentInset.top)
@@ -45,12 +46,19 @@ class GameHistoryViewController: UITableViewController, ParallaxScrollingTableVi
         }
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        navigationController?.hideTransparentNavigationBar()
+    }
+
     deinit {
         removeGamertagWatcher()
     }
     
     // MARK: - Private
 
+    private let refreshControl = UIRefreshControl()
     fileprivate var gamertagChanged: Bool = false
 
     fileprivate func setupBindAndFires() {
@@ -70,14 +78,18 @@ class GameHistoryViewController: UITableViewController, ParallaxScrollingTableVi
     }
 
     fileprivate func setupTableView() {
+        view.backgroundColor = .cinder
         tableView.separatorStyle = .none
         tableView.backgroundColor = .cinder
+        tableView.dataSource = self
+        tableView.delegate = self
+
         setupRefreshView()
-        refreshControl?.addTarget(self, action: #selector(refreshMatches), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(refreshMatches), for: .valueChanged)
     }
 
     fileprivate func setupRefreshView() {
-        guard let refreshControl = refreshControl else { return }
+        tableView.backgroundView = refreshControl
         refreshCustomView.frame = refreshControl.bounds
         refreshControl.addSubview(refreshCustomView)
         refreshCustomView.backgroundColor = UIColor.clear
@@ -94,17 +106,18 @@ class GameHistoryViewController: UITableViewController, ParallaxScrollingTableVi
         loadingIndicator.show()
         viewModel.fetchMatches(true) { [weak self] () in
             self?.loadingIndicator.hide()
-            self?.refreshControl?.endRefreshing()
+            self?.refreshControl.endRefreshing()
         }
     }
+}
 
-    // MARK: TableView Methods
+extension GameHistoryViewController: UITableViewDataSource {
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.numberOfMatches(forSection: section)
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let match = viewModel.match(for: indexPath)
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameHistoryCell", for: indexPath) as! GameHistoryCell
         cell.configure(match)
@@ -112,21 +125,24 @@ class GameHistoryViewController: UITableViewController, ParallaxScrollingTableVi
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let match = viewModel.match(for: indexPath)
         let vc = StoryboardScene.GameHistory.carnageReportViewController()
         vc.viewModel = CarnageReportViewModel(match: match)
 
         navigationController?.pushViewController(vc, animated: true)
     }
+}
 
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+extension GameHistoryViewController: UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? GameHistoryCell {
             cellImageOffset(tableView, cell: cell, indexPath: indexPath)
         }
     }
 
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150.0
     }
 }
@@ -143,7 +159,7 @@ extension GameHistoryViewController: GamertagWatcher {
 
 extension GameHistoryViewController {
 
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let indexPaths = tableView.indexPathsForVisibleRows {
             for indexPath in indexPaths {
                 if let cell = tableView.cellForRow(at: indexPath) as? GameHistoryCell {
