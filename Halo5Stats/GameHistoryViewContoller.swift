@@ -13,6 +13,14 @@ class GameHistoryViewController: UIViewController, ParallaxScrollingTableView {
     @IBOutlet var tableView: UITableView!
     @IBOutlet var refreshCustomView: UIView!
     @IBOutlet var loadingIndicator: LoadingIndicator!
+    @IBOutlet var headerView: GameHistoryHeaderView!
+    @IBOutlet var headerViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var noModesSelectedLabel: UILabel!
+
+    struct Layout {
+        static let maxHeaderHeight: CGFloat = 130.0
+        static let minHeaderHeight: CGFloat = 70.0
+    }
     
     var viewModel = GameHistoryViewModel()
     lazy var filterMatchesViewController = StoryboardScene.GameHistory.matchFilterViewController()
@@ -23,20 +31,15 @@ class GameHistoryViewController: UIViewController, ParallaxScrollingTableView {
         super.viewDidLoad()
 
         setupBindAndFires()
-        setupTableView()
-
-        // ATTENTION: This will be added back in a future update when I have more filters
-
-//        let filterButtonImage = UIImage(named: "Filter")?.imageWithRenderingMode(.AlwaysTemplate)
-//        let filterButton = UIBarButtonItem(image: filterButtonImage, style: .Plain, target: self, action: #selector(filterButtonTapped))
-//        filterButton.tintColor = .whiteSmoke
-//        navigationItem.rightBarButtonItem = filterButton
+        setup()
+        initializeHeader()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         navigationController?.presentTransparentNavigationBar()
+        navigationController?.setNavigationBarHidden(true, animated: false)
 
         if gamertagChanged {
             let top = CGPoint(x: 0, y: 0 - tableView.contentInset.top)
@@ -49,6 +52,7 @@ class GameHistoryViewController: UIViewController, ParallaxScrollingTableView {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
+        navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.hideTransparentNavigationBar()
     }
 
@@ -63,22 +67,17 @@ class GameHistoryViewController: UIViewController, ParallaxScrollingTableView {
 
     fileprivate func setupBindAndFires() {
         viewModel.matches.bindAndFire { [weak self] (matches) in
-            if let shouldInsert = self?.viewModel.shouldInsert, let indexPaths = self?.viewModel.indexPathsToInsert, let isFiltering = self?.viewModel.isFiltering.value, shouldInsert && !isFiltering {
+            if let shouldInsert = self?.viewModel.shouldInsert, let indexPaths = self?.viewModel.indexPathsToInsert, shouldInsert {
                 self?.tableView.insertRows(at: indexPaths as [IndexPath], with: .automatic)
             } else {
                 self?.tableView.reloadData()
             }
         }
-
-        viewModel.filteredMatches.bindAndFire { [weak self] (matches) in
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
     }
 
-    fileprivate func setupTableView() {
+    fileprivate func setup() {
         view.backgroundColor = .cinder
+
         tableView.separatorStyle = .none
         tableView.backgroundColor = .cinder
         tableView.dataSource = self
@@ -86,6 +85,14 @@ class GameHistoryViewController: UIViewController, ParallaxScrollingTableView {
 
         setupRefreshView()
         refreshControl.addTarget(self, action: #selector(refreshMatches), for: .valueChanged)
+
+        headerView.delegate = self
+        viewModel.gameModes = headerView.selectedGameModes
+
+        noModesSelectedLabel.font = UIFont.kelson(.Regular, size: 16.0)
+        noModesSelectedLabel.textColor = .whiteSmoke
+
+        updateViewForGameModes()
     }
 
     fileprivate func setupRefreshView() {
@@ -96,12 +103,6 @@ class GameHistoryViewController: UIViewController, ParallaxScrollingTableView {
         refreshControl.tintColor = UIColor.clear
     }
 
-//    @objc private func filterButtonTapped() {
-//        filterMatchesViewController.modalPresentationStyle = .OverFullScreen
-//        filterMatchesViewController.viewModel.delegate = viewModel
-//        presentViewController(filterMatchesViewController, animated: false) {}
-//    }
-
     @objc fileprivate func refreshMatches() {
         loadingIndicator.show()
         viewModel.fetchMatches(true) { [weak self] () in
@@ -109,6 +110,17 @@ class GameHistoryViewController: UIViewController, ParallaxScrollingTableView {
             self?.refreshControl.endRefreshing()
         }
     }
+
+    fileprivate func updateViewForGameModes() {
+        noModesSelectedLabel.isHidden = !viewModel.gameModes.isEmpty
+        tableView.isHidden = viewModel.gameModes.isEmpty
+    }
+
+    // MARK: - ScrollingHeaderController
+
+    var previousScrollOffset: CGFloat = 0.0
+    var maxHeaderHeight: CGFloat = Layout.maxHeaderHeight
+    var minHeaderHeight: CGFloat = Layout.minHeaderHeight
 }
 
 extension GameHistoryViewController: UITableViewDataSource {
@@ -145,19 +157,6 @@ extension GameHistoryViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150.0
     }
-}
-
-extension GameHistoryViewController: GamertagWatcher {
-
-    func defaultGamertagChanged(_ notification: Notification) {
-        viewModel = GameHistoryViewModel()
-        gamertagChanged = true
-        setupBindAndFires()
-        _ = navigationController?.popToRootViewController(animated: false)
-    }
-}
-
-extension GameHistoryViewController {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let indexPaths = tableView.indexPathsForVisibleRows {
@@ -168,5 +167,52 @@ extension GameHistoryViewController {
             }
         }
         viewModel.scrollViewDidScroll(scrollView)
+        animateHeaderScroll(with: scrollView)
+    }
+
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        scrollViewDidStop()
+    }
+
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            scrollViewDidStop()
+        }
+    }
+}
+
+extension GameHistoryViewController: ScrollingHeaderController {
+
+    var scrollView: UIScrollView! {
+        return tableView
+    }
+
+    var scrollingHeaderView: ScrollingHeaderView! {
+        return headerView
+    }
+}
+
+extension GameHistoryViewController: GamertagWatcher {
+
+    func defaultGamertagChanged(_ notification: Notification) {
+        viewModel = GameHistoryViewModel()
+        gamertagChanged = true
+        setupBindAndFires()
+        navigationController?.popToRootViewController(animated: false)
+    }
+}
+
+extension GameHistoryViewController: GameHistoryHeaderViewDelegate {
+
+    func gameModeButtonTapped() {
+        viewModel.gameModes = headerView.selectedGameModes
+
+        if viewModel.gameModes.isEmpty == false {
+            viewModel.fetchMatches(true) { [weak self] in
+                self?.updateViewForGameModes()
+            }
+        } else {
+            updateViewForGameModes()
+        }
     }
 }

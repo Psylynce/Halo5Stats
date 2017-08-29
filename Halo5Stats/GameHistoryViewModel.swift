@@ -10,10 +10,9 @@ import UIKit
 class GameHistoryViewModel {
 
     let gamertag: String?
+    var gameModes: [GameMode] = [.arena, .warzone, .custom]
 
     var matches: Dynamic<[MatchModel]> = Dynamic([])
-    var isFiltering: Dynamic<Bool> = Dynamic(false)
-    var filteredMatches: Dynamic<[MatchModel]> = Dynamic([])
     var isEndOfMatches: Bool = false
     var matchIds: [String] = []
 
@@ -33,6 +32,10 @@ class GameHistoryViewModel {
         let gamertag = GamertagManager.sharedManager.gamertagForUser()
         self.init(gamertag: gamertag)
     }
+
+    // MARK: - GameHistoryViewModel
+
+    // MARK: Internal
 
     func fetchMatches(_ isRefresh: Bool = false, completion: @escaping (Void) -> Void) {
         guard let gamertag = gamertag, let spartan = Spartan.spartan(gamertag), isFetching == false else {
@@ -90,28 +93,20 @@ class GameHistoryViewModel {
         let currentOffset = scrollView.contentOffset.y
         let percentage = Int(currentOffset * 100 / maxOffset)
 
-        if percentage >= 60 && !isFiltering.value {
+        if percentage >= 60 {
             fetchMatches() {}
         }
     }
 
     func numberOfMatches(forSection section: Int) -> Int {
-        if isFiltering.value {
-            return filteredMatches.value.count
-        } else {
-            return matches.value.count
-        }
+        return matches.value.count
     }
 
     func match(for indexPath: IndexPath) -> MatchModel {
-        if isFiltering.value {
-            return filteredMatches.value[indexPath.row]
-        } else {
-            return matches.value[indexPath.row]
-        }
+        return matches.value[indexPath.row]
     }
 
-    // MARK: - Private
+    // MARK: Private
 
     fileprivate func updateMapMetadata(_ completion: @escaping (Void) -> Void) {
         guard let queue = Container.resolve(OperationQueue.self) else { return }
@@ -125,8 +120,9 @@ class GameHistoryViewModel {
     fileprivate func requestMatches(_ gamertag: String, completion: @escaping (Void) -> Void) {
         guard let queue = Container.resolve(OperationQueue.self) else { return }
 
+        let modes = gameModes.map { $0.rawValue }.joined(separator: ",")
         let params = [APIConstants.MatchesStart : "\(currentStartIndex)",
-                      APIConstants.MatchesModes : GameMode.multiplayerModes()]
+                      APIConstants.MatchesModes : modes]
         let matchesRequest = MatchesRequest(gamertag: gamertag, parameters: params)
         let operation = APIRequestOperation(request: matchesRequest) { [weak self] () in
             if let data = matchesRequest.data {
@@ -150,34 +146,5 @@ class GameHistoryViewModel {
             guard let matchId = id[JSONKeys.Matches.matchId] as? String, !matchIds.contains(matchId) else { continue }
             matchIds.append(matchId)
         }
-    }
-}
-
-extension GameHistoryViewModel: MatchFilterDelegate {
-
-    func applyFilters(_ model: MatchFilterViewModel) {
-        isFiltering.value = model.isFiltered()
-        let allMatches = matches.value
-        var filteredMatches: [MatchModel] = []
-
-        if model.arenaSelected.value {
-            filteredMatches += allMatches.filter {
-                $0.gameMode == .arena
-            }
-        }
-
-        if model.warzoneSelected.value {
-            filteredMatches += allMatches.filter {
-                $0.gameMode == .warzone
-            }
-        }
-
-        if model.customsSelected.value {
-            filteredMatches += allMatches.filter {
-                $0.gameMode == .custom
-            }
-        }
-
-        self.filteredMatches.value = filteredMatches
     }
 }

@@ -170,6 +170,7 @@
 		5CBEC7AB1D3206E2005C7E34 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBEC7AA1D3206E2005C7E34 /* SectionHeaderView.swift */; };
 		5CD029CE1CED14CA009E8EFE /* MatchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD029CD1CED14CA009E8EFE /* MatchFilterViewController.swift */; };
 		5CD029D01CEE043B009E8EFE /* MatchFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD029CF1CEE043B009E8EFE /* MatchFilterViewModel.swift */; };
+		5CDBD33B1EA50D180001EE1A /* GameHistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBD33A1EA50D180001EE1A /* GameHistoryHeaderView.swift */; };
 		5CDE5DC51D401F1F0044D341 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDE5DC41D401F1F0044D341 /* LoadingIndicator.swift */; };
 		5CDE5DC71D4086A00044D341 /* DataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDE5DC61D4086A00044D341 /* DataLoader.swift */; };
 		5CDE5DE01D4490E50044D341 /* HaloIntro.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 5CDE5DDF1D4490E50044D341 /* HaloIntro.mp4 */; };
@@ -439,6 +440,7 @@
 		5CBEC7AA1D3206E2005C7E34 /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		5CD029CD1CED14CA009E8EFE /* MatchFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MatchFilterViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5CD029CF1CEE043B009E8EFE /* MatchFilterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchFilterViewModel.swift; sourceTree = "<group>"; };
+		5CDBD33A1EA50D180001EE1A /* GameHistoryHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHistoryHeaderView.swift; sourceTree = "<group>"; };
 		5CDE5DC41D401F1F0044D341 /* LoadingIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
 		5CDE5DC61D4086A00044D341 /* DataLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataLoader.swift; sourceTree = "<group>"; };
 		5CDE5DDF1D4490E50044D341 /* HaloIntro.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = HaloIntro.mp4; sourceTree = "<group>"; };
@@ -918,6 +920,7 @@
 				5CDE5DC41D401F1F0044D341 /* LoadingIndicator.swift */,
 				5CDE5DE11D44964E0044D341 /* CircleImageView.swift */,
 				5CEC51901E9FC7ED0084F31A /* SpartanStatsHeaderView.swift */,
+				5CDBD33A1EA50D180001EE1A /* GameHistoryHeaderView.swift */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -1422,6 +1425,7 @@
 				5C1B80A21E3A4A47005AC32B /* AlertOperation.swift in Sources */,
 				5C0EB7F11C83F57400F9DFE6 /* Season+CoreDataProperties.swift in Sources */,
 				5CEC51761E9E82010084F31A /* StartupManager.swift in Sources */,
+				5CDBD33B1EA50D180001EE1A /* GameHistoryHeaderView.swift in Sources */,
 				5C1B80AE1E3A4A47005AC32B /* NSOperation+Operations.swift in Sources */,
 				5C1B80A61E3A4A47005AC32B /* Dictionary+Operations.swift in Sources */,
 				5CDE5DF71D4AFA9D0044D341 /* KeyboardController.swift in Sources */,

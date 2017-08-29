@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="JAj-Wz-Swc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="JAj-Wz-Swc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -140,7 +140,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M85-FR-Hnx">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There are no game modes currently selected." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Wc-gN-4kB">
+                                <rect key="frame" x="30" y="313.5" width="315" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M85-FR-Hnx" customClass="GameHistoryHeaderView" customModule="H5S" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="aJV-2c-R3k">
@@ -149,14 +155,23 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVm-OE-KMN">
                                                 <rect key="frame" x="0.0" y="0.0" width="118.5" height="50"/>
                                                 <state key="normal" title="Arena"/>
+                                                <connections>
+                                                    <action selector="gameModeButtonTapped:" destination="M85-FR-Hnx" eventType="touchUpInside" id="tEi-Ck-oXN"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KSK-pJ-chL">
                                                 <rect key="frame" x="128.5" y="0.0" width="118" height="50"/>
                                                 <state key="normal" title="Warzone"/>
+                                                <connections>
+                                                    <action selector="gameModeButtonTapped:" destination="M85-FR-Hnx" eventType="touchUpInside" id="J52-Ex-Ow9"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbk-8E-LNd">
                                                 <rect key="frame" x="256.5" y="0.0" width="118.5" height="50"/>
                                                 <state key="normal" title="Custom"/>
+                                                <connections>
+                                                    <action selector="gameModeButtonTapped:" destination="M85-FR-Hnx" eventType="touchUpInside" id="X6Y-eV-Pwa"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -179,6 +194,12 @@
                                     <constraint firstItem="aJV-2c-R3k" firstAttribute="leading" secondItem="M85-FR-Hnx" secondAttribute="leading" id="cIv-wW-IHq"/>
                                     <constraint firstItem="ECK-Xy-UpF" firstAttribute="centerX" secondItem="M85-FR-Hnx" secondAttribute="centerX" id="peX-ix-ozj"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="arenaButton" destination="hVm-OE-KMN" id="HEg-La-img"/>
+                                    <outlet property="customGamesButton" destination="qbk-8E-LNd" id="yzU-9G-HJi"/>
+                                    <outlet property="titleLabel" destination="ECK-Xy-UpF" id="0p6-0B-qke"/>
+                                    <outlet property="warzoneButton" destination="KSK-pJ-chL" id="uXv-8O-9ar"/>
+                                </connections>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VQE-Dc-396">
                                 <rect key="frame" x="0.0" y="130" width="375" height="537"/>
@@ -286,17 +307,24 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="7Wc-gN-4kB" firstAttribute="leading" secondItem="M6R-0u-EvZ" secondAttribute="leading" constant="30" id="2rl-qq-hE2"/>
                             <constraint firstAttribute="trailing" secondItem="M85-FR-Hnx" secondAttribute="trailing" id="6jS-eX-lcW"/>
                             <constraint firstAttribute="trailing" secondItem="VQE-Dc-396" secondAttribute="trailing" id="7eQ-kT-0Oq"/>
                             <constraint firstItem="VQE-Dc-396" firstAttribute="top" secondItem="M85-FR-Hnx" secondAttribute="bottom" id="EER-EW-ruC"/>
                             <constraint firstItem="VQE-Dc-396" firstAttribute="leading" secondItem="M6R-0u-EvZ" secondAttribute="leading" id="J37-Oq-vCC"/>
+                            <constraint firstItem="7Wc-gN-4kB" firstAttribute="centerY" secondItem="M6R-0u-EvZ" secondAttribute="centerY" id="ag4-8X-INh"/>
+                            <constraint firstAttribute="trailing" secondItem="7Wc-gN-4kB" secondAttribute="trailing" constant="30" id="dmX-Nm-xtS"/>
                             <constraint firstItem="M85-FR-Hnx" firstAttribute="leading" secondItem="M6R-0u-EvZ" secondAttribute="leading" id="dqf-kH-A1I"/>
                             <constraint firstItem="M85-FR-Hnx" firstAttribute="top" secondItem="M6R-0u-EvZ" secondAttribute="top" id="gsj-g3-dJX"/>
                             <constraint firstItem="tWD-Dl-nCO" firstAttribute="top" secondItem="VQE-Dc-396" secondAttribute="bottom" id="k56-Qh-Ire"/>
+                            <constraint firstItem="7Wc-gN-4kB" firstAttribute="centerX" secondItem="M6R-0u-EvZ" secondAttribute="centerX" id="uCg-yb-cuh"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="headerView" destination="M85-FR-Hnx" id="Vo5-Ib-12x"/>
+                        <outlet property="headerViewHeightConstraint" destination="0MP-PP-eKS" id="eoj-m3-LqC"/>
                         <outlet property="loadingIndicator" destination="ey1-D4-FLI" id="oJe-lt-Vcg"/>
+                        <outlet property="noModesSelectedLabel" destination="7Wc-gN-4kB" id="jgY-pI-5gz"/>
                         <outlet property="refreshCustomView" destination="rbF-3u-9WD" id="QCR-uA-RyS"/>
                         <outlet property="tableView" destination="VQE-Dc-396" id="WDO-9o-7IU"/>
                     </connections>
