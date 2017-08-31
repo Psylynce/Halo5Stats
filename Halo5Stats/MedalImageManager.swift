@@ -53,8 +53,8 @@ class MedalImageManager {
         }
 
         let fetchOperation = Foundation.BlockOperation { [weak self] () -> Void in
-            let imageUrl = medal.imageUrl
-            let task = URLSession.halo5ConfiguredSession().dataTask(with: imageUrl, completionHandler: { (data, response, error) -> Void in
+            let urlRequest = Endpoint.haloRequest(with: medal.imageUrl)
+            let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, error) -> Void in
                 if let _ = error {
                     if let completion = completion {
                         completion(medal, self?.placeholderImage)

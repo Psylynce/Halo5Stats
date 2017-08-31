@@ -79,8 +79,8 @@ class CompareViewModel {
         let playerTwo = spartans.value[1]
 
         for section in sections {
-            guard let playerOneServiceRecord = playerOne.spartan.serviceRecord(forType: section.gameMode.rawValue) else { return }
-            guard let playerTwoServiceRecord = playerTwo.spartan.serviceRecord(forType: section.gameMode.rawValue) else { return }
+            guard let playerOneServiceRecord = playerOne.spartan.serviceRecord(forType: section.gameMode) else { return }
+            guard let playerTwoServiceRecord = playerTwo.spartan.serviceRecord(forType: section.gameMode) else { return }
             guard let playerOneModel = ServiceRecordModel.convert(serviceRecord: playerOneServiceRecord) else { return }
             guard let playerTwoModel = ServiceRecordModel.convert(serviceRecord: playerTwoServiceRecord) else { return }
             let compareModel = ComparableStatModel(playerOne: playerOneModel, playerTwo: playerTwoModel)

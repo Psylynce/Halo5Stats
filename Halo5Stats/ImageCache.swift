@@ -36,7 +36,8 @@ class ImageCache {
             return
         }
 
-        let task = URLSession.halo5ConfiguredSession().dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
+        let urlRequest = Endpoint.haloRequest(with: url)
+        let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: { [weak self] (data, response, error) in
             guard let data = data, error == nil else { return }
 
             if let response = response as? HTTPURLResponse, response.statusCode == 404 {

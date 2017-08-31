@@ -16,23 +16,6 @@ import Foundation
 */
 open class Operation: Foundation.Operation {
 
-    // use the KVO mechanism to indicate that changes to "state" affect other properties as well
-    class func keyPathsForValuesAffectingIsReady() -> Set<NSObject> {
-        return ["state" as NSObject]
-    }
-
-    class func keyPathsForValuesAffectingIsExecuting() -> Set<NSObject> {
-        return ["state" as NSObject]
-    }
-
-    class func keyPathsForValuesAffectingIsFinished() -> Set<NSObject> {
-        return ["state" as NSObject]
-    }
-
-    class func keyPathsForValuesAffectingIsCancelled() -> Set<NSObject> {
-        return ["state" as NSObject]
-    }
-
     // MARK: State Management
 
     fileprivate enum State: Int, Comparable {
@@ -65,6 +48,17 @@ open class Operation: Foundation.Operation {
 
         /// The `Operation` has been cancelled.
         case cancelled
+
+        func keyPathForKeyValueObserving() -> String? {
+            switch self {
+            case .ready:
+                return "isReady"
+            case .finished:
+                return "isFinished"
+            default:
+                return nil
+            }
+        }
     }
 
     /**
@@ -88,6 +82,12 @@ open class Operation: Foundation.Operation {
 
             willChangeValue(forKey: "state")
 
+            let newStateKeyPath = newState.keyPathForKeyValueObserving()
+
+            if let path = newStateKeyPath {
+                willChangeValue(forKey: path)
+            }
+
             switch (_state, newState) {
                 case (.cancelled, _):
                     break // cannot leave the cancelled state
@@ -96,6 +96,10 @@ open class Operation: Foundation.Operation {
                 default:
                     assert(_state != newState, "Performing invalid cyclic state transition.")
                     _state = newState
+            }
+
+            if let path = newStateKeyPath {
+                didChangeValue(forKey: path)
             }
 
             didChangeValue(forKey: "state")

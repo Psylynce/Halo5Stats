@@ -139,7 +139,6 @@
 		5C92C3461D51460D00E0D924 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92C3451D51460D00E0D924 /* ImageManager.swift */; };
 		5C960E751C55DC9500178AB1 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C960E741C55DC9500178AB1 /* Endpoint.swift */; };
 		5C960E791C57365B00178AB1 /* APIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C960E781C57365B00178AB1 /* APIConstants.swift */; };
-		5C960E7B1C59D54000178AB1 /* NSURLSessionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C960E7A1C59D54000178AB1 /* NSURLSessionExtension.swift */; };
 		5C960E8C1C5EEFFC00178AB1 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C960E8B1C5EEFFC00178AB1 /* PersistenceController.swift */; };
 		5C960E8F1C606F0D00178AB1 /* LoadObjectStoreOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C960E8E1C606F0D00178AB1 /* LoadObjectStoreOperation.swift */; };
 		5C960E911C60742000178AB1 /* InitializeObjectStoreOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C960E901C60742000178AB1 /* InitializeObjectStoreOperation.swift */; };
@@ -409,7 +408,6 @@
 		5C92C3451D51460D00E0D924 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		5C960E741C55DC9500178AB1 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		5C960E781C57365B00178AB1 /* APIConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIConstants.swift; sourceTree = "<group>"; };
-		5C960E7A1C59D54000178AB1 /* NSURLSessionExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionExtension.swift; sourceTree = "<group>"; };
 		5C960E8B1C5EEFFC00178AB1 /* PersistenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		5C960E8E1C606F0D00178AB1 /* LoadObjectStoreOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadObjectStoreOperation.swift; sourceTree = "<group>"; };
 		5C960E901C60742000178AB1 /* InitializeObjectStoreOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitializeObjectStoreOperation.swift; sourceTree = "<group>"; };
@@ -804,7 +802,6 @@
 				5C161BF91C8D2E6C00D4B946 /* CoreData */,
 				5C15AB071C309D81007F84DB /* NSCharacterSetExtension.swift */,
 				5C15AB091C309E00007F84DB /* StringExtension.swift */,
-				5C960E7A1C59D54000178AB1 /* NSURLSessionExtension.swift */,
 				5C3779C01C8FC70D00A9AFF5 /* NSNumber+Extensions.swift */,
 				5C54BAFD1C96609E00433689 /* NSDate+Extensions.swift */,
 				5CFC946F1CC2B33900BDD58E /* NSSet+Extensions.swift */,
@@ -1553,7 +1550,6 @@
 				5C04765D1DB68F22008B6706 /* WeaponsFilterViewController.swift in Sources */,
 				5CFC945E1CC17C9900BDD58E /* ApplicationViewModel.swift in Sources */,
 				5C38D87C1C93EF9D00BEECF5 /* MatchesRequest.swift in Sources */,
-				5C960E7B1C59D54000178AB1 /* NSURLSessionExtension.swift in Sources */,
 				5C960E9D1C65A05B00178AB1 /* APIRequestOperation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
