@@ -167,6 +167,8 @@
 		5CBEC7A71D3047EA005C7E34 /* MedalImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBEC7A61D3047EA005C7E34 /* MedalImageManager.swift */; };
 		5CBEC7A91D320673005C7E34 /* SectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CBEC7A81D320673005C7E34 /* SectionHeaderView.xib */; };
 		5CBEC7AB1D3206E2005C7E34 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CBEC7AA1D3206E2005C7E34 /* SectionHeaderView.swift */; };
+		5CC4CFE31F59C007002B9767 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CC4CFE21F59C007002B9767 /* StoreKit.framework */; };
+		5CC4CFE51F59C845002B9767 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CC4CFE41F59C845002B9767 /* UserNotifications.framework */; };
 		5CD029CE1CED14CA009E8EFE /* MatchFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD029CD1CED14CA009E8EFE /* MatchFilterViewController.swift */; };
 		5CD029D01CEE043B009E8EFE /* MatchFilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD029CF1CEE043B009E8EFE /* MatchFilterViewModel.swift */; };
 		5CDBD33B1EA50D180001EE1A /* GameHistoryHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CDBD33A1EA50D180001EE1A /* GameHistoryHeaderView.swift */; };
@@ -436,6 +438,8 @@
 		5CBEC7A61D3047EA005C7E34 /* MedalImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MedalImageManager.swift; sourceTree = "<group>"; };
 		5CBEC7A81D320673005C7E34 /* SectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SectionHeaderView.xib; sourceTree = "<group>"; };
 		5CBEC7AA1D3206E2005C7E34 /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
+		5CC4CFE21F59C007002B9767 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		5CC4CFE41F59C845002B9767 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		5CD029CD1CED14CA009E8EFE /* MatchFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MatchFilterViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		5CD029CF1CEE043B009E8EFE /* MatchFilterViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchFilterViewModel.swift; sourceTree = "<group>"; };
 		5CDBD33A1EA50D180001EE1A /* GameHistoryHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameHistoryHeaderView.swift; sourceTree = "<group>"; };
@@ -526,6 +530,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CC4CFE51F59C845002B9767 /* UserNotifications.framework in Frameworks */,
+				5CC4CFE31F59C007002B9767 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,6 +681,7 @@
 				5C2579721BF8FE3A008C5164 /* Halo5StatsTests */,
 				5C25797D1BF8FE3A008C5164 /* Halo5StatsUITests */,
 				5C2579591BF8FE3A008C5164 /* Products */,
+				5CC4CFE11F59C007002B9767 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1066,6 +1073,15 @@
 				5CDE5DF61D4AFA9D0044D341 /* KeyboardController.swift */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		5CC4CFE11F59C007002B9767 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5CC4CFE41F59C845002B9767 /* UserNotifications.framework */,
+				5CC4CFE21F59C007002B9767 /* StoreKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		5CEC51741E9E81AD0084F31A /* Horatio */ = {
@@ -1643,7 +1659,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1683,7 +1699,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1698,6 +1714,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Halo5Stats/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JustinPowell.Halo5Stats;
@@ -1714,6 +1731,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Halo5Stats/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.JustinPowell.Halo5Stats;

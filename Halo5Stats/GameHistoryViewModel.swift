@@ -17,7 +17,6 @@ class GameHistoryViewModel {
     var matchIds: [String] = []
 
     var currentStartIndex: Int = 0
-    var isFetching: Bool = false
     var shouldInsert: Bool = false
     var indexPathsToInsert: [IndexPath] = []
 
@@ -38,7 +37,7 @@ class GameHistoryViewModel {
     // MARK: Internal
 
     func fetchMatches(_ isRefresh: Bool = false, completion: @escaping (Void) -> Void) {
-        guard let gamertag = gamertag, let spartan = Spartan.spartan(gamertag), isFetching == false else {
+        guard let gamertag = gamertag, let spartan = Spartan.spartan(gamertag) else {
             completion()
             return
         }
@@ -47,12 +46,10 @@ class GameHistoryViewModel {
             currentStartIndex = 0
             matchIds = []
         }
-        isFetching = true
 
         requestMatches(gamertag) {
             DispatchQueue.main.async { [weak self] in
                 self?.updateMatches(forSpartan: spartan, isRefresh: isRefresh)
-                self?.isFetching = false
                 completion()
             }
         }

@@ -87,6 +87,7 @@ class GameHistoryViewController: UIViewController, ParallaxScrollingTableView {
         refreshControl.addTarget(self, action: #selector(refreshMatches), for: .valueChanged)
 
         headerView.delegate = self
+        headerView.clipsToBounds = true
         viewModel.gameModes = headerView.selectedGameModes
 
         noModesSelectedLabel.font = UIFont.kelson(.Regular, size: 16.0)
@@ -99,8 +100,8 @@ class GameHistoryViewController: UIViewController, ParallaxScrollingTableView {
         tableView.backgroundView = refreshControl
         refreshCustomView.frame = refreshControl.bounds
         refreshControl.addSubview(refreshCustomView)
-        refreshCustomView.backgroundColor = UIColor.clear
-        refreshControl.tintColor = UIColor.clear
+        refreshCustomView.backgroundColor = .clear
+        refreshControl.tintColor = .clear
     }
 
     @objc fileprivate func refreshMatches() {
@@ -114,6 +115,9 @@ class GameHistoryViewController: UIViewController, ParallaxScrollingTableView {
     fileprivate func updateViewForGameModes() {
         noModesSelectedLabel.isHidden = !viewModel.gameModes.isEmpty
         tableView.isHidden = viewModel.gameModes.isEmpty
+        if viewModel.gameModes.isEmpty {
+            expandHeader()
+        }
     }
 
     // MARK: - ScrollingHeaderController
@@ -210,6 +214,9 @@ extension GameHistoryViewController: GameHistoryHeaderViewDelegate {
         if viewModel.gameModes.isEmpty == false {
             viewModel.fetchMatches(true) { [weak self] in
                 self?.updateViewForGameModes()
+                if self?.viewModel.matches.value.isEmpty == false {
+                    self?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                }
             }
         } else {
             updateViewForGameModes()

@@ -78,14 +78,14 @@ extension ScrollingHeaderController where Self: UIViewController {
     }
 
     func scrollViewDidStop() {
-        if headerViewHeightConstraint.constant > midPoint {
-            expandHeader()
-        } else {
-            collapseHeader()
-        }
+//        if headerViewHeightConstraint.constant > midPoint {
+//            expandHeader()
+//        } else {
+//            collapseHeader()
+//        }
     }
 
-    private func collapseHeader() {
+    func collapseHeader() {
         self.headerViewHeightConstraint.constant = self.minHeaderHeight
 
         UIView.animate(withDuration: 0.2) {
@@ -94,7 +94,7 @@ extension ScrollingHeaderController where Self: UIViewController {
         }
     }
 
-    private func expandHeader() {
+    func expandHeader() {
         self.headerViewHeightConstraint.constant = self.maxHeaderHeight
 
         UIView.animate(withDuration: 0.2) {

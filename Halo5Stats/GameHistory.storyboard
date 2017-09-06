@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="JAj-Wz-Swc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="JAj-Wz-Swc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -149,26 +149,29 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M85-FR-Hnx" customClass="GameHistoryHeaderView" customModule="H5S" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="a15-Lj-JAX">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="130"/>
+                                    </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="aJV-2c-R3k">
                                         <rect key="frame" x="0.0" y="80" width="375" height="50"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVm-OE-KMN">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hVm-OE-KMN">
                                                 <rect key="frame" x="0.0" y="0.0" width="118.5" height="50"/>
-                                                <state key="normal" title="Arena"/>
+                                                <state key="normal" image="ArenaIcon"/>
                                                 <connections>
                                                     <action selector="gameModeButtonTapped:" destination="M85-FR-Hnx" eventType="touchUpInside" id="tEi-Ck-oXN"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KSK-pJ-chL">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KSK-pJ-chL">
                                                 <rect key="frame" x="128.5" y="0.0" width="118" height="50"/>
-                                                <state key="normal" title="Warzone"/>
+                                                <state key="normal" image="WarzoneIcon"/>
                                                 <connections>
                                                     <action selector="gameModeButtonTapped:" destination="M85-FR-Hnx" eventType="touchUpInside" id="J52-Ex-Ow9"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbk-8E-LNd">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbk-8E-LNd">
                                                 <rect key="frame" x="256.5" y="0.0" width="118.5" height="50"/>
-                                                <state key="normal" title="Custom"/>
+                                                <state key="normal" image="CustomsIcon"/>
                                                 <connections>
                                                     <action selector="gameModeButtonTapped:" destination="M85-FR-Hnx" eventType="touchUpInside" id="X6Y-eV-Pwa"/>
                                                 </connections>
@@ -189,15 +192,21 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="0MP-PP-eKS"/>
                                     <constraint firstAttribute="trailing" secondItem="aJV-2c-R3k" secondAttribute="trailing" id="1Bv-kX-ZHZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="a15-Lj-JAX" secondAttribute="bottom" id="2a7-LB-Ux2"/>
+                                    <constraint firstItem="a15-Lj-JAX" firstAttribute="top" secondItem="M85-FR-Hnx" secondAttribute="top" id="EFO-Jr-vek"/>
                                     <constraint firstItem="ECK-Xy-UpF" firstAttribute="top" secondItem="M85-FR-Hnx" secondAttribute="top" constant="35" id="EdZ-4L-isn"/>
+                                    <constraint firstItem="a15-Lj-JAX" firstAttribute="leading" secondItem="M85-FR-Hnx" secondAttribute="leading" id="FhJ-0K-tfg"/>
                                     <constraint firstAttribute="bottom" secondItem="aJV-2c-R3k" secondAttribute="bottom" id="QRL-PS-Eof"/>
                                     <constraint firstItem="aJV-2c-R3k" firstAttribute="leading" secondItem="M85-FR-Hnx" secondAttribute="leading" id="cIv-wW-IHq"/>
+                                    <constraint firstAttribute="trailing" secondItem="a15-Lj-JAX" secondAttribute="trailing" id="crm-xy-rin"/>
                                     <constraint firstItem="ECK-Xy-UpF" firstAttribute="centerX" secondItem="M85-FR-Hnx" secondAttribute="centerX" id="peX-ix-ozj"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="arenaButton" destination="hVm-OE-KMN" id="HEg-La-img"/>
+                                    <outlet property="backgroundImageView" destination="a15-Lj-JAX" id="wMx-7n-Ffc"/>
                                     <outlet property="customGamesButton" destination="qbk-8E-LNd" id="yzU-9G-HJi"/>
                                     <outlet property="titleLabel" destination="ECK-Xy-UpF" id="0p6-0B-qke"/>
+                                    <outlet property="titleLabelTopConstraint" destination="EdZ-4L-isn" id="F07-w1-IjQ"/>
                                     <outlet property="warzoneButton" destination="KSK-pJ-chL" id="uXv-8O-9ar"/>
                                 </connections>
                             </view>
@@ -350,7 +359,7 @@
                     </constraints>
                 </view>
             </objects>
-            <point key="canvasLocation" x="409" y="438"/>
+            <point key="canvasLocation" x="408.80000000000001" y="437.63118440779613"/>
         </scene>
         <!--Carnage Report View Controller-->
         <scene sceneID="OKB-y1-A7f">
@@ -942,4 +951,9 @@
             <point key="canvasLocation" x="1739" y="438"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ArenaIcon" width="559" height="445"/>
+        <image name="CustomsIcon" width="559" height="445"/>
+        <image name="WarzoneIcon" width="559" height="445"/>
+    </resources>
 </document>
