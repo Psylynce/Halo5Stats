@@ -48,7 +48,7 @@ open class URLSessionTaskOperation: Operation {
             task.removeObserver(self, forKeyPath: "state")
 
             if let error = task.error {
-                finish([error as Error])
+                finish([error])
             } else {
                 finish()
             }

@@ -59,6 +59,29 @@ open class Operation: Foundation.Operation {
                 return nil
             }
         }
+
+        func canTransitionToState(_ target: State) -> Bool {
+            switch (self, target) {
+            case (.initialized, .pending):
+                return true
+            case (.pending, .evaluatingConditions):
+                return true
+            case (.pending, .finishing):
+                return true
+            case (.evaluatingConditions, .ready):
+                return true
+            case (.ready, .executing):
+                return true
+            case (.ready, .finishing):
+                return true
+            case (.executing, .finishing):
+                return true
+            case (.finishing, .finished):
+                return true
+            default:
+                return false
+            }
+        }
     }
 
     /**
@@ -72,14 +95,18 @@ open class Operation: Foundation.Operation {
     /// Private storage for the `state` property that will be KVO observed.
     fileprivate var _state = State.initialized
 
+    /// A lock to guard reads and writes to the `_state` property
+    fileprivate var stateLock = NSLock()
+
     fileprivate var state: State {
         get {
-            return _state
+            return stateLock.withCriticalScope {
+                _state
+            }
         }
 
         set(newState) {
             // Manually fire the KVO notifications for state change, since this is "private".
-
             willChangeValue(forKey: "state")
 
             let newStateKeyPath = newState.keyPathForKeyValueObserving()
@@ -88,14 +115,12 @@ open class Operation: Foundation.Operation {
                 willChangeValue(forKey: path)
             }
 
-            switch (_state, newState) {
-                case (.cancelled, _):
-                    break // cannot leave the cancelled state
-                case (.finished, _):
-                    break // cannot leave the finished state
-                default:
-                    assert(_state != newState, "Performing invalid cyclic state transition.")
-                    _state = newState
+            stateLock.withCriticalScope {
+                guard _state != .finished else { return }
+
+                assert(_state.canTransitionToState(newState), "Invalid state transition")
+
+                _state = newState
             }
 
             if let path = newStateKeyPath {
@@ -109,18 +134,23 @@ open class Operation: Foundation.Operation {
     // Here is where we extend our definition of "readiness".
     override open var isReady: Bool {
         switch state {
-            case .pending:
-                if super.isReady {
-                    evaluateConditions()
-                }
+        case .initialized:
+            return isCancelled
 
-                return false
+        case .pending:
+            guard !isCancelled else { return true }
 
-            case .ready:
-                return super.isReady
+            if super.isReady {
+                evaluateConditions()
+            }
 
-            default:
-                return false
+            return false
+
+        case .ready:
+            return super.isReady || isCancelled
+
+        default:
+            return false
         }
     }
 
@@ -135,6 +165,8 @@ open class Operation: Foundation.Operation {
             qualityOfService = newValue ? .userInitiated : .default
         }
     }
+
+    fileprivate(set) open var failed = false
 
     override open var isExecuting: Bool {
         return state == .executing
@@ -154,13 +186,8 @@ open class Operation: Foundation.Operation {
         state = .evaluatingConditions
 
         OperationConditionEvaluator.evaluate(conditions, operation: self) { failures in
-            if failures.isEmpty {
-                // If there were no errors, we may proceed.
-                self.state = .ready
-            } else {
-                self.state = .cancelled
-                self.finish(failures)
-            }
+            self._internalErrors.append(contentsOf: failures)
+            self.state = .ready
         }
     }
 
@@ -191,19 +218,31 @@ open class Operation: Foundation.Operation {
     // MARK: Execution and Cancellation
 
     override final public func start() {
-        if let name = self.name {
-            print(name + " started")
+        super.start()
+
+        if name == nil {
+            name = String(describing: self)
         }
 
+        if isCancelled {
+            finish()
+        }
+    }
+
+    override final public func main() {
         assert(state == .ready, "This operation must be performed on an operation queue.")
 
-        state = .executing
+        if _internalErrors.isEmpty && !isCancelled {
+            state = .executing
 
-        for observer in observers {
-            observer.operationDidStart(self)
+            for observer in observers {
+                observer.operationDidStart(self)
+            }
+
+            execute()
+        } else {
+            finish()
         }
-
-        execute()
     }
 
     /**
@@ -223,16 +262,13 @@ open class Operation: Foundation.Operation {
     }
 
     fileprivate var _internalErrors = [Error]()
-    override open func cancel() {
-        cancelWithError()
-    }
 
     open func cancelWithError(_ error: Error? = nil) {
         if let error = error {
             _internalErrors.append(error)
         }
 
-        state = .cancelled
+        cancel()
     }
 
     final func produceOperation(_ operation: Foundation.Operation) {
@@ -270,6 +306,8 @@ open class Operation: Foundation.Operation {
             state = .finishing
 
             let combinedErrors = _internalErrors + errors
+            failed = !combinedErrors.isEmpty
+
             finished(combinedErrors)
 
             for observer in observers {
