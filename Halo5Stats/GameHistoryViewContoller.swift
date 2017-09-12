@@ -46,6 +46,7 @@ class GameHistoryViewController: UIViewController, ParallaxScrollingTableView {
             tableView.setContentOffset(top, animated: false)
             tableView.reloadData()
             gamertagChanged = false
+            setupBindAndFires()
         }
     }
 
@@ -201,7 +202,6 @@ extension GameHistoryViewController: GamertagWatcher {
     func defaultGamertagChanged(_ notification: Notification) {
         viewModel = GameHistoryViewModel()
         gamertagChanged = true
-        setupBindAndFires()
         navigationController?.popToRootViewController(animated: false)
     }
 }
