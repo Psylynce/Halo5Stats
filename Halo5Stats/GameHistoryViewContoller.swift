@@ -148,6 +148,7 @@ extension GameHistoryViewController: UITableViewDataSource {
         vc.viewModel = CarnageReportViewModel(match: match)
 
         navigationController?.pushViewController(vc, animated: true)
+        AppReviewManager.shared.updateCount(for: .matchViewed)
     }
 }
 
