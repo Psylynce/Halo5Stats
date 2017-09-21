@@ -44,7 +44,7 @@ class PlayerComparisonViewController: UIViewController {
     fileprivate let gamertagValidator = GamertagValidator()
 
     fileprivate func setupController(shouldSetupSearch setupSearch: Bool = true) {
-        title = "Spartans"
+        navigationItem.title = "Spartans"
         gamertagValidator.viewController = self
         spartansViewController.viewController = self
 
