@@ -8,6 +8,10 @@
 import UIKit
 
 class TabBarController: UITabBarController, UITabBarControllerDelegate {
+
+    private struct Layout {
+        static let imageInsets = UIEdgeInsets(top: 5.5, left: 0, bottom: -5.5, right: 0)
+    }
     
     // MARK: - UIViewContoller
 
@@ -35,23 +39,27 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         let statsImage = UIImage(named: "SR")?.withRenderingMode(.alwaysTemplate)
         let statsNC = UINavigationController(rootViewController: playerStatsParentViewController)
         playerStatsParentViewController.addGamertagWatcher()
-        statsNC.tabBarItem = UITabBarItem(title: "Stats", image: statsImage, selectedImage: nil)
+        statsNC.tabBarItem = UITabBarItem(title: nil, image: statsImage, selectedImage: nil)
 
         let historyImage = UIImage(named: "History")?.withRenderingMode(.alwaysTemplate)
         let gameHistoryNC = UINavigationController(rootViewController: gameHistoryViewController)
         gameHistoryViewController.addGamertagWatcher()
-        gameHistoryNC.tabBarItem = UITabBarItem(title: "History", image: historyImage, selectedImage: nil)
+        gameHistoryNC.tabBarItem = UITabBarItem(title: nil, image: historyImage, selectedImage: nil)
 
         let compareImage = UIImage(named: "Compare")?.withRenderingMode(.alwaysTemplate)
         let comparisonNC = UINavigationController(rootViewController: playerComparisonViewController)
         playerComparisonViewController.addGamertagWatcher()
-        comparisonNC.tabBarItem = UITabBarItem(title: "Compare", image: compareImage, selectedImage: nil)
+        comparisonNC.tabBarItem = UITabBarItem(title: nil, image: compareImage, selectedImage: nil)
 
         let settingsImage = UIImage(named: "Settings")?.withRenderingMode(.alwaysTemplate)
         let settingsNC = UINavigationController(rootViewController: settingsViewController)
-        settingsNC.tabBarItem = UITabBarItem(title: "Settings", image: settingsImage, selectedImage: nil)
+        settingsNC.tabBarItem = UITabBarItem(title: nil, image: settingsImage, selectedImage: nil)
+
+        let controllers = [statsNC, gameHistoryNC, comparisonNC, settingsNC]
+
+        controllers.forEach { $0.tabBarItem.imageInsets = Layout.imageInsets }
         
-        setViewControllers([statsNC, gameHistoryNC, comparisonNC, settingsNC], animated: false)
+        setViewControllers(controllers, animated: false)
     }
     
     fileprivate func styleTabBar() {
