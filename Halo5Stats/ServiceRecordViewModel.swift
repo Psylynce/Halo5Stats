@@ -68,6 +68,12 @@ class ServiceRecordViewModel {
     init(gameMode: GameMode, gamertag: String?) {
         self.gameMode = gameMode
         self.gamertag = gamertag
+
+        // Make this a method on the service record model
+        if let gamertag = gamertag, let spartan = Spartan.spartan(gamertag), let cachedRecord = spartan.serviceRecord(forType: gameMode), let cachedRecordModel = ServiceRecordModel.convert(serviceRecord: cachedRecord) {
+            serviceRecord.value = [cachedRecordModel]
+        }
+
         fetchServiceRecord(force: false) {}
     }
 
@@ -112,7 +118,7 @@ class ServiceRecordViewModel {
     // MARK: - Private
 
     fileprivate func setRecord(forSpartan spartan: Spartan) {
-        guard let record = spartan.serviceRecord(forType: gameMode.rawValue), let convertedRecord = ServiceRecordModel.convert(serviceRecord: record) else { return }
+        guard let record = spartan.serviceRecord(forType: gameMode), let convertedRecord = ServiceRecordModel.convert(serviceRecord: record) else { return }
         DispatchQueue.main.async { [weak self] in
             self?.serviceRecord.value = [convertedRecord]
             self?.setupSections()

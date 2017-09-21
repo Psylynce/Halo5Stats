@@ -23,11 +23,11 @@ class Spartan: NSManagedObject {
         return nil
     }
 
-    func serviceRecord(forType type: String) -> ServiceRecord? {
+    func serviceRecord(forType type: GameMode) -> ServiceRecord? {
         guard let records = serviceRecords?.allObjects as? [ServiceRecord], records.count != 0 else { return nil}
 
         for record in records {
-            if record.type == type {
+            if record.type == type.rawValue {
                 return record
             }
         }

@@ -63,7 +63,7 @@ class ServiceRecord: NSManagedObject {
                 continue
             }
 
-            if let record = spartan.serviceRecord(forType: type.rawValue) {
+            if let record = spartan.serviceRecord(forType: type) {
                 record.update(withData: stats as AnyObject, context: context)
                 record.spartanRank = serviceRecord[JSONKeys.ServiceRecord.spartanRank] as? Int as NSNumber?
             } else {

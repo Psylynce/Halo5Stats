@@ -37,6 +37,7 @@ class ComparisonTableViewController: UIViewController {
 
         updateAppearance()
         navigationController?.presentTransparentNavigationBar()
+        AppReviewManager.shared.updateCount(for: .compareViewed)
     }
 
     override func viewWillDisappear(_ animated: Bool) {

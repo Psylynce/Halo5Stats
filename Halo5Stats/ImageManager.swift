@@ -65,7 +65,8 @@ class ImageManager {
 
         let fetchOperation = Foundation.BlockOperation { [weak self] () -> Void in
             let imageUrl = self?.style == .small ? model.imageURL : (model.largeImageURL ?? model.imageURL)
-            let task = URLSession.halo5ConfiguredSession().dataTask(with: imageUrl, completionHandler: { (data, response, error) -> Void in
+            let urlRequest = Endpoint.haloRequest(with: imageUrl)
+            let task = URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, error) -> Void in
                 if let _ = error {
                     if let completion = completion {
                         completion(model, model.placeholderImage)

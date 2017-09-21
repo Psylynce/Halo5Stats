@@ -9,26 +9,18 @@ import UIKit
 
 class SettingsViewModel {
 
-    struct K {
-        static let appStoreUrlKey = "appStoreUrl"
-        static let appId = "1149670664"
-    }
-
     enum Row {
         case changeDefault
-        case review
 
         var name: String {
             switch self {
             case .changeDefault:
                 return "Change Default Gamertag"
-            case .review:
-                return "Review H5S"
             }
         }
     }
 
-    var rows: [Row] = [.changeDefault, .review]
+    var rows: [Row] = [.changeDefault]
 
     var legalText: String {
         let myName = "Justin Powell"
@@ -43,57 +35,11 @@ class SettingsViewModel {
         return finalText
     }
 
-    var appReviewUrl: URL? {
-        guard let urlString = appStoreUrlString else { return nil }
-        return URL(string: urlString)
-    }
-
     var version: String? {
         if let info = Bundle.main.infoDictionary, let version = info["CFBundleShortVersionString"] {
             return "v \(version)"
         } else {
             return nil
-        }
-    }
-
-    init() {
-        updateAppStoreUrl()
-    }
-
-    fileprivate var appStoreUrlString: String? {
-        get {
-            return UserDefaults.standard.string(forKey: K.appStoreUrlKey) ?? "https://itunes.apple.com/app/id\(K.appId)"
-        }
-        set {
-            if newValue != appStoreUrlString {
-                UserDefaults.standard.set(newValue, forKey: K.appStoreUrlKey)
-                UserDefaults.standard.synchronize()
-            }
-        }
-    }
-
-    fileprivate func updateAppStoreUrl() {
-        guard let url = URL(string: "https://raw.githubusercontent.com/Psylynce/Halo5Stats/develop/config.json") else { return }
-
-        let task = URLSession.shared.dataTask(with: url, completionHandler: { [weak self] (data, response, error) in
-            guard let data = data, error == nil else { return }
-
-            do {
-                let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: AnyObject]
-                self?.parseConfig(json)
-            } catch {
-                return
-            }
-        }) 
-
-        task.resume()
-    }
-
-    fileprivate func parseConfig(_ json: [String: AnyObject]?) {
-        guard let json = json else { return }
-
-        if let urlValue = json[K.appStoreUrlKey] as? String {
-            appStoreUrlString = urlValue
         }
     }
 }

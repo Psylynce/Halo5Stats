@@ -70,4 +70,13 @@ class Endpoint {
     func url(withSubstitutions substitutions: [String:String]) -> URL {
         return url(withSubstitutions: substitutions, parameters: parameters)
     }
+
+    static func haloRequest(with url: URL) -> URLRequest {
+        var urlRequest = URLRequest(url: url)
+        if let key = KeyManager.sharedManager.apiKey {
+            urlRequest.allHTTPHeaderFields = [APIConstants.KeyHeader : key]
+        }
+
+        return urlRequest
+    }
 }

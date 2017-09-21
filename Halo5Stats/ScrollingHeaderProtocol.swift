@@ -33,20 +33,14 @@ extension ScrollingHeaderController where Self: UIViewController {
         return minHeaderHeight + (range / 2.0)
     }
 
-    var openAmount: CGFloat {
-        return headerViewHeightConstraint.constant - minHeaderHeight
-    }
-
-    var percentage: CGFloat {
-        return openAmount / range
-    }
-
     func initializeHeader() {
         headerViewHeightConstraint.constant = maxHeaderHeight
         updateHeader()
     }
 
     func updateHeader() {
+        let openAmount = headerViewHeightConstraint.constant - minHeaderHeight
+        let percentage = openAmount / range
         scrollingHeaderView.animateElements(scrollPercentage: percentage, openAmount: openAmount)
     }
 
@@ -84,28 +78,26 @@ extension ScrollingHeaderController where Self: UIViewController {
     }
 
     func scrollViewDidStop() {
-        if headerViewHeightConstraint.constant > midPoint {
-            expandHeader()
-        } else {
-            collapseHeader()
-        }
+//        if headerViewHeightConstraint.constant > midPoint {
+//            expandHeader()
+//        } else {
+//            collapseHeader()
+//        }
     }
 
-    private func collapseHeader() {
-        view.layoutIfNeeded()
+    func collapseHeader() {
+        self.headerViewHeightConstraint.constant = self.minHeaderHeight
 
         UIView.animate(withDuration: 0.2) {
-            self.headerViewHeightConstraint.constant = self.minHeaderHeight
             self.updateHeader()
             self.view.layoutIfNeeded()
         }
     }
 
-    private func expandHeader() {
-        view.layoutIfNeeded()
+    func expandHeader() {
+        self.headerViewHeightConstraint.constant = self.maxHeaderHeight
 
         UIView.animate(withDuration: 0.2) {
-            self.headerViewHeightConstraint.constant = self.maxHeaderHeight
             self.updateHeader()
             self.view.layoutIfNeeded()
         }

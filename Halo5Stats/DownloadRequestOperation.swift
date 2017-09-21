@@ -16,15 +16,17 @@ class DownloadRequestOperation: GroupOperation {
         self.cacheFile = cacheFile
         super.init(operations: [])
         name = "Downloading \(request.name)"
-        
-        let url = request.url
-        let task = URLSession.halo5ConfiguredSession().downloadTask(with: url) { (url, response, error) in
-            self.downloadFinished(url, response: response, error: error)
+
+        let urlRequest = Endpoint.haloRequest(with: request.url)
+
+        let task = URLSession.shared.downloadTask(with: urlRequest) { [weak self] (url, response, error) in
+            guard let strongSelf = self else { return }
+            strongSelf.downloadFinished(url, response: response, error: error)
         }
-        
+
         let taskOperation = URLSessionTaskOperation(task: task)
         
-        let reachabilityCondition = ReachabilityCondition(host: url)
+        let reachabilityCondition = ReachabilityCondition(host: request.url)
         taskOperation.addCondition(reachabilityCondition)
         
         let networkObserver = NetworkObserver()
@@ -53,5 +55,4 @@ class DownloadRequestOperation: GroupOperation {
             // Do nothing, and the operation will automatically finish.
         }
     }
-
 }
