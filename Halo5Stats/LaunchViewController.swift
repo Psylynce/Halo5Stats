@@ -165,7 +165,7 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
         let text = textField.text ?? ""
         let possibleNewText = text.replacingCharacters(in: range.rangeForString(text), with: string)
         
-        let lengthIsValid = possibleNewText.characters.count <= GamertagManager.K.maxGamertagLength
+        let lengthIsValid = possibleNewText.count <= GamertagManager.K.maxGamertagLength
         let charactersAreValid = gamertagManager.containsGamertagCharacters(possibleNewText) || possibleNewText.isEmpty
         
         return lengthIsValid && charactersAreValid

@@ -46,7 +46,7 @@ class GamertagManager {
     func gamertagExists() -> Bool {
         guard let gamertag = gamertagForUser() else { return false }
 
-        return gamertag.characters.count > 0
+        return gamertag.isEmpty == false
     }
     
     func errorMessage() -> (title: String, message: String) {
@@ -87,10 +87,10 @@ class GamertagManager {
     // MARK: Private
     
     fileprivate func areBeginningAndEndValid(_ gamertag: String) -> Bool {
-        guard let first = gamertag.first(), let last = gamertag.last() else { return false }
-        
+        guard let first = gamertag.first, let last = gamertag.last else { return false }
+
         let numericCharacterSet = CharacterSet.numericCharacterSet()
-        let beginsWithNonNumber = first.rangeOfCharacter(from: numericCharacterSet) == nil
+        let beginsWithNonNumber = String(first).rangeOfCharacter(from: numericCharacterSet) == nil
         
         let doesNotBeginWithSpace = first != " "
         let doesNotEndWithSpace = last != " "

@@ -29,7 +29,7 @@ class CarnageReportViewModel {
     fileprivate func convert(_ reports: [CarnageReport]) {
         guard !reports.isEmpty else { return }
 
-        let newReports = reports.flatMap { MatchPlayerModel.convert($0) }
+        let newReports = reports.compactMap { MatchPlayerModel.convert($0) }
         var sortedPlayers = newReports.sorted { $0.rank < $1.rank }
         
         if match.isTeamGame {

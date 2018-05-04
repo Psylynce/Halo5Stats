@@ -60,7 +60,7 @@ class GameHistoryViewModel {
 
         let newMatchIds = Array(matchIds[currentStartIndex ..< matchIds.count])
         let fetchedMatches = Match.sortedMatches(withIdentifiers: newMatchIds, in: controller.managedObjectContext)
-        let newMatches = fetchedMatches.flatMap { MatchModel.convert($0) }
+        let newMatches = fetchedMatches.compactMap { MatchModel.convert($0) }
 
         currentStartIndex = matchIds.count
         if isRefresh {
