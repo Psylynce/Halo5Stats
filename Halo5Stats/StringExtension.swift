@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension String: Collection {
+extension String {
     
     func first() -> String? {
         if isEmpty { return nil }

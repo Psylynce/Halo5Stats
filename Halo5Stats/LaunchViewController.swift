@@ -82,7 +82,7 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
         metadataLabel.textColor = .whiteSmoke
         metadataLabel.alpha = 0
 
-        let attributes: [String : AnyObject]? = [NSForegroundColorAttributeName : UIColor.whiteSmoke.withAlphaComponent(0.6), NSFontAttributeName : UIFont.kelson(.Regular, size: 14)! ]
+        let attributes: [NSAttributedStringKey : Any] = [NSAttributedStringKey.foregroundColor : UIColor.whiteSmoke.withAlphaComponent(0.6), NSAttributedStringKey.font : UIFont.kelson(.Regular, size: 14)!]
         let placeholder = NSAttributedString(string: "Enter Gamertag", attributes: attributes)
         textField.attributedPlaceholder = placeholder
         textField.delegate = self
@@ -178,7 +178,7 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
     
     // MARK: - Actions
     
-    func launchButtonTapped(_ sender: UIButton) {
+    @objc func launchButtonTapped(_ sender: UIButton) {
         guard let gamertag = textField.text else { return }
         view.endEditing(true)
         showIndicator(animate: true)

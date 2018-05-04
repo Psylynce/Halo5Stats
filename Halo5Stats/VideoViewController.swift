@@ -77,7 +77,7 @@ class VideoViewController: UIViewController {
         let playerLayer = AVPlayerLayer(player: player)
 
         playerLayer.frame = view.frame
-        playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
 
         return playerLayer
     }

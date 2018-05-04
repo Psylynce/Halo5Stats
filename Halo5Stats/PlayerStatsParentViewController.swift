@@ -11,6 +11,11 @@ import Foundation
 class PlayerStatsParentViewController: UIViewController {
 
     @IBOutlet var headerView: SpartanStatsHeaderView!
+    @IBOutlet weak var containerView: UIView! {
+        didSet {
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
     @IBOutlet var spartanImageViewTopConstraint: NSLayoutConstraint!
     @IBOutlet var headerViewHeightConstraint: NSLayoutConstraint!
 

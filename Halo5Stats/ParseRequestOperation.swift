@@ -42,6 +42,7 @@ class ParseRequestOperation: Operation {
         }
         catch let jsonError {
             finishWithError(jsonError)
+            print(jsonError)
         }
     }
     

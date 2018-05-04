@@ -68,7 +68,7 @@ class MedalDetailViewController: UIViewController {
         let difficultyRange = nsText.range(of: difficulty)
         let countRange = nsText.range(of: count)
         let font = UIFont.kelson(.Light, size: 14) ?? UIFont.systemFont(ofSize: 14)
-        let boldAttributes = [NSFontAttributeName : font]
+        let boldAttributes = [NSAttributedStringKey.font : font]
 
         let final = NSMutableAttributedString(string: finalText)
         final.addAttributes(boldAttributes, range: classificationRange)
@@ -78,7 +78,7 @@ class MedalDetailViewController: UIViewController {
         return final
     }
 
-    fileprivate func animateViews(open: Bool, completion: ((Void) -> Void)?) {
+    fileprivate func animateViews(open: Bool, completion: (() -> Void)?) {
         if open {
             animateOpen()
         } else {
@@ -98,7 +98,7 @@ class MedalDetailViewController: UIViewController {
             }, completion: nil)
     }
 
-    fileprivate func animateClose(_ completion: ((Void) -> Void)?) {
+    fileprivate func animateClose(_ completion: (() -> Void)?) {
         let frame = openingFrame
 
         UIView.animate(withDuration: 0.2, delay: 0.2, options: UIViewAnimationOptions(), animations: { [weak self] in

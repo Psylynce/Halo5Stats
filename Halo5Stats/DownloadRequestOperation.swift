@@ -37,13 +37,14 @@ class DownloadRequestOperation: GroupOperation {
     
     func downloadFinished(_ url: URL?, response: URLResponse?, error: Error?) {
         if let localURL = url {
+            let manager = Foundation.FileManager.default
             do {
-                try Foundation.FileManager.default.removeItem(at: cacheFile)
+                try manager.removeItem(at: cacheFile)
             }
             catch { }
             
             do {
-                try Foundation.FileManager.default.moveItem(at: localURL, to: cacheFile)
+                try manager.moveItem(at: localURL, to: cacheFile)
             }
             catch let error {
                 aggregateError(error)

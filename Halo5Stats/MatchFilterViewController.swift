@@ -159,7 +159,7 @@ class MatchFilterViewController: UIViewController {
         }) 
     }
 
-    fileprivate func closeAnimation(_ completion: @escaping (Void) -> Void) {
+    fileprivate func closeAnimation(_ completion: (() -> Void)?) {
         initialConstraintValues()
         UIView.animate(withDuration: 0.3, animations: {
             [weak self] in
@@ -167,7 +167,7 @@ class MatchFilterViewController: UIViewController {
             self?.view.layoutIfNeeded()
             }, completion: { (completed) in
                 if completed {
-                    completion()
+                    completion?()
                 }
         }) 
     }

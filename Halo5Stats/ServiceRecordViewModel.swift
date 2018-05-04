@@ -77,7 +77,7 @@ class ServiceRecordViewModel {
         fetchServiceRecord(force: false) {}
     }
 
-    func fetchServiceRecord(force: Bool, completion: @escaping (Void) -> Void) {
+    func fetchServiceRecord(force: Bool, completion: @escaping () -> Void) {
         requestServiceRecord(force) {
             completion()
         }
@@ -125,7 +125,7 @@ class ServiceRecordViewModel {
         }
     }
 
-    fileprivate func requestServiceRecord(_ force: Bool, completion: @escaping (Void) -> Void) {
+    fileprivate func requestServiceRecord(_ force: Bool, completion: @escaping () -> Void) {
         guard let queue = Container.resolve(OperationQueue.self) else { return }
         guard let gamertag = self.gamertag, let spartan = Spartan.spartan(gamertag) else { return }
 

@@ -12,7 +12,7 @@ class ConstraintMaker: NSObject {
     // MARK: - Static
     
     let make = ConstraintMaker()
-    let makeGreater = ConstraintMaker(relation: .greaterThanOrEqual, priority: UILayoutPriorityRequired, multiplier: 1.0)
+    let makeGreater = ConstraintMaker(relation: .greaterThanOrEqual, priority: UILayoutPriority.required, multiplier: 1.0)
     
     // MARK: - Parameters
     
@@ -29,7 +29,7 @@ class ConstraintMaker: NSObject {
     }
     
     convenience override init() {
-        self.init(relation: .equal, priority: UILayoutPriorityRequired, multiplier: 1.0)
+        self.init(relation: .equal, priority: UILayoutPriority.required, multiplier: 1.0)
     }
     
     // MARK: Generator

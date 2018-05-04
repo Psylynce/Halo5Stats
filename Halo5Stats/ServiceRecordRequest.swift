@@ -25,7 +25,7 @@ struct ServiceRecordRequest: RequestProtocol {
     // MARK: RequestProtocol
     
     var name: String {
-        return "\(gameMode.rawValue)_\(gamertagsString)_ServiceRecord"
+        return "\(gamertagsString)_ServiceRecord_\(gameMode.rawValue)"
     }
     
     var url: URL {
@@ -38,7 +38,7 @@ struct ServiceRecordRequest: RequestProtocol {
     }
     
     var cacheKey: String {
-        return "\(gamertagsString)_\(gameMode.rawValue)_serviceRecord"
+        return "\(gamertagsString)_\(gameMode.rawValue)_ServiceRecord"
     }
 
     var jsonKey: String {
@@ -52,7 +52,7 @@ struct ServiceRecordRequest: RequestProtocol {
     fileprivate static func parseServiceRecord() -> ((_ name: String, _ context: NSManagedObjectContext, _ data: [String : AnyObject]) -> Void) {
         func parse(_ name: String, context: NSManagedObjectContext, data: [String : AnyObject]) -> Void {
             let nameComponents = name.components(separatedBy: "_")
-            guard let gameMode = APIConstants.GameMode(rawValue: nameComponents[0]) else {
+            guard let mode = nameComponents.last, let gameMode = APIConstants.GameMode(rawValue: mode) else {
                 print("Something went wrong!")
                 return
             }

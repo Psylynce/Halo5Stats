@@ -49,17 +49,6 @@ open class Operation: Foundation.Operation {
         /// The `Operation` has been cancelled.
         case cancelled
 
-        func keyPathForKeyValueObserving() -> String? {
-            switch self {
-            case .ready:
-                return "isReady"
-            case .finished:
-                return "isFinished"
-            default:
-                return nil
-            }
-        }
-
         func canTransitionToState(_ target: State) -> Bool {
             switch (self, target) {
             case (.initialized, .pending):
@@ -84,6 +73,16 @@ open class Operation: Foundation.Operation {
         }
     }
 
+    override open class func keyPathsForValuesAffectingValue(forKey key: String) -> Set<String> {
+        var set = super.keyPathsForValuesAffectingValue(forKey: key)
+
+        if key == "isReady" || key == "isExecuting" || key == "isFinished" || key == "isCancelled" {
+            set.insert("state")
+        }
+
+        return set
+    }
+
     /**
         Indicates that the Operation can now begin to evaluate readiness conditions,
         if appropriate.
@@ -96,7 +95,7 @@ open class Operation: Foundation.Operation {
     fileprivate var _state = State.initialized
 
     /// A lock to guard reads and writes to the `_state` property
-    fileprivate var stateLock = NSLock()
+    fileprivate var stateLock = NSRecursiveLock()
 
     fileprivate var state: State {
         get {
@@ -107,51 +106,50 @@ open class Operation: Foundation.Operation {
 
         set(newState) {
             // Manually fire the KVO notifications for state change, since this is "private".
-            willChangeValue(forKey: "state")
-
-            let newStateKeyPath = newState.keyPathForKeyValueObserving()
-
-            if let path = newStateKeyPath {
-                willChangeValue(forKey: path)
-            }
-
             stateLock.withCriticalScope {
-                guard _state != .finished else { return }
+                willChangeValue(forKey: "state")
 
                 assert(_state.canTransitionToState(newState), "Invalid state transition")
 
-                _state = newState
-            }
+                if _state != .finished {
+                    _state = newState
+                }
 
-            if let path = newStateKeyPath {
-                didChangeValue(forKey: path)
+                didChangeValue(forKey: "state")
             }
-
-            didChangeValue(forKey: "state")
         }
     }
 
     // Here is where we extend our definition of "readiness".
     override open var isReady: Bool {
-        switch state {
-        case .initialized:
-            return isCancelled
+        var result = false
 
-        case .pending:
-            guard !isCancelled else { return true }
+        stateLock.withCriticalScope { () -> Void in
+            switch state {
+            case .initialized:
+                result = isCancelled
 
-            if super.isReady {
-                evaluateConditions()
+            case .pending:
+                guard !isCancelled else {
+                    result = true
+                    return
+                }
+
+                if super.isReady {
+                    evaluateConditions()
+                }
+
+                result = false
+
+            case .ready:
+                result = super.isReady || isCancelled
+
+            default:
+                result = false
             }
-
-            return false
-
-        case .ready:
-            return super.isReady || isCancelled
-
-        default:
-            return false
         }
+
+        return result
     }
 
     open var userInitiated: Bool {
