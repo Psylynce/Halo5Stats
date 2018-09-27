@@ -116,7 +116,7 @@ class ImageManager {
         if let cache = cacheDirectory() {
             let imageUrl = cache.appendingPathComponent(imageName)
 
-            try? UIImagePNGRepresentation(image)?.write(to: imageUrl, options: [.atomic])
+            try? image.pngData()?.write(to: imageUrl, options: [.atomic])
         }
     }
 

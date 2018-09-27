@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import Halo5Stats
 
 class Halo5StatsTests: XCTestCase {
     

@@ -12,13 +12,13 @@ extension UIViewController {
 
     func embed(viewController vc: UIViewController, inView view: UIView) {
         vc.view.translatesAutoresizingMaskIntoConstraints = false
-        addChildViewController(vc)
+        addChild(vc)
         addSubview(vc.view, toView: view)
     }
 
     func swap(fromViewController oldViewController: UIViewController, toViewController newViewController: UIViewController, toView view: UIView, animated: Bool = true) {
-        oldViewController.willMove(toParentViewController: nil)
-        addChildViewController(newViewController)
+        oldViewController.willMove(toParent: nil)
+        addChild(newViewController)
         addSubview(newViewController.view, toView: view)
         newViewController.view.alpha = animated ? 0 : 1
         newViewController.view.layoutIfNeeded()
@@ -48,8 +48,8 @@ extension UIViewController {
 
     fileprivate func finishSwap(_ oldViewController: UIViewController, newViewController: UIViewController) {
         oldViewController.view.removeFromSuperview()
-        oldViewController.removeFromParentViewController()
-        newViewController.didMove(toParentViewController: self)
+        oldViewController.removeFromParent()
+        newViewController.didMove(toParent: self)
     }
 
     func hideBackButtonTitle() {

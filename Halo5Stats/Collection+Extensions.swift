@@ -9,7 +9,7 @@ import Foundation
 
 extension Collection where Index: Comparable {
 
-    subscript (safe index: Index) -> _Element? {
+    subscript (safe index: Index) -> Element? {
         if index >= startIndex && index < endIndex {
             return self[index]
         } else {

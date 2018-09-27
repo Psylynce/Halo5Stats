@@ -72,8 +72,10 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         UINavigationBar.appearance().barTintColor = .haloBlack
         UINavigationBar.appearance().tintColor = .whiteSmoke
         let font = UIFont.kelson(.Regular, size: 18) ?? UIFont.systemFont(ofSize: 18)
-        let titleAttributes: [String : AnyObject] = [NSForegroundColorAttributeName : UIColor.white,
-                               NSFontAttributeName : font]
+        let titleAttributes: [NSAttributedString.Key : AnyObject] = [
+            .foregroundColor : UIColor.white,
+            .font : font
+        ]
         UINavigationBar.appearance().titleTextAttributes = titleAttributes
         UINavigationBar.appearance().isTranslucent = false
     }
@@ -85,4 +87,3 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
     }
 
 }
-

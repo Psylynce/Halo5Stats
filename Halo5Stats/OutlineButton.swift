@@ -21,6 +21,6 @@ class OutlineButton: UIButton {
         layer.borderColor = UIColor.whiteSmoke.cgColor
         layer.cornerRadius = 2
         titleLabel?.font = UIFont.kelson(.Regular, size: 18)
-        setTitleColor(.whiteSmoke, for: UIControlState())
+        setTitleColor(.whiteSmoke, for: UIControl.State())
     }
 }

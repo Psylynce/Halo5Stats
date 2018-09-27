@@ -84,9 +84,7 @@
 		5C1B80B61E3A4A47005AC32B /* RemoteNotificationCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B809C1E3A4A47005AC32B /* RemoteNotificationCondition.swift */; };
 		5C1B80B71E3A4A47005AC32B /* SilentCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B809D1E3A4A47005AC32B /* SilentCondition.swift */; };
 		5C1B80B81E3A4A47005AC32B /* TimeoutObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B809E1E3A4A47005AC32B /* TimeoutObserver.swift */; };
-		5C1B80B91E3A4A47005AC32B /* UIUserNotifications+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B809F1E3A4A47005AC32B /* UIUserNotifications+Operations.swift */; };
 		5C1B80BA1E3A4A47005AC32B /* URLSessionTaskOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B80A01E3A4A47005AC32B /* URLSessionTaskOperation.swift */; };
-		5C1B80BB1E3A4A47005AC32B /* UserNotificationCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1B80A11E3A4A47005AC32B /* UserNotificationCondition.swift */; };
 		5C1D797D1CE62F4F0056FE80 /* SpartanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1D797C1CE62F4F0056FE80 /* SpartanManager.swift */; };
 		5C1D79811CEA7E050056FE80 /* KDCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5C1D79801CEA7E050056FE80 /* KDCell.xib */; };
 		5C1D79831CEA7E310056FE80 /* KDCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1D79821CEA7E310056FE80 /* KDCell.swift */; };
@@ -350,9 +348,7 @@
 		5C1B809C1E3A4A47005AC32B /* RemoteNotificationCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RemoteNotificationCondition.swift; path = Operations/RemoteNotificationCondition.swift; sourceTree = "<group>"; };
 		5C1B809D1E3A4A47005AC32B /* SilentCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SilentCondition.swift; path = Operations/SilentCondition.swift; sourceTree = "<group>"; };
 		5C1B809E1E3A4A47005AC32B /* TimeoutObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TimeoutObserver.swift; path = Operations/TimeoutObserver.swift; sourceTree = "<group>"; };
-		5C1B809F1E3A4A47005AC32B /* UIUserNotifications+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIUserNotifications+Operations.swift"; path = "Operations/UIUserNotifications+Operations.swift"; sourceTree = "<group>"; };
 		5C1B80A01E3A4A47005AC32B /* URLSessionTaskOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLSessionTaskOperation.swift; path = Operations/URLSessionTaskOperation.swift; sourceTree = "<group>"; };
-		5C1B80A11E3A4A47005AC32B /* UserNotificationCondition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserNotificationCondition.swift; path = Operations/UserNotificationCondition.swift; sourceTree = "<group>"; };
 		5C1D797C1CE62F4F0056FE80 /* SpartanManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpartanManager.swift; sourceTree = "<group>"; };
 		5C1D79801CEA7E050056FE80 /* KDCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KDCell.xib; sourceTree = "<group>"; };
 		5C1D79821CEA7E310056FE80 /* KDCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = KDCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -670,9 +666,7 @@
 				5C1B809C1E3A4A47005AC32B /* RemoteNotificationCondition.swift */,
 				5C1B809D1E3A4A47005AC32B /* SilentCondition.swift */,
 				5C1B809E1E3A4A47005AC32B /* TimeoutObserver.swift */,
-				5C1B809F1E3A4A47005AC32B /* UIUserNotifications+Operations.swift */,
 				5C1B80A01E3A4A47005AC32B /* URLSessionTaskOperation.swift */,
-				5C1B80A11E3A4A47005AC32B /* UserNotificationCondition.swift */,
 			);
 			name = Operations;
 			sourceTree = "<group>";
@@ -1259,23 +1253,23 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Justin Powell";
 				TargetAttributes = {
 					5C2579571BF8FE3A008C5164 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = H4W46R8JF7;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1000;
 					};
 					5C25796E1BF8FE3A008C5164 = {
 						CreatedOnToolsVersion = 7.1.1;
 						DevelopmentTeam = H4W46R8JF7;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 					5C2579791BF8FE3A008C5164 = {
 						CreatedOnToolsVersion = 7.1.1;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 1000;
 						TestTargetID = 5C2579571BF8FE3A008C5164;
 					};
 				};
@@ -1414,7 +1408,6 @@
 				5C960EA11C65A2DB00178AB1 /* ParseRequestOperation.swift in Sources */,
 				5C38D8701C9236D500BEECF5 /* CSRTier.swift in Sources */,
 				5CFC94701CC2B33900BDD58E /* NSSet+Extensions.swift in Sources */,
-				5C1B80B91E3A4A47005AC32B /* UIUserNotifications+Operations.swift in Sources */,
 				5CB47F491C07D1310063A56C /* ConstraintMaker.swift in Sources */,
 				5C1B80B21E3A4A47005AC32B /* OperationErrors.swift in Sources */,
 				5C960E9B1C659DE500178AB1 /* RequestProtocol.swift in Sources */,
@@ -1520,7 +1513,6 @@
 				5C2579641BF8FE3A008C5164 /* Halo5Stats.xcdatamodeld in Sources */,
 				5C1B80B31E3A4A47005AC32B /* OperationObserver.swift in Sources */,
 				5C0EB7F31C83F57400F9DFE6 /* ServiceRecord+CoreDataProperties.swift in Sources */,
-				5C1B80BB1E3A4A47005AC32B /* UserNotificationCondition.swift in Sources */,
 				5CFC94AF1CC8306300BDD58E /* WeaponCell.swift in Sources */,
 				5C0EB7F21C83F57400F9DFE6 /* Season.swift in Sources */,
 				5C3AC2651CCFE08500DC72CF /* SpartanCell.swift in Sources */,
@@ -1633,14 +1625,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1679,14 +1679,22 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1724,7 +1732,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.JustinPowell.Halo5Stats;
 				PRODUCT_NAME = H5S;
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1741,7 +1750,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.JustinPowell.Halo5Stats;
 				PRODUCT_NAME = H5S;
 				PROVISIONING_PROFILE = "";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1754,7 +1764,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = JPow.Halo5StatsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -1767,7 +1778,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = JPow.Halo5StatsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1778,7 +1790,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = JPow.Halo5StatsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = Halo5Stats;
 				USES_XCTRUNNER = YES;
 			};
@@ -1791,7 +1804,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = JPow.Halo5StatsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = Halo5Stats;
 				USES_XCTRUNNER = YES;
 			};

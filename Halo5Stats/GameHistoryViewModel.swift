@@ -36,7 +36,7 @@ class GameHistoryViewModel {
 
     // MARK: Internal
 
-    func fetchMatches(_ isRefresh: Bool = false, completion: @escaping (Void) -> Void) {
+    func fetchMatches(_ isRefresh: Bool = false, completion: @escaping () -> Void) {
         guard let gamertag = gamertag, let spartan = Spartan.spartan(gamertag) else {
             completion()
             return
@@ -60,7 +60,7 @@ class GameHistoryViewModel {
 
         let newMatchIds = Array(matchIds[currentStartIndex ..< matchIds.count])
         let fetchedMatches = Match.sortedMatches(withIdentifiers: newMatchIds, in: controller.managedObjectContext)
-        let newMatches = fetchedMatches.flatMap { MatchModel.convert($0) }
+        let newMatches = fetchedMatches.compactMap { MatchModel.convert($0) }
 
         currentStartIndex = matchIds.count
         if isRefresh {
@@ -105,7 +105,7 @@ class GameHistoryViewModel {
 
     // MARK: Private
 
-    fileprivate func updateMapMetadata(_ completion: @escaping (Void) -> Void) {
+    fileprivate func updateMapMetadata(_ completion: @escaping () -> Void) {
         guard let queue = Container.resolve(OperationQueue.self) else { return }
 
         let mapsRequest = MetadataRequest(metadataType: .Maps)
@@ -114,7 +114,7 @@ class GameHistoryViewModel {
         queue.addOperation(operation)
     }
 
-    fileprivate func requestMatches(_ gamertag: String, completion: @escaping (Void) -> Void) {
+    fileprivate func requestMatches(_ gamertag: String, completion: @escaping () -> Void) {
         guard let queue = Container.resolve(OperationQueue.self) else { return }
 
         let modes = gameModes.map { $0.rawValue }.joined(separator: ",")

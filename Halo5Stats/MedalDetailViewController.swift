@@ -68,17 +68,16 @@ class MedalDetailViewController: UIViewController {
         let difficultyRange = nsText.range(of: difficulty)
         let countRange = nsText.range(of: count)
         let font = UIFont.kelson(.Light, size: 14) ?? UIFont.systemFont(ofSize: 14)
-        let boldAttributes = [NSFontAttributeName : font]
 
         let final = NSMutableAttributedString(string: finalText)
-        final.addAttributes(boldAttributes, range: classificationRange)
-        final.addAttributes(boldAttributes, range: difficultyRange)
-        final.addAttributes(boldAttributes, range: countRange)
+        final.addAttributes([.font : font], range: classificationRange)
+        final.addAttributes([.font : font], range: difficultyRange)
+        final.addAttributes([.font : font], range: countRange)
 
         return final
     }
 
-    fileprivate func animateViews(open: Bool, completion: ((Void) -> Void)?) {
+    fileprivate func animateViews(open: Bool, completion: (() -> Void)?) {
         if open {
             animateOpen()
         } else {
@@ -89,7 +88,7 @@ class MedalDetailViewController: UIViewController {
     fileprivate func animateOpen() {
         let frame = endingFrame
 
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 20.0, options: UIViewAnimationOptions(), animations: { [weak self] in
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 20.0, options: [], animations: { [weak self] in
             self?.imageView.frame = frame
             self?.radialView.alpha = 1
             self?.nameLabel.alpha = 1
@@ -98,10 +97,10 @@ class MedalDetailViewController: UIViewController {
             }, completion: nil)
     }
 
-    fileprivate func animateClose(_ completion: ((Void) -> Void)?) {
+    fileprivate func animateClose(_ completion: (() -> Void)?) {
         let frame = openingFrame
 
-        UIView.animate(withDuration: 0.2, delay: 0.2, options: UIViewAnimationOptions(), animations: { [weak self] in
+        UIView.animate(withDuration: 0.2, delay: 0.2, options: [], animations: { [weak self] in
             self?.imageView.frame = frame!
             self?.radialView.alpha = 0
             self?.nameLabel.alpha = 0

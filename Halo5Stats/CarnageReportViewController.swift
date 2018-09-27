@@ -105,7 +105,7 @@ extension CarnageReportViewController {
 
         switch section {
         case .image:
-            return UITableViewAutomaticDimension
+            return UITableView.automaticDimension
         case .scores:
             let showTeams = viewModel.match.isTeamGame
             return showTeams ? 100.0 : 130.0

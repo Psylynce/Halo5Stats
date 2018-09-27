@@ -15,7 +15,7 @@ struct TeamModel {
 
     static func teams(_ match: Match) -> [TeamModel] {
         guard let teams = match.teams?.allObjects as? [Team] else { return [] }
-        let models = teams.flatMap { TeamModel.convert($0) }
+        let models = teams.compactMap { TeamModel.convert($0) }
 
         return models.sorted { $0.rank < $1.rank }
     }

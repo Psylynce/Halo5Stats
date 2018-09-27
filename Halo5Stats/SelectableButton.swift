@@ -27,7 +27,7 @@ class SelectableButton: UIButton {
     fileprivate func setupAppearance() {
         titleLabel?.font = UIFont.kelson(.Regular, size: 12)
         setTitleColor(selectedColor, for: .selected)
-        setTitleColor(deselectedColor, for: UIControlState())
+        setTitleColor(deselectedColor, for: UIControl.State())
 
         layer.borderWidth = 1
         layer.cornerRadius = 2

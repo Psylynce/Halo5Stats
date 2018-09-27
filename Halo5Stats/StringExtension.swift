@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension String: Collection {
+extension String {
     
     func first() -> String? {
         if isEmpty { return nil }
@@ -18,15 +18,15 @@ extension String: Collection {
     func last() -> String? {
         if isEmpty { return nil }
         
-        return String(self[self.characters.index(self.endIndex, offsetBy: -1)])
+        return String(self[self.index(self.endIndex, offsetBy: -1)])
     }
     
     func isMinLength(_ length: Int) -> Bool {
-        return self.characters.count >= length
+        return self.count >= length
     }
     
     func isMaxLength(_ length: Int) -> Bool {
-        return self.characters.count <= length
+        return self.count <= length
     }
     
     func isMinAndMaxLength(_ min: Int, max: Int) -> Bool {
@@ -39,10 +39,10 @@ extension String: Collection {
     var normalizedFromCapitalizedString: String {
         do {
             let regex = try NSRegularExpression(pattern: "(?=\\S)[A-Z]", options: [])
-            let range = NSMakeRange(1, characters.count - 1)
+            let range = NSMakeRange(1, count - 1)
             var string = regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: " $0")
 
-            for i in string.characters.indices {
+            for i in string.indices {
                 if i == string.startIndex || string[string.index(i, offsetBy: -1)] == " " {
                     string.replaceSubrange(i ... i, with: String(string[i]).uppercased())
                 }
@@ -58,7 +58,7 @@ extension String: Collection {
 
 extension NSRange {
     func rangeForString(_ string: String) -> Range<String.Index> {
-        let startIndex = string.characters.index(string.startIndex, offsetBy: location)
+        let startIndex = string.index(string.startIndex, offsetBy: location)
         let endIndex = string.index(startIndex, offsetBy: length)
 
         let range = startIndex ..< endIndex

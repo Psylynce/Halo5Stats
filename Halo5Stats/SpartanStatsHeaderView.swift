@@ -73,7 +73,7 @@ class SpartanStatsHeaderView: UIView {
 
         sliderViewLeadingConstraint.constant = CGFloat(currentIndex) * sliderView.bounds.width
 
-        UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, options: UIView.AnimationOptions(), animations: {
             self.sliderView.backgroundColor = gameMode.color
             self.layoutIfNeeded()
         }, completion: nil)

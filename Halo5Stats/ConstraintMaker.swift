@@ -12,29 +12,29 @@ class ConstraintMaker: NSObject {
     // MARK: - Static
     
     let make = ConstraintMaker()
-    let makeGreater = ConstraintMaker(relation: .greaterThanOrEqual, priority: UILayoutPriorityRequired, multiplier: 1.0)
+    let makeGreater = ConstraintMaker(relation: .greaterThanOrEqual, priority: UILayoutPriority.required, multiplier: 1.0)
     
     // MARK: - Parameters
     
-    let relation: NSLayoutRelation
+    let relation: NSLayoutConstraint.Relation
     let priority: UILayoutPriority
     let multiplier: CGFloat
     
     // MARK: - Internal
     
-    init(relation: NSLayoutRelation, priority: UILayoutPriority, multiplier: CGFloat) {
+    init(relation: NSLayoutConstraint.Relation, priority: UILayoutPriority, multiplier: CGFloat) {
         self.relation = relation
         self.priority = priority
         self.multiplier = multiplier
     }
     
     convenience override init() {
-        self.init(relation: .equal, priority: UILayoutPriorityRequired, multiplier: 1.0)
+        self.init(relation: .equal, priority: UILayoutPriority.required, multiplier: 1.0)
     }
     
     // MARK: Generator
     
-    func constraintFor(_ attribute: NSLayoutAttribute, onView: UIView, toView: UIView? = nil, offset: CGFloat = 0.0) -> [NSLayoutConstraint] {
+    func constraintFor(_ attribute: NSLayoutConstraint.Attribute, onView: UIView, toView: UIView? = nil, offset: CGFloat = 0.0) -> [NSLayoutConstraint] {
         onView.translatesAutoresizingMaskIntoConstraints = false
         
         var originView = onView
@@ -53,7 +53,7 @@ class ConstraintMaker: NSObject {
     
     // MARK: Pin Edge Constraints
     
-    func pinEdgeConstraintsOnView(_ attributes: [NSLayoutAttribute], onView view: UIView, toView: UIView? = nil, edgeInsets: UIEdgeInsets = UIEdgeInsets.zero) -> [NSLayoutConstraint] {
+    func pinEdgeConstraintsOnView(_ attributes: [NSLayoutConstraint.Attribute], onView view: UIView, toView: UIView? = nil, edgeInsets: UIEdgeInsets = UIEdgeInsets.zero) -> [NSLayoutConstraint] {
         var constraints: [NSLayoutConstraint] = []
         
         if attributes.contains(.leading) {

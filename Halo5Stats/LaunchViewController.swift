@@ -82,7 +82,10 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
         metadataLabel.textColor = .whiteSmoke
         metadataLabel.alpha = 0
 
-        let attributes: [String : AnyObject]? = [NSForegroundColorAttributeName : UIColor.whiteSmoke.withAlphaComponent(0.6), NSFontAttributeName : UIFont.kelson(.Regular, size: 14)! ]
+        let attributes: [NSAttributedString.Key : AnyObject]? = [
+            .foregroundColor : UIColor.whiteSmoke.withAlphaComponent(0.6),
+            .font : UIFont.kelson(.Regular, size: 14)!
+        ]
         let placeholder = NSAttributedString(string: "Enter Gamertag", attributes: attributes)
         textField.attributedPlaceholder = placeholder
         textField.delegate = self
@@ -95,13 +98,13 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
         textField.font = UIFont.kelson(.Regular, size: 16)
         
         launchButton.addTarget(self, action: #selector(launchButtonTapped(_:)), for: .touchUpInside)
-        launchButton.setTitle("Launch", for: UIControlState())
+        launchButton.setTitle("Launch", for: .normal)
         launchButton.alpha = 0
         borderView.alpha = 0
         cancelButton.alpha = 0
         cancelButton.isEnabled = isChangingGamertag
 
-        cancelButton.setTitleColor(.whiteSmoke, for: UIControlState())
+        cancelButton.setTitleColor(.whiteSmoke, for: .normal)
         cancelButton.titleLabel?.font = UIFont.kelson(.Regular, size: 17)
 
         videoContainerView.alpha = 0
@@ -121,7 +124,7 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
     fileprivate func animateElements() {
         imageViewVerticalCenterConstraint.constant = -logoImageView.frame.height / 2.5
 
-        UIView.animate(withDuration: 0.3, delay: 0.5, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.5, options: UIView.AnimationOptions(), animations: {
             self.view.layoutIfNeeded()
             }) { (_) in
             UIView.animate(withDuration: 0.3, animations: {
@@ -138,13 +141,13 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
     }
 
     fileprivate func showMetadataLabel() {
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions(), animations: { [weak self] in
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: UIView.AnimationOptions(), animations: { [weak self] in
             self?.metadataLabel.alpha = 1
             }, completion: nil)
     }
 
     fileprivate func hideMetadataLabel(_ completion: @escaping () -> Void) {
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions(), animations: { [weak self] in
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: UIView.AnimationOptions(), animations: { [weak self] in
             self?.metadataLabel.alpha = 0
         }) { (_) in
             completion()
@@ -165,7 +168,7 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
         let text = textField.text ?? ""
         let possibleNewText = text.replacingCharacters(in: range.rangeForString(text), with: string)
         
-        let lengthIsValid = possibleNewText.characters.count <= GamertagManager.K.maxGamertagLength
+        let lengthIsValid = possibleNewText.count <= GamertagManager.K.maxGamertagLength
         let charactersAreValid = gamertagManager.containsGamertagCharacters(possibleNewText) || possibleNewText.isEmpty
         
         return lengthIsValid && charactersAreValid
@@ -178,7 +181,7 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
     
     // MARK: - Actions
     
-    func launchButtonTapped(_ sender: UIButton) {
+    @objc func launchButtonTapped(_ sender: UIButton) {
         guard let gamertag = textField.text else { return }
         view.endEditing(true)
         showIndicator(animate: true)
@@ -244,4 +247,3 @@ extension LaunchViewController: DataLoader {
         }) 
     }
 }
-

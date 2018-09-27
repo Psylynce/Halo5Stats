@@ -86,7 +86,7 @@ class PlayerCarnageReportViewController: UIViewController {
     }
 
     @objc fileprivate func addSpartanButtonTapped() {
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        let activityIndicator = UIActivityIndicatorView(style: .white)
         let barItem = UIBarButtonItem(customView: activityIndicator)
         navigationItem.rightBarButtonItem = barItem
         activityIndicator.startAnimating()
