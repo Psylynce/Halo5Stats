@@ -78,17 +78,17 @@ class MatchFilterViewController: UIViewController {
     fileprivate func setupBindAndFires() {
         viewModel.arenaSelected.bindAndFire { [weak self] (selected) in
             let color = selected ? UIColor.green : .whiteSmoke
-            self?.arenaButton.setTitleColor(color, for: UIControl.State())
+            self?.arenaButton.setTitleColor(color, for: .normal)
         }
 
         viewModel.warzoneSelected.bindAndFire { [weak self] (selected) in
             let color = selected ? UIColor.green : .whiteSmoke
-            self?.warzoneButton.setTitleColor(color, for: UIControl.State())
+            self?.warzoneButton.setTitleColor(color, for: .normal)
         }
 
         viewModel.customsSelected.bindAndFire { [weak self] (selected) in
             let color = selected ? UIColor.green : .whiteSmoke
-            self?.customsButton.setTitleColor(color, for: UIControl.State())
+            self?.customsButton.setTitleColor(color, for: .normal)
         }
     }
 
@@ -105,20 +105,20 @@ class MatchFilterViewController: UIViewController {
     fileprivate func setupAppearance() {
         view.backgroundColor = UIColor.clear
 
-        closeButton.setTitle("Cancel", for: UIControl.State())
-        closeButton.setTitleColor(.whiteSmoke, for: UIControl.State())
+        closeButton.setTitle("Cancel", for: .normal)
+        closeButton.setTitleColor(.whiteSmoke, for: .normal)
 
-        applyButton.setTitle("Apply", for: UIControl.State())
-        applyButton.setTitleColor(.whiteSmoke, for: UIControl.State())
+        applyButton.setTitle("Apply", for: .normal)
+        applyButton.setTitleColor(.whiteSmoke, for: .normal)
 
         gradientBackgroundView.backgroundColor = UIColor.clear
 
-        arenaButton.setTitle("ARENA", for: UIControl.State())
-        warzoneButton.setTitle("WARZONE", for: UIControl.State())
-        customsButton.setTitle("CUSTOMS", for: UIControl.State())
+        arenaButton.setTitle("ARENA", for: .normal)
+        warzoneButton.setTitle("WARZONE", for: .normal)
+        customsButton.setTitle("CUSTOMS", for: .normal)
 
         filterButtons.forEach {
-            $0.setTitleColor(.whiteSmoke, for: UIControl.State())
+            $0.setTitleColor(.whiteSmoke, for: .normal)
             $0.titleLabel?.font = UIFont.kelson(.Bold, size: 16)
         }
     }
