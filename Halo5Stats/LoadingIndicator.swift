@@ -76,7 +76,7 @@ class LoadingIndicator: UIView {
         animation.fromValue = 0
         animation.toValue = 1
         animation.duration = 2
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
 
         let group = CAAnimationGroup()
         group.duration = 2.5
@@ -92,7 +92,7 @@ class LoadingIndicator: UIView {
         animation.fromValue = 0
         animation.toValue = 1
         animation.duration = 2
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        animation.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
 
         let group = CAAnimationGroup()
         group.duration = 2.5

@@ -37,7 +37,7 @@ class VideoViewController: UIViewController {
 
     @objc fileprivate func replayVideo(_ notification: Notification) {
         if let player = player {
-            player.seek(to: CMTime.zero)
+            player.seek(to: .zero)
             player.play()
         }
     }
@@ -57,12 +57,12 @@ class VideoViewController: UIViewController {
     fileprivate func play(fromTime time: CMTime) {
         guard let player = player else { return }
         if player.status == .readyToPlay && player.currentItem?.status == .readyToPlay {
-            player.seek(to: time, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero, completionHandler: { (_) in
+            player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: { (_) in
                 player.play()
             }) 
         } else {
             let delay = Int64(Double(NSEC_PER_SEC) * 0.2)
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(delay) / Double(NSEC_PER_SEC)) { [weak self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay) / Double(NSEC_PER_SEC)) { [weak self] in
                 self?.play(fromTime: time)
             }
         }
@@ -77,7 +77,7 @@ class VideoViewController: UIViewController {
         let playerLayer = AVPlayerLayer(player: player)
 
         playerLayer.frame = view.frame
-        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        playerLayer.videoGravity = .resizeAspectFill
 
         return playerLayer
     }
@@ -90,8 +90,7 @@ class VideoViewController: UIViewController {
 
     fileprivate func loadVideo() {
         do {
-            try
-               AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, options: [])
+            try AVAudioSession.sharedInstance().setCategory(.ambient, mode: .default, options: [])
         } catch {}
 
         if let playerLayer = playerLayer {

@@ -124,7 +124,7 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
     fileprivate func animateElements() {
         imageViewVerticalCenterConstraint.constant = -logoImageView.frame.height / 2.5
 
-        UIView.animate(withDuration: 0.3, delay: 0.5, options: UIView.AnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.5, options: [], animations: {
             self.view.layoutIfNeeded()
             }) { (_) in
             UIView.animate(withDuration: 0.3, animations: {
@@ -141,13 +141,13 @@ class LaunchViewController: UIViewController, UIScrollViewDelegate, UITextFieldD
     }
 
     fileprivate func showMetadataLabel() {
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: UIView.AnimationOptions(), animations: { [weak self] in
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [], animations: { [weak self] in
             self?.metadataLabel.alpha = 1
             }, completion: nil)
     }
 
     fileprivate func hideMetadataLabel(_ completion: @escaping () -> Void) {
-        UIView.animate(withDuration: 0.4, delay: 0.0, options: UIView.AnimationOptions(), animations: { [weak self] in
+        UIView.animate(withDuration: 0.4, delay: 0.0, options: [], animations: { [weak self] in
             self?.metadataLabel.alpha = 0
         }) { (_) in
             completion()
