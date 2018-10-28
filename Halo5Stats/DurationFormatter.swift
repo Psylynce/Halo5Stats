@@ -25,7 +25,7 @@ class DurationFormatter {
         var seconds = ""
         var totalSeconds: Double = 0
 
-        if duration.characters.count == 0 {
+        if duration.count == 0 {
             return 0
         }
 

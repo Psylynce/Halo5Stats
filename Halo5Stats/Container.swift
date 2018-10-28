@@ -40,7 +40,7 @@ open class Container {
 
     fileprivate var services = [ContainerItemKey: ContainerItemType]()
 
-    open func register<T>(_ serviceType: T.Type, name: String? = nil, factory: (Resolvable) -> T) -> ContainerEntry<T> {
+    open func register<T>(_ serviceType: T.Type, name: String? = nil, factory: @escaping (Resolvable) -> T) -> ContainerEntry<T> {
         return registerFactory(serviceType, factory: factory, name: name)
     }
 
@@ -53,7 +53,7 @@ open class Container {
         return entry
     }
 
-    @discardableResult static open func register<T>(_ serviceType: T.Type, name: String? = nil, factory: (Resolvable) -> T) -> ContainerEntry<T> {
+    @discardableResult static public func register<T>(_ serviceType: T.Type, name: String? = nil, factory: @escaping (Resolvable) -> T) -> ContainerEntry<T> {
         return sharedContainer.register(serviceType, name: name, factory: factory)
     }
 }

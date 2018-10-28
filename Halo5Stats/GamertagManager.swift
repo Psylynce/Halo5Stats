@@ -46,7 +46,7 @@ class GamertagManager {
     func gamertagExists() -> Bool {
         guard let gamertag = gamertagForUser() else { return false }
 
-        return gamertag.characters.count > 0
+        return gamertag.count > 0
     }
     
     func errorMessage() -> (title: String, message: String) {

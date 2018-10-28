@@ -29,7 +29,7 @@ class SpartanCell: UITableViewCell {
 
             cellModel.isFavorite.bindAndFire { [weak self] (isFavorite) in
                 let image = isFavorite ? UIImage(named: "Star_Filled") : UIImage(named: "Star")
-                self?.favoriteButton.setImage(image?.withRenderingMode(.alwaysTemplate), for: UIControlState())
+                self?.favoriteButton.setImage(image?.withRenderingMode(.alwaysTemplate), for: .normal)
                 self?.favoriteButton.imageView?.tintColor = isFavorite ? .whiteSmoke : UIColor.whiteSmoke.withAlphaComponent(0.4)
             }
         }
@@ -42,7 +42,7 @@ class SpartanCell: UITableViewCell {
         gamertagLabel.font = UIFont.kelson(.Regular, size: 18)
         gamertagLabel.textColor = .whiteSmoke
 
-        compareButton.setTitle("COMPARE", for: UIControlState())
+        compareButton.setTitle("COMPARE", for: .normal)
 
         contentView.backgroundColor = UIColor.clear
         backgroundColor = UIColor.clear

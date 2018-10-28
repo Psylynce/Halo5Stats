@@ -48,7 +48,7 @@ class SpartansViewModel {
         guard let controller = Container.resolve(PersistenceController.self) else { return }
 
         let spartans = Spartan.fetch(inContext: controller.managedObjectContext)
-        let newSpartans = spartans.flatMap { SpartanModel.convert($0) }
+        let newSpartans = spartans.compactMap { SpartanModel.convert($0) }
 
         self.filteredSpartans.value = sortSpartans(newSpartans)
 

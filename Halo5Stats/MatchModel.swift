@@ -59,17 +59,17 @@ struct MatchModel {
         guard let gbvId = match.gameBaseVariantId, let gameBaseVariant = GameBaseVariant.baseVariant(forIdentifier: gbvId), let mapId = match.mapId, let map = Map.map(forIdentifier: mapId), let completionDate = match.completionDate, let teamGameNum = match.isTeamGame else { return nil }
         guard let mapImageUrlString = map.imageUrl, let mapImageUrl = URL(string: mapImageUrlString) else { return nil }
 
-        let gameModeInt = Int(match.gameMode ?? -1)
+        let gameModeInt = Int(truncating: match.gameMode ?? -1)
         let gameMode = GameMode.gameMode(forInt: gameModeInt)
         let gameType = gameBaseVariant.name ?? ""
         let gameTypeIconUrl = URL(string: gameBaseVariant.iconUrl ?? "")
         let mapName = map.name ?? ""
-        let intOutcome = Int(match.outcome ?? -1)
+        let intOutcome = Int(truncating: match.outcome ?? -1)
         let outcome = Outcome(rawValue: intOutcome)
         let score = match.score()
         let date = completionDate
         let matchId = match.identifier ?? ""
-        let isTeamGame = Bool(teamGameNum.intValue as NSNumber)
+        let isTeamGame = Bool(truncating: teamGameNum.intValue as NSNumber)
         let teams = TeamModel.teams(match)
         let durationTime = match.matchDuration ?? ""
         let duration = DurationFormatter.readableDuration(durationTime)

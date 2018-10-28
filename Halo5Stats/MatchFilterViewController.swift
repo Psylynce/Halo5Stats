@@ -78,17 +78,17 @@ class MatchFilterViewController: UIViewController {
     fileprivate func setupBindAndFires() {
         viewModel.arenaSelected.bindAndFire { [weak self] (selected) in
             let color = selected ? UIColor.green : .whiteSmoke
-            self?.arenaButton.setTitleColor(color, for: UIControlState())
+            self?.arenaButton.setTitleColor(color, for: .normal)
         }
 
         viewModel.warzoneSelected.bindAndFire { [weak self] (selected) in
             let color = selected ? UIColor.green : .whiteSmoke
-            self?.warzoneButton.setTitleColor(color, for: UIControlState())
+            self?.warzoneButton.setTitleColor(color, for: .normal)
         }
 
         viewModel.customsSelected.bindAndFire { [weak self] (selected) in
             let color = selected ? UIColor.green : .whiteSmoke
-            self?.customsButton.setTitleColor(color, for: UIControlState())
+            self?.customsButton.setTitleColor(color, for: .normal)
         }
     }
 
@@ -105,20 +105,20 @@ class MatchFilterViewController: UIViewController {
     fileprivate func setupAppearance() {
         view.backgroundColor = UIColor.clear
 
-        closeButton.setTitle("Cancel", for: UIControlState())
-        closeButton.setTitleColor(.whiteSmoke, for: UIControlState())
+        closeButton.setTitle("Cancel", for: .normal)
+        closeButton.setTitleColor(.whiteSmoke, for: .normal)
 
-        applyButton.setTitle("Apply", for: UIControlState())
-        applyButton.setTitleColor(.whiteSmoke, for: UIControlState())
+        applyButton.setTitle("Apply", for: .normal)
+        applyButton.setTitleColor(.whiteSmoke, for: .normal)
 
         gradientBackgroundView.backgroundColor = UIColor.clear
 
-        arenaButton.setTitle("ARENA", for: UIControlState())
-        warzoneButton.setTitle("WARZONE", for: UIControlState())
-        customsButton.setTitle("CUSTOMS", for: UIControlState())
+        arenaButton.setTitle("ARENA", for: .normal)
+        warzoneButton.setTitle("WARZONE", for: .normal)
+        customsButton.setTitle("CUSTOMS", for: .normal)
 
         filterButtons.forEach {
-            $0.setTitleColor(.whiteSmoke, for: UIControlState())
+            $0.setTitleColor(.whiteSmoke, for: .normal)
             $0.titleLabel?.font = UIFont.kelson(.Bold, size: 16)
         }
     }
@@ -159,7 +159,7 @@ class MatchFilterViewController: UIViewController {
         }) 
     }
 
-    fileprivate func closeAnimation(_ completion: @escaping (Void) -> Void) {
+    fileprivate func closeAnimation(_ completion: @escaping () -> Void) {
         initialConstraintValues()
         UIView.animate(withDuration: 0.3, animations: {
             [weak self] in

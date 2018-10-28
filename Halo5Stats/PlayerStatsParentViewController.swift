@@ -55,7 +55,7 @@ class PlayerStatsParentViewController: UIViewController {
         guard let id = segue.identifier, let statsSegue = StoryboardSegue.PlayerStats(rawValue: id) else { return }
         switch statsSegue {
         case .EmbedServiceRecord:
-            pageViewController = segue.destination as! UIPageViewController
+            pageViewController = (segue.destination as! UIPageViewController)
         }
     }
 
@@ -153,7 +153,7 @@ class PlayerStatsParentViewController: UIViewController {
         headerViewHeightConstraint.constant = Layout.minHeaderHeight
         spartanImageViewTopConstraint.constant = Layout.shrunkenSpartanImageViewTop
 
-        UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
             self.headerView.effectView.alpha = Layout.shrunkenBlurAlpha
             self.headerView.spartanImageView.layer.transform = CATransform3DMakeScale(0, 0, 0)
             self.view.layoutIfNeeded()
@@ -164,7 +164,7 @@ class PlayerStatsParentViewController: UIViewController {
         headerViewHeightConstraint.constant = Layout.maxHeaderHeight
         spartanImageViewTopConstraint.constant = Layout.defaultSpartanImageViewTop
 
-        UIView.animate(withDuration: 0.3, delay: 0, options: UIViewAnimationOptions(), animations: {
+        UIView.animate(withDuration: 0.3, delay: 0, options: [], animations: {
             self.headerView.effectView.alpha = Layout.defaultBlurAlpha
             self.headerView.spartanImageView.layer.transform = CATransform3DMakeScale(1, 1, 0)
             self.view.layoutIfNeeded()

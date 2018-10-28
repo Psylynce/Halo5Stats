@@ -102,7 +102,7 @@ class PlayerCarnageReportViewModel {
         self.sections = sections
     }
 
-    func saveSpartan(_ player: MatchPlayerModel, completion: @escaping (Void) -> Void) {
+    func saveSpartan(_ player: MatchPlayerModel, completion: @escaping () -> Void) {
         guard !SpartanManager.sharedManager.spartanIsSaved(player.gamertag) else { return }
         guard let queue = Container.resolve(OperationQueue.self) else { return }
         

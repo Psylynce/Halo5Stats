@@ -38,17 +38,17 @@ class KeyboardController: NSObject {
     // MARK: - Observers
 
     fileprivate func registerKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     fileprivate func removeKeyboardObservers() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     @objc fileprivate func keyboardWillShow(_ notification: Notification) {
-        guard let scrollView = scrollView, let frameValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue, let window = window, let mainView = mainView, keyboardUp == false else { return }
+        guard let scrollView = scrollView, let frameValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue, let window = window, let mainView = mainView, keyboardUp == false else { return }
 
         if originalContentInsets == UIEdgeInsets.zero || originalScrollIndicatorInsets == UIEdgeInsets.zero {
             originalContentInsets = scrollView.contentInset
